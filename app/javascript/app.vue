@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <p>{{ message }}</p>
+    <Grid></Grid>
   </div>
 </template>
 
 <script>
+
+import Grid from './grid.vue'
+
 export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
+  components: {
+    Grid
   }
 }
 </script>

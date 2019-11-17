@@ -34,12 +34,15 @@
     ]
   },
   "dependencies": {
+    "@ag-grid-community/all-modules": "^22.0.0",
+    "@ag-grid-community/vue": "^22.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "^4.2.0",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.2",
+    "vue-property-decorator": "^8.3.0",
     "vue-template-compiler": "^2.6.10",
     "vue-turbolinks": "^2.0.4"
   },
