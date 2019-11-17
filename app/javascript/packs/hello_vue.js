@@ -9,20 +9,32 @@ import TurbolinksAdapter from 'vue-turbolinks'
 
 import Vue from 'vue'
 import App from '../app.vue'
-import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
+import vuetify from './plugins/vuetify'
 
 Vue.use(TurbolinksAdapter)
-Vue.use(Buefy)
+Vue.use(vuetify)
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
-    render: h => h(App)
+    vuetify,
+    render: h => h(App),
   }).$mount()
   document.body.appendChild(app.$el)
 
   console.log(app)
 })
+
+// document.addEventListener('turbolinks:load', () => {
+//   const app = new Vue({
+//     el: '#hello',
+//     data: () => {
+//       return {
+//         message: "Can you say hello?"
+//       }
+//     },
+//     components: { App }
+//   })
+// })
 
 
 // The above code uses Vue without the compiler, which means you cannot
@@ -66,14 +78,3 @@ document.addEventListener('turbolinks:load', () => {
 //
 // Vue.use(TurbolinksAdapter)
 //
-// document.addEventListener('turbolinks:load', () => {
-//   const app = new Vue({
-//     el: '#hello',
-//     data: () => {
-//       return {
-//         message: "Can you say hello?"
-//       }
-//     },
-//     components: { App }
-//   })
-// })

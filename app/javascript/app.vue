@@ -1,46 +1,47 @@
 <template>
-  <div id="app">
-    <b-navbar>
-        <template slot="brand">
-            <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                <img src="~/images/logo.svg">
-            </b-navbar-item>
-            <b-navbar-item href="https://haydenmcfarland.me">
-            Home
-            </b-navbar-item>
+<v-app id="inspire">
+    <div>
+      <v-toolbar>
+        <img src="~/images/logo.svg">
+  
+        <v-spacer></v-spacer>
+  
+        <v-toolbar-items>
+          <v-btn text>Link 1</v-btn>
+          <v-btn text>Link 2</v-btn>
+          <v-btn text>Link 3</v-btn>
+        </v-toolbar-items>
+  
+        <template v-if="$vuetify.breakpoint.smAndUp">
+          <v-btn icon>
+            <v-icon>mdi-export-variant</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>mdi-delete-circle</v-icon>
+          </v-btn>
+          <v-btn icon>
+            <v-icon>mdi-plus-circle</v-icon>
+          </v-btn>
         </template>
-        <template slot="start">
-            <b-navbar-item href="#">
-                Toggle Dark Mode
-            </b-navbar-item>
-        </template>
-
-        <template slot="end">
-            <b-navbar-item tag="div">
-                <div class="buttons">
-                    <a class="button is-primary">
-                        <strong>Sign up</strong>
-                    </a>
-                    <a class="button is-light">
-                        Log in
-                    </a>
-                </div>
-            </b-navbar-item>
-        </template>
-    </b-navbar>
+      </v-toolbar>
     <Grid></Grid>
   </div>
+</v-app>
 </template>
 
 <script>
 
 import Grid from './grid.vue'
+import Vue from 'vue'
+import Vuetify from 'vuetify'
 import 'images/logo.svg'
+
+Vue.use(Vuetify)
 
 export default {
   components: {
     Grid
-  }
+  },
 }
 </script>
 
