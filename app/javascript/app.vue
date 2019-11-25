@@ -1,49 +1,52 @@
 <template>
-<v-app id="app" :dark="setTheme">
-      <v-app-bar app>
-        <router-link to="/">
+    <v-app id="app" :dark="setTheme">
+        <v-app-bar app>
+            <v-toolbar-title>
+                <router-link to="/">
+                    <v-btn icon>
+                        <v-icon>mdi-home</v-icon>
+                    </v-btn>
+                </router-link>
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
+                <div v-if="!signedIn()">
+                    <router-link to="/signin">
+                        <v-btn icon>
+                            <v-icon>mdi-account-arrow-right</v-icon>
+                        </v-btn>
+                    </router-link>
+                </div>
+                <div v-else>
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on }">
+                        <v-btn v-on="on">
+                            User
+                        </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item>
+                                <v-switch v-model="goDark"></v-switch>
+                                    <a href="#" @click.prevent="signOut">
+                                <v-btn icon>
+                                    <v-icon>mdi-account-off</v-icon>
+                                </v-btn>
+                                </a>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
+        </v-app-bar>
+        <v-content>
+            <v-container fluid>
+                <v-row justify="center">
+                    <router-view/>
+                </v-row>
+            </v-container>
+        </v-content>
+        <v-bottom-navigation fixed>
             <img src="~/images/logo.svg"/>
-        </router-link>
-  
-        <v-spacer></v-spacer>
-  
-        <v-toolbar-items>
-          <v-btn text>Applications</v-btn>
-        </v-toolbar-items>
-  
-        <template v-if="$vuetify.breakpoint.smAndUp">
-          <v-btn icon>
-            <v-icon>mdi-plus-circle</v-icon>
-          </v-btn>
-          <v-menu offset-y>
-            <template v-slot:activator="{ on }">
-              <v-btn dark v-on="on">
-                    <div v-if="!signedIn()">
-                        ---
-                    </div>
-                    <div v-else>
-                        User
-                    </div>
-                </v-btn>
-            </template>
-            <v-list>
-              <v-list-item>
-                <v-switch v-model="goDark"></v-switch>
-                <router-link to="/signin" class="link-grey px-2 no-underline" v-if="!signedIn()">Sign in</router-link>
-                <a href="#" @click.prevent="signOut" class="link-grey px-2 no-underline" v-if="signedIn()">Sign out</a>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </template>
-      </v-app-bar>
-      <v-content>
-        <v-container fluid fill-height>
-            <router-view/>
-        </v-container>
-      </v-content>
-    <v-bottom-navigation fixed>
-    </v-bottom-navigation>
-</v-app>
+        </v-bottom-navigation>
+    </v-app>
 </template>
 
 <script>
@@ -98,4 +101,5 @@ p {
   text-align: center;
 }
 
+a {  text-decoration: none; }
 </style>

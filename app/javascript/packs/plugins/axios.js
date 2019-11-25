@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Vue from 'vue'
 
 const API_URL = 'http://localhost:3000'
 
@@ -26,10 +27,26 @@ securedAxiosInstance.interceptors.request.use(config => {
       'X-CSRF-TOKEN': localStorage.csrf
     }
   }
+
   return config
-})
+}) 
+
+let toastErrorHandler = (error) => {
+    if (typeof error.response === 'undefined') {
+        Vue.prototype.$toast.error("Internal server error");  
+    }
+    if (error.response) {
+        Vue.prototype.$toast.error(error.response.status + " - " + error.response.statusText);   
+    }
+}
+
+plainAxiosInstance.interceptors.response.use(null, error => {
+    toastErrorHandler(error);
+});
 
 securedAxiosInstance.interceptors.response.use(null, error => {
+  toastErrorHandler(error);
+
   if (error.response && error.response.config && error.response.status === 401) {
     // If 401 by expired access cookie, we do a refresh request
     return plainAxiosInstance.post('/refresh', {}, { headers: { 'X-CSRF-TOKEN': localStorage.csrf } })
@@ -51,5 +68,6 @@ securedAxiosInstance.interceptors.response.use(null, error => {
     return Promise.reject(error)
   }
 })
+
 
 export { securedAxiosInstance, plainAxiosInstance }
