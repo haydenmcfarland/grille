@@ -76,9 +76,6 @@ export default {
         }
     },
     methods: {
-        setError(error, text) {
-            this.error = (error.response && error.response.data && error.response.data.error) || text
-        },
         signedIn() {
             return localStorage.signedIn
         },
@@ -89,7 +86,6 @@ export default {
                     delete localStorage.signedIn
                     this.$router.replace('/')
                 })
-                .catch(error => this.setError(error, 'Cannot sign out'))
         }
     }
 }
