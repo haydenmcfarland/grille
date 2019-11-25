@@ -1,5 +1,3 @@
-console.log('[Service Worker] Hello world!');
-
 var CACHE_NAME = 'v1-cached-assets';
 
 function onInstall(event) {
