@@ -1,7 +1,9 @@
 <template>
 <v-app id="app" :dark="setTheme">
       <v-app-bar app>
-        <img src="~/images/logo.svg">
+        <router-link to="/">
+            <img src="~/images/logo.svg"/>
+        </router-link>
   
         <v-spacer></v-spacer>
   
@@ -45,18 +47,13 @@
 </template>
 
 <script>
-import Grid from './grid.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import 'images/logo.svg'
-import router from './packs/router'
 Vue.use(Vuetify)
 
+import 'images/logo.svg'
+
 export default {
-  router,
-  components: {
-    Grid
-  },
   created() {
     this.$vuetify.theme.dark = false;
     this.signedIn();
