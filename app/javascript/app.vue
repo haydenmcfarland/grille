@@ -1,6 +1,6 @@
 <template>
 <v-app id="app" :dark="setTheme">
-      <v-toolbar>
+      <v-app-bar app>
         <img src="~/images/logo.svg">
   
         <v-spacer></v-spacer>
@@ -16,20 +16,26 @@
           <v-menu offset-y>
             <template v-slot:activator="{ on }">
               <v-btn dark v-on="on">
-                User
-              </v-btn>
+                    <div v-if="!signedIn()">
+                        ---
+                    </div>
+                    <div v-else>
+                        User
+                    </div>
+                </v-btn>
             </template>
             <v-list>
               <v-list-item>
                 <v-switch v-model="goDark"></v-switch>
+                <router-link to="/signin" class="link-grey px-2 no-underline" v-if="!signedIn()">Sign in</router-link>
+                <a href="#" @click.prevent="signOut" class="link-grey px-2 no-underline" v-if="signedIn()">Sign out</a>
               </v-list-item>
             </v-list>
           </v-menu>
         </template>
-      </v-toolbar>
+      </v-app-bar>
       <v-content>
         <v-container fluid fill-height>
-            <Header/>
             <router-view/>
         </v-container>
       </v-content>
@@ -40,7 +46,6 @@
 
 <script>
 import Grid from './grid.vue'
-import Header from './Header.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'images/logo.svg'
@@ -50,11 +55,11 @@ Vue.use(Vuetify)
 export default {
   router,
   components: {
-    Header,
     Grid
   },
   created() {
-    this.$vuetify.theme.dark = false
+    this.$vuetify.theme.dark = false;
+    this.signedIn();
   },
   data() {
         return {
@@ -68,6 +73,23 @@ export default {
             } else {
                 return (this.$vuetify.theme.dark = false);
             }
+        }
+    },
+    methods: {
+        setError (error, text) {
+        this.error = (error.response && error.response.data && error.response.data.error) || text
+        },
+        signedIn () {
+        return localStorage.signedIn
+        },
+        signOut () {
+        this.$http.secured.delete('/signin')
+            .then(response => {
+            delete localStorage.csrf
+            delete localStorage.signedIn
+            this.$router.replace('/')
+            })
+            .catch(error => this.setError(error, 'Cannot sign out'))
         }
     }
 }

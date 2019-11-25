@@ -51,5 +51,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'serviceworker-rails', github: 'rossta/serviceworker-rails'
 
 gem 'rack-cors'
-gem 'redis', '~> 4.1'
-gem 'jwt_sessions', '~> 2.3'
+gem 'redis'
+gem 'jwt_sessions'
+gem 'bcrypt'
