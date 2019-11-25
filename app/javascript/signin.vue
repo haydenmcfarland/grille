@@ -1,13 +1,8 @@
-<!-- recordstore-frontend/src/components/Signin.vue -->
-
 <template>
 <v-container>
-    <v-alert>
-        {{ error }}
-    </v-alert>
     <v-form @submit.prevent="signin">
-        <v-text-field name="Email" label="Email"></v-text-field>
-        <v-text-field name="Password" label="Password" type="password"></v-text-field>
+        <v-text-field name="Email" label="Email"/>
+        <v-text-field name="Password" label="Password" type="password"/>
         <v-card-actions>
             <v-btn type="submit" primary large block>Login</v-btn>
         </v-card-actions>
@@ -22,7 +17,6 @@ export default {
         return {
             email: '',
             password: '',
-            error: ''
         }
     },
     created() {
@@ -38,7 +32,7 @@ export default {
                     password: this.password
                 })
                 .then(response => this.signinSuccessful(response))
-                .catch(error => this.signinFailed(error))
+                .catch(error => this.signinFailed())
         },
         signinSuccessful(response) {
             if (!response.data.csrf) {
@@ -47,11 +41,9 @@ export default {
             }
             localStorage.csrf = response.data.csrf
             localStorage.signedIn = true
-            this.error = ''
             this.$router.replace('/records')
         },
-        signinFailed(error) {
-            this.error = (error.response && error.response.data && error.response.data.error) || ''
+        signinFailed() {
             delete localStorage.csrf
             delete localStorage.signedIn
         },
