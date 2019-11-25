@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Grid from '../grid.vue'
+import Signin from '../Signin.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -9,8 +9,8 @@ export default new Router({
     routes: [
         {
             path: "/",
-            name: "grid",
-            component: Grid
+            name: "Signin",
+            component: Signin
         }
     ],
 })

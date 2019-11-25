@@ -29,7 +29,8 @@
       </v-toolbar>
       <v-content>
         <v-container fluid fill-height>
-            <router-view></router-view>
+            <Header/>
+            <router-view/>
         </v-container>
       </v-content>
     <v-bottom-navigation fixed>
@@ -39,6 +40,7 @@
 
 <script>
 import Grid from './grid.vue'
+import Header from './Header.vue'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'images/logo.svg'
@@ -48,6 +50,7 @@ Vue.use(Vuetify)
 export default {
   router,
   components: {
+    Header,
     Grid
   },
   created() {

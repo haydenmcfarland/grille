@@ -49,3 +49,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Turn your Rails app into a Progressive Web App. https://github.com/rossta/serviceworker-rails
 gem 'serviceworker-rails', github: 'rossta/serviceworker-rails'
+
+gem 'rack-cors'
+gem 'redis', '~> 4.1'
+gem 'jwt_sessions', '~> 2.3'

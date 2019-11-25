@@ -10,9 +10,15 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import Vue from 'vue'
 import App from '../app.vue'
 import vuetify from './plugins/vuetify'
+import VueAxios from 'vue-axios'
+import { securedAxiosInstance, plainAxiosInstance } from './plugins/axios'
 
 Vue.use(TurbolinksAdapter)
 Vue.use(vuetify)
+Vue.use(VueAxios, {
+  secured: securedAxiosInstance,
+  plain: plainAxiosInstance
+})
 
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
