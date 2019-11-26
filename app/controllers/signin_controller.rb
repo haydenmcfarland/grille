@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SigninController < ApplicationController
+  wrap_parameters false
+
   before_action :authorize_access_request!, only: [:destroy]
 
   def create

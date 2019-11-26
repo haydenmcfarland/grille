@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SignupController < ApplicationController
+  wrap_parameters false
+
   def create
     user = User.new(user_params)
     if user.save
@@ -21,6 +23,7 @@ class SignupController < ApplicationController
   private
 
   def user_params
+    binding.pry
     params.permit(:email, :password, :password_confirmation, :signup)
   end
 end
