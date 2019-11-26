@@ -39,12 +39,13 @@
     <v-content>
         <v-container fluid>
             <v-row justify="center">
+                <vue-progress-bar></vue-progress-bar>
                 <router-view />
             </v-row>
         </v-container>
     </v-content>
     <v-bottom-navigation fixed>
-        <img src="~/images/logo.svg" />
+        <img src="~/images/logo.svg"/>
     </v-bottom-navigation>
 </v-app>
 </template>

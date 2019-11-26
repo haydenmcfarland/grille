@@ -26,9 +26,21 @@ const router = new Router({
 const userPathNames = ['signin', 'signup']
 const signedIn = () => { localStorage.signedIn }
 
-router.beforeEach((to, _from, next) => {
+router.beforeEach((to, from, next) => {
+    Vue.prototype.$Progress.finish(0);
+    if (to.meta.progress !== undefined) {
+        let meta = to.meta.progress
+        // parse meta tags
+        Vue.prototype.$Progress.parseMeta(meta)
+      }
+
+    Vue.prototype.$Progress.start();
     if (!signedIn() && !userPathNames.includes(to.name)) next('/signin');
     else next()
 });
+
+router.afterEach((_to, _from) => {
+    Vue.prototype.$Progress.finish()
+})
 
 export default router

@@ -9237,6 +9237,11 @@ vue-loader@^15.7.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-progressbar@^0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/vue-progressbar/-/vue-progressbar-0.7.5.tgz#414730892252b1e45582d4979dec93038e007f79"
+  integrity sha512-VeNG/inMsFbvdCTS7lJ1gjDAKSUZdqkhW9gS1tb0we1rqFKxR+BCEiVUgw5C84vODKb14M2GWHTw0WVdpoVg6g==
+
 vue-property-decorator@^8.3.0:
   version "8.3.0"
   resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.3.0.tgz#536f027dc7d626f37c8d85a2dc02f0a6cb979440"
