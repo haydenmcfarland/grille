@@ -24,7 +24,6 @@ const router = new Router({
 })
 
 const userPathNames = ['signin', 'signup']
-const signedIn = () => { localStorage.signedIn }
 
 router.beforeEach((to, from, next) => {
     Vue.prototype.$Progress.finish(0);
@@ -35,7 +34,8 @@ router.beforeEach((to, from, next) => {
       }
 
     Vue.prototype.$Progress.start();
-    if (!signedIn() && !userPathNames.includes(to.name)) next('/signin');
+    if (localStorage.signedIn) next(to);
+    else if (!localStorage.signedIn && !userPathNames.includes(to.name)) next('/signin');
     else next()
 });
 

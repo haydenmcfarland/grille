@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RefreshController < ApplicationController
+  include JWTSessions::RailsAuthorization
+
   before_action :authorize_refresh_by_access_request!
 
   def create
