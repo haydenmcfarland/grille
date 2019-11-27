@@ -3,7 +3,7 @@
     <v-form @submit.prevent="signup" v-model="valid">
         <v-text-field name="email" label="E-mail" v-model="email" :rules="emailRules" required />
         <v-text-field name="password" label="Password" v-model="password" type="password" :rules="passwordRules" required />
-        <v-text-field name="confirm_password" label="Confirm Password" v-model="password_confirmation" type="password" :rules="passwordRules" required />
+        <v-text-field name="confirm_password" label="Confirm Password" v-model="password_confirmation" type="password" :rules="passwordConfirmationRules" required />
         <v-card-actions>
             <v-btn type="submit" primary large block :disabled="!valid">Register</v-btn>
         </v-card-actions>
@@ -12,6 +12,13 @@
 </template>
 
 <script>
+
+const passwordRules = [
+              v => !!v || 'Password is required',
+              v => v.length > 10 ||
+              'Password must be greater than 10 characters'
+            ]
+
 export default {
     name: 'Signup',
     data() {
@@ -19,17 +26,18 @@ export default {
             valid: false,
             email: '',
             emailRules: [
-              (v) => !!v || 'E-mail is required',
-              (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 
+              v => !!v || 'E-mail is required',
+              v => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
               'E-mail must be valid'
             ],
             password: '',
+            passwordRules: passwordRules,
             password_confirmation: '',
-            passwordRules: [
-              (v) => !!v || 'Password is required',
-              (v) => v.length > 10 || 
-              'Password must be greater than 10 characters'
-            ],
+            passwordConfirmationRules: [
+                v => this.password == this.password_confirmation ||
+                'Passwords must match'
+            ].concat(passwordRules)
+
         }
     },
     created() {
