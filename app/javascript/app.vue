@@ -9,14 +9,7 @@
             </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <div v-if="!signedIn()">
-            <router-link to="/signin">
-                <v-btn icon>
-                    <v-icon>mdi-account-arrow-right</v-icon>
-                </v-btn>
-            </router-link>
-        </div>
-        <div v-else>
+        <div v-if="signedIn()">
             <v-menu offset-y>
                 <template v-slot:activator="{ on }">
                     <v-btn v-on="on">
