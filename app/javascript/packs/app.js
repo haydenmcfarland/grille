@@ -6,6 +6,7 @@ import { securedAxiosInstance, plainAxiosInstance } from './plugins/axios'
 import VueAxios from 'vue-axios'
 import router from './plugins/router'
 import VueProgressBar from 'vue-progressbar'
+import apolloProvider from './plugins/apollo'
 
 const options = {
 	color: '#7B1FA2',
@@ -60,7 +61,8 @@ Vue.use(VueAxios, {
 document.addEventListener('turbolinks:load', () => {
   const app = new Vue({
     vuetify,
-    router,
+	router,
+	apolloProvider,
     render: h => h(App),
   }).$mount()
   document.body.appendChild(app.$el)

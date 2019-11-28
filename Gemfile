@@ -7,6 +7,9 @@ ruby '2.6.5'
 
 gem 'bcrypt'
 gem 'bootsnap'
+gem 'devise'
+gem 'graphiql-rails', group: :development
+gem 'graphql'
 gem 'jbuilder'
 gem 'jwt_sessions'
 gem 'pg'
@@ -34,7 +37,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-
-gem "graphql", "~> 1.9"
-
-gem 'graphiql-rails', group: :development
