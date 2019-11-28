@@ -15,9 +15,6 @@ class User < ApplicationRecord
          :jwt_authenticatable,
          jwt_revocation_strategy: self
 
-  # add new roles to the end
-  enum role: %i[customer admin]
-
   # - VALIDATIONS
   validates :email, presence: true, uniqueness: true
   validates :email, length: { maximum: 255 }
