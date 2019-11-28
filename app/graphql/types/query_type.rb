@@ -2,15 +2,12 @@
 
 module Types
   class QueryType < BaseObject
-    field :user,
-          Types::UserType,
-          null: false,
-          description: 'Returns user information' do
-            argument :id, ID, required: true
-          end
-
-    def user(id:)
-      User.find(id)
+    # ---- User ----
+    field :me, Types::UserType, null: true do
+      description 'Returns the current user'
+    end
+    def me(demo: false)
+      context[:current_user]
     end
   end
 end
