@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/concern'
 
 module Tokenizable
@@ -25,9 +27,9 @@ module Tokenizable
   end
 
   private def token_headers
-    { 
-      'Accept' => 'application/json', 
-      'Content-Type' => 'application/json' 
+    {
+      'Accept' => 'application/json',
+      'Content-Type' => 'application/json'
     }
   end
 end

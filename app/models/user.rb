@@ -27,9 +27,6 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :last_name, length: { maximum: 255 }
 
-  # - CALLBACKS
-  # after_initialize :setup_new_user, if: :new_record?
-
   # Send mail through activejob
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
@@ -39,8 +36,4 @@ class User < ApplicationRecord
   def name
     [first_name, last_name].join(' ').strip
   end
-
-  #private def setup_new_user
-  #  #
-  #end
 end
