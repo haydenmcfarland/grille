@@ -20,5 +20,5 @@ Rails.application.routes.draw do
   delete 'signin', controller: :signin, action: :destroy
 
   # utilized to use vue-router history mode
-  match '/*path', to: redirect('/?redirect=%{path}'), via: :all
+  match /^(graphql)/, to: redirect('/?redirect=%{path}'), via: :all
 end
