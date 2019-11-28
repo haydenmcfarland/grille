@@ -46,14 +46,13 @@ export default {
                 .catch(error => this.signinFailed())
         },
         signinSuccessful(response) {
-            console.log(response)
             if (!response.data.csrf) {
                 this.signinFailed(response)
                 return
             }
             localStorage.csrf = response.data.csrf
             localStorage.signedIn = true
-            this.$router.replace('/')
+            this.$router.replace('/');
         },
         signinFailed() {
             delete localStorage.csrf
@@ -61,7 +60,7 @@ export default {
         },
         checkSignedIn() {
             if (localStorage.signedIn) {
-                this.$router.replace('/')
+                this.$router.replace('/');
             }
         },
     }
