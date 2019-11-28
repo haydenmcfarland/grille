@@ -4,7 +4,9 @@ module Mutations
   module Auth
     class Logout < Mutations::BaseMutation
       null true
+
       description 'Logout for users'
+
       type GraphQL::Types::Boolean
 
       def resolve

@@ -16,7 +16,7 @@ module Mutations
         password_confirmation: context[:current_user] ? context[:current_user].password_confirmation : ''
       )
         user = context[:current_user]
-        return nil unless user
+        return unless user
 
         user.update!(
           password: password,

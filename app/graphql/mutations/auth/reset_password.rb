@@ -5,6 +5,7 @@ module Mutations
     class ResetPassword < Mutations::BaseMutation
       null true
 
+      description 'reset User password'
       argument :password, String, required: true
       argument :passwordConfirmation, String, required: true
       argument :resetPasswordToken, String, required: true
