@@ -7,7 +7,7 @@ module Mutations
 
       description 'JWT token lgin'
 
-      type Types::UserType
+      type Types::Auth::UserType
 
       def resolve
         context[:current_user]

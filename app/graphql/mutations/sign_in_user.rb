@@ -7,7 +7,7 @@ module Mutations
     argument :email, Types::AuthProviderEmailInput, required: false
 
     field :token, String, null: true
-    field :user, Types::UserType, null: true
+    field :user, Types::Auth::UserType, null: true
 
     def resolve(email: nil)
       # basic validation

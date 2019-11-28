@@ -8,7 +8,7 @@ module Mutations
       argument :email, String, required: true
       argument :password, String, required: true
 
-      type Types::UserType
+      type Types::Auth::UserType
 
       def resolve(email:, password:)
         user = User.find_for_authentication(email: email)

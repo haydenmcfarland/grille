@@ -4,7 +4,7 @@ module Mutations
   class SignOut < Mutations::BaseMutation
     graphql_name 'SignOut'
 
-    field :user, Types::UserType, null: false
+    field :user, Types::Auth::UserType, null: false
 
     def resolve
       user = context[:current_user]

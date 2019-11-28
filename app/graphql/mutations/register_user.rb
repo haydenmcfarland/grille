@@ -7,7 +7,7 @@ module Mutations
     argument :email, String, required: true
     argument :password, String, required: true
 
-    field :user, Types::UserType, null: false
+    field :user, Types::Auth::UserType, null: false
 
     def resolve(args)
       user = User.create!(args)

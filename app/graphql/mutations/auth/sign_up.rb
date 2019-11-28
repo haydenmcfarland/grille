@@ -12,7 +12,7 @@ module Mutations
       argument :firstName, String, required: true
       argument :lastName, String, required: true
 
-      type Types::UserType
+      type Types::Auth::UserType
 
       def resolve(email:, password:, password_confirmation:, first_name:, last_name:)
         User.create(

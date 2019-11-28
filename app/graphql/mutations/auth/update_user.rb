@@ -9,7 +9,7 @@ module Mutations
       argument :password, String, required: false
       argument :passwordConfirmation, String, required: false
 
-      type Types::UserType
+      type Types::Auth::UserType
 
       def resolve(
         password: context[:current_user] ? context[:current_user].password : '',
