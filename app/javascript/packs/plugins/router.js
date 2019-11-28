@@ -6,9 +6,22 @@ Vue.use(Router)
 
 const router = new Router({
     base: process.env.BASE_URL,
+    mode: 'history',
     routes: [
         {
-            path: "/",
+            path: '/',
+            name: 'Redirect',
+            redirect: function (to) {
+              if (to.query.redirect) {
+                // This will clear the ?redirect=<path> from the end URL
+                var path = to.query.redirect
+                delete to.query.redirect
+                return {
+                  path: '/' + path,
+                  query: to.query
+                }
+              }
+            }
         },
         {
             path: "/signin",
@@ -34,8 +47,8 @@ router.beforeEach((to, from, next) => {
       }
 
     Vue.prototype.$Progress.start();
-    if (localStorage.signedIn) next(to);
-    else if (!localStorage.signedIn && !userPathNames.includes(to.name)) next('/signin');
+    if (localStorage.signedIn) next();
+    else if(!userPathNames.includes(to.name)) next('/signin');
     else next()
 });
 

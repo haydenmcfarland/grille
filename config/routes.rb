@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   post 'signin', controller: :signin, action: :create
   post 'signup', controller: :signup, action: :create
   delete 'signin', controller: :signin, action: :destroy
+
+  # utilized to use vue-router history mode
+  match '/*path', to: redirect('/?redirect=%{path}'), via: :all
 end

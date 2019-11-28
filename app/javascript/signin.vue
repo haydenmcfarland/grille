@@ -53,7 +53,7 @@ export default {
             }
             localStorage.csrf = response.data.csrf
             localStorage.signedIn = true
-            this.$router.go('/')
+            this.$router.replace('/')
         },
         signinFailed() {
             delete localStorage.csrf
@@ -61,7 +61,7 @@ export default {
         },
         checkSignedIn() {
             if (localStorage.signedIn) {
-                this.$router.go('/')
+                this.$router.replace('/')
             }
         },
     }
