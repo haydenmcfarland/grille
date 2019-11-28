@@ -87,6 +87,7 @@ GEM
     ffi (1.11.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    graphql (1.9.15)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.4)
@@ -219,6 +220,7 @@ DEPENDENCIES
   bcrypt
   bootsnap
   capybara
+  graphql (~> 1.9)
   jbuilder
   jwt_sessions
   listen
