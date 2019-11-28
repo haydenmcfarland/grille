@@ -13,23 +13,25 @@ module Tokenizable
       token
     end
 
-    private def devise_scope
+    private
+
+    def devise_scope
       @devise_scope ||= Devise::Mapping.find_scope!(self)
     end
-  end
 
-  private def user_encoder
-    Warden::JWTAuth::UserEncoder.new
-  end
+    def user_encoder
+      Warden::JWTAuth::UserEncoder.new
+    end
 
-  private def aud_headers
-    token_headers[Warden::JWTAuth.config.aud_header]
-  end
+    def aud_headers
+      token_headers[Warden::JWTAuth.config.aud_header]
+    end
 
-  private def token_headers
-    {
-      'Accept' => 'application/json',
-      'Content-Type' => 'application/json'
-    }
+    def token_headers
+      {
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/json'
+      }
+    end
   end
 end
