@@ -18,7 +18,6 @@ gem 'puma'
 gem 'rack-cors'
 gem 'rails'
 gem 'redis'
-gem 'serviceworker-rails', github: 'rossta/serviceworker-rails'
 gem 'webpacker'
 
 group :development, :test do
