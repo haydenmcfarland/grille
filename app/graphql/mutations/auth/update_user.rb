@@ -3,13 +3,15 @@
 module Mutations
   module Auth
     class UpdateUser < Mutations::BaseMutation
-      field :update_user, Types::UserType, null: true do
-        description 'Update user'
-        argument :password, String, required: false
-        argument :passwordConfirmation, String, required: false
-      end
+      null true
 
-      def update_user(
+      description 'Update user'
+      argument :password, String, required: false
+      argument :passwordConfirmation, String, required: false
+
+      type Types::UserType
+
+      def resolve(
         password: context[:current_user] ? context[:current_user].password : '',
         password_confirmation: context[:current_user] ? context[:current_user].password_confirmation : ''
       )

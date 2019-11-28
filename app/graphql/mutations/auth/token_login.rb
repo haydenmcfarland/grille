@@ -3,11 +3,13 @@
 module Mutations
   module Auth
     class TokenLogin < Mutations::BaseMutation
-      field :token_login, Types::UserType, null: true do
-        description 'JWT token login'
-      end
+      null true
 
-      def token_login
+      description 'JWT token lgin'
+
+      type Types::UserType
+
+      def resolve
         context[:current_user]
       end
     end

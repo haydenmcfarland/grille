@@ -3,16 +3,18 @@
 module Mutations
   module Auth
     class SignUp < Mutations::BaseMutation
-      field :sign_up, Types::UserType, null: true do
-        description 'Sign up for users'
-        argument :email, String, required: true
-        argument :password, String, required: true
-        argument :passwordConfirmation, String, required: true
-        argument :firstName, String, required: true
-        argument :lastName, String, required: true
-      end
+      null true
 
-      def sign_up(email:, password:, password_confirmation:, first_name:, last_name:)
+      description 'Sign up for users'
+      argument :email, String, required: true
+      argument :password, String, required: true
+      argument :passwordConfirmation, String, required: true
+      argument :firstName, String, required: true
+      argument :lastName, String, required: true
+
+      type Types::UserType
+
+      def resolve(email:, password:, password_confirmation:, first_name:, last_name:)
         User.create(
           email: email,
           password: password,

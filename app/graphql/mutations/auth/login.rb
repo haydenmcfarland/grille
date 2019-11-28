@@ -7,7 +7,8 @@ module Mutations
 
       argument :email, String, required: true
       argument :password, String, required: true
-      field :user, Types::UserType, null: true
+
+      type Types::UserType
 
       def resolve(email:, password:)
         user = User.find_for_authentication(email: email)
@@ -16,7 +17,7 @@ module Mutations
         is_valid_for_auth = user.valid_for_authentication? do
           user.valid_password?(password)
         end
-        { user: is_valid_for_auth ? user : nil }
+        is_valid_for_auth ? user : nil
       end
     end
   end

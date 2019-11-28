@@ -3,12 +3,14 @@
 module Mutations
   module Auth
     class SendResetPasswordInstructions < Mutations::BaseMutation
-      field :send_reset_password_instructions, Boolean, null: true do
-        description 'Send password reset instructions to users email'
-        argument :email, String, required: true
-      end
+      null true
 
-      def send_reset_password_instructions(email:)
+      description 'Send password reset instructions to users email'
+      argument :email, String, required: true
+
+      type GraphQL::Types::Boolean
+
+      def resolve(email:)
         user = User.find_by_email(email)
         return true unless user
 
