@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class SignInUser < BaseMutation
+  class Login < BaseMutation
     null true
 
     argument :email, Types::AuthProviderEmailInput, required: false
