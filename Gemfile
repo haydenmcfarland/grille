@@ -8,6 +8,7 @@ ruby '2.6.5'
 gem 'bcrypt'
 gem 'bootsnap'
 gem 'devise'
+gem 'devise-jwt'
 gem 'graphiql-rails', group: :development
 gem 'graphql'
 gem 'jbuilder'
