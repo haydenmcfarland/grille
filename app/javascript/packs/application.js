@@ -1,65 +1,45 @@
+// rails
 require("@rails/ujs").start();
 require("@rails/activestorage").start();
 
 import "initializers/polyfills";
 import "initializers/turbolinks";
-import TurbolinksAdapter from "vue-turbolinks";
+
 import Vue from "vue";
-import App from "./components/app.vue";
-import vuetify from "./plugins/vuetify";
-import { securedAxiosInstance, plainAxiosInstance } from "./plugins/axios";
-import VueAxios from "vue-axios";
-import router from "./plugins/router";
+
+import TurbolinksAdapter from "vue-turbolinks";
+Vue.use(TurbolinksAdapter);
+
+// progress bar
 import VueProgressBar from "vue-progressbar";
+import { progressBarConfig } from "./plugins/config/progress_bar";
+Vue.use(VueProgressBar, progressBarConfig);
+
+// graphql
 import apolloProvider from "./plugins/apollo";
 
-const options = {
-  color: "#7B1FA2",
-  failedColor: "#8A2BE2",
-  thickness: "5px",
-  transition: {
-    speed: "0.2s",
-    opacity: "0.6s",
-    termination: 300
-  },
-  autoRevert: true,
-  location: "top",
-  inverse: false
-};
-Vue.use(VueProgressBar, options);
-
+// toast
 import VuetifyToast from "vuetify-toast-snackbar";
-Vue.use(VuetifyToast, {
-  x: "middle", // default
-  y: "top", // default
-  color: "info", // default
-  icon: "mdi-alert-circle",
-  iconColor: "", // default
-  classes: ["body-2"],
-  timeout: 3000, // default
-  dismissable: true, // default
-  multiLine: false, // default
-  vertical: false, // default
-  queueable: false, // default
-  showClose: false, // default
-  closeText: "", // default
-  closeIcon: "close", // default
-  closeColor: "", // default
-  slot: [], //default
-  shorts: {
-    custom: {
-      color: "purple"
-    }
-  },
-  property: "$toast" // default
-});
+import { toastConfig } from "./plugins/config/toast";
+Vue.use(VuetifyToast, toastConfig);
 
-Vue.use(TurbolinksAdapter);
+// vuetify
+import vuetify from "./plugins/vuetify";
 Vue.use(vuetify);
+
+// axios
+import { securedAxiosInstance, plainAxiosInstance } from "./plugins/axios";
+import VueAxios from "vue-axios";
 Vue.use(VueAxios, {
   secured: securedAxiosInstance,
   plain: plainAxiosInstance
 });
+
+// router
+import router from "./plugins/router";
+
+// main application component
+import App from "./components/app.vue";
 
 document.addEventListener("turbolinks:load", () => {
   const app = new Vue({
