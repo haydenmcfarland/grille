@@ -4,6 +4,7 @@ import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { AUTH_TOKEN_KEY } from "../config/constants";
 
 Vue.use(VueApollo);
 
@@ -32,6 +33,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-const apolloProvider = new VueApollo({ defaultClient: client });
+const apolloProvider = new VueApollo({
+  defaultClient: client,
+});
 
 export default apolloProvider;

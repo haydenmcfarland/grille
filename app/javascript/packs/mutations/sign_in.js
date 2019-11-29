@@ -1,30 +1,21 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 const mutation = gql`
   mutation signIn($email: String!, $password: String!) {
-    signIn(input: { email: $email, password: $password }) {
-      user {
-        id
-        firstName
-        lastName
-        authenticationToken
-      }
-      success
-      errors
+    login(email: $email, password: $password) {
+      id
+      firstName
+      lastName
     }
   }
 `;
 
-export default function signIn({
-  apollo,
-  email,
-  password,
-}) {
+export default function signIn({ apollo, email, password }) {
   return apollo.mutate({
     mutation,
     variables: {
       email,
-      password,
-    },
+      password
+    }
   });
 }

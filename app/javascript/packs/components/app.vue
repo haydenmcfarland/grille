@@ -9,7 +9,7 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div v-if="signedIn()">
+      <div v-if="true">
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on">
@@ -53,7 +53,6 @@ import "images/logo.svg";
 export default {
   created() {
     this.$vuetify.theme.dark = false;
-    this.signedIn();
   },
   data() {
     return {
@@ -70,16 +69,6 @@ export default {
     }
   },
   methods: {
-    signedIn() {
-      return localStorage.signedIn;
-    },
-    signOut() {
-      this.$http.secured.delete("/signin").then(response => {
-        delete localStorage.csrf;
-        delete localStorage.signedIn;
-        this.$router.replace("/");
-      });
-    }
   }
 };
 </script>

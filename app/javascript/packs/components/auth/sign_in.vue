@@ -4,14 +4,14 @@
       <v-text-field
         name="email"
         label="E-mail"
-        v-model="form.email"
+        v-model="email"
         :rules="emailRules"
         required
       />
       <v-text-field
         name="password"
         label="Password"
-        v-model="form.password"
+        v-model="password"
         type="password"
         :rules="passwordRules"
         required
@@ -26,57 +26,55 @@
 </template>
 
 <script>
-import _get from 'lodash/get';
-import signIn from '../../mutations/sign_in';
-import { AUTH_TOKEN_KEY } from '../../config/constants';
-import { mapMutations } from 'vuex';
+import _get from "lodash/get";
+import signIn from "../../mutations/sign_in";
+import { AUTH_TOKEN_KEY } from "../../config/constants";
+import { mapMutations } from "vuex";
 
 export default {
-  name: "Signin",
+  name: "SignIn",
   data() {
     return {
       valid: false,
-      error:{},
-      form: {},
+      error: {},
+      email: "",
       emailRules: [
         v => !!v || "E-mail is required",
         v =>
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid"
       ],
+      password: "",
       passwordRules: [
         v => !!v || "Password is required",
         v => v.length > 10 || "Password must be greater than 10 characters"
       ]
     };
   },
-  created() {
-
-  },
-  updated() {
-
-  },
+  created() {},
+  updated() {},
   methods: {
-    ...mapMutations(['signIn']),
+    ...mapMutations(["signIn"]),
     handleSignIn() {
       signIn({
         apollo: this.$apollo,
-        ...this.form,
-      }).then(response => _get(response, 'data.signIn', {}))
-      .then(response => {
-        if(response.success) {
-          const user = response.user;
-          this.signIn(user);
-          localStorage.setItem(AUTH_TOKEN_KEY, user.authenticationToken);
-          this.$router.push('/');
-        } else {
-          this.errors = this.errorMessages(response.data.signIn.errors);
-        }
-      }).catch(error => {
-        this.errors = [error];
-      });
-    },
-  },
+        ...{ password: this.password, email: this.email }
+      })
+        .then(response => _get(response, "data.signIn", {}))
+        .then(response => {
+          if (response.success) {
+            const user = response.user;
+            this.signIn(user);
+            localStorage.setItem(AUTH_TOKEN_KEY, user.authenticationToken);
+            Vue.prototype.$router.push("/");
+          } else {
+            this.errors = this.errorMessages(response.data.signIn.errors);
+          }
+        })
+        .catch(error => {
+          this.errors = [error];
+        });
+    }
+  }
 };
 </script>
-

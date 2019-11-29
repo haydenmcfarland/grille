@@ -49,12 +49,16 @@ import App from "./components/app.vue";
 import SettingsMixin from './mixins/settings';
 Vue.mixin(SettingsMixin)
 
+// vuex store
+import createStore from './store/base_store';
+
 document.addEventListener("turbolinks:load", () => {
   const app = new Vue({
     vuetify,
     router,
 	apolloProvider,
-    render: h => h(App)
+	store: createStore(),
+	render: h => h(App)
   }).$mount();
   document.body.appendChild(app.$el);
 });
