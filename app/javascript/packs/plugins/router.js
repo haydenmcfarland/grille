@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Signin from "../components/sign_in.vue";
-import Signup from "../components/sign_up.vue";
+import Signin from "../components/auth/sign_in.vue";
+import Signup from "../components/auth/sign_up.vue";
 Vue.use(Router);
 
 const router = new Router({
