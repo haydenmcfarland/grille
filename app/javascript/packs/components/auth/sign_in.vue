@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <v-form @submit.prevent="signin" v-model="valid">
+    <v-form @submit.prevent="handleSignIn" v-model="valid">
       <v-text-field
         name="email"
         label="E-mail"
-        v-model="email"
+        v-model="form.email"
         :rules="emailRules"
         required
       />
       <v-text-field
         name="password"
         label="Password"
-        v-model="password"
+        v-model="form.password"
         type="password"
         :rules="passwordRules"
         required
@@ -26,19 +26,24 @@
 </template>
 
 <script>
+import _get from 'lodash/get';
+import signIn from '../../mutations/sign_in';
+import { AUTH_TOKEN_KEY } from '../../config/constants';
+import { mapMutations } from 'vuex';
+
 export default {
   name: "Signin",
   data() {
     return {
       valid: false,
-      email: "",
+      error:{},
+      form: {},
       emailRules: [
         v => !!v || "E-mail is required",
         v =>
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid"
       ],
-      password: "",
       passwordRules: [
         v => !!v || "Password is required",
         v => v.length > 10 || "Password must be greater than 10 characters"
@@ -46,39 +51,32 @@ export default {
     };
   },
   created() {
-    this.checkSignedIn();
+
   },
   updated() {
-    this.checkSignedIn();
+
   },
   methods: {
-    signin() {
-      this.$http.plain
-        .post("/signin", {
-          email: this.email,
-          password: this.password
-        })
-        .then(response => this.signinSuccessful(response))
-        .catch(error => this.signinFailed());
+    ...mapMutations(['signIn']),
+    handleSignIn() {
+      signIn({
+        apollo: this.$apollo,
+        ...this.form,
+      }).then(response => _get(response, 'data.signIn', {}))
+      .then(response => {
+        if(response.success) {
+          const user = response.user;
+          this.signIn(user);
+          localStorage.setItem(AUTH_TOKEN_KEY, user.authenticationToken);
+          this.$router.push('/');
+        } else {
+          this.errors = this.errorMessages(response.data.signIn.errors);
+        }
+      }).catch(error => {
+        this.errors = [error];
+      });
     },
-    signinSuccessful(response) {
-      if (!response.data.csrf) {
-        this.signinFailed(response);
-        return;
-      }
-      localStorage.csrf = response.data.csrf;
-      localStorage.signedIn = true;
-      this.$router.replace("/");
-    },
-    signinFailed() {
-      delete localStorage.csrf;
-      delete localStorage.signedIn;
-    },
-    checkSignedIn() {
-      if (localStorage.signedIn) {
-        this.$router.replace("/");
-      }
-    }
-  }
+  },
 };
 </script>
+
