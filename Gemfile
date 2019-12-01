@@ -9,7 +9,6 @@ gem 'bcrypt'
 gem 'bootsnap'
 gem 'devise'
 gem 'devise-jwt'
-gem 'graphiql-rails', group: :development
 gem 'graphql'
 gem 'jbuilder'
 gem 'jwt_sessions'
@@ -26,6 +25,7 @@ end
 
 group :development do
   gem 'listen'
+  gem 'graphiql-rails'
   gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen'
