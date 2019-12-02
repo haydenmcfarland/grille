@@ -7,9 +7,10 @@ module Mutations
 
       description 'Logout for users'
 
-      type GraphQL::Types::Boolean
+      field :result, GraphQL::Types::Boolean, null: false
+      #type GraphQL::Types::Boolean
 
-      def resolve
+      def grille_resolver
         if context[:current_user]
           context[:current_user].update(jti: SecureRandom.uuid)
           return true

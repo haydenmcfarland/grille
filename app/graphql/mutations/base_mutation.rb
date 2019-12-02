@@ -4,7 +4,7 @@ class Mutations::BaseMutation < GraphQL::Schema::Mutation
   null false
 
   def grille_resolver(*_args)
-    raise '\'grille_resolver\' not declared in mutation'
+    raise "\'#{__method__}' must be declared in mutation"
   end
 
   def resolve(*args)
@@ -15,6 +15,12 @@ class Mutations::BaseMutation < GraphQL::Schema::Mutation
         obj: { result.class.name.demodulize.downcase => result },
         success: result.persisted?,
         errors: result.errors
+      )
+    elsif [true, false].include?(result)
+      Mutations::MutationResult.call(
+        obj: { result: result },
+        success: result,
+        errors: nil
       )
     else
       raise "unsupported resolver type: '#{result.class}'"
