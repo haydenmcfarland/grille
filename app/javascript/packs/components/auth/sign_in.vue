@@ -59,8 +59,9 @@ export default {
       signIn({
         apollo: this.$apollo,
         ...{ password: this.password, email: this.email }
-      })
-        .then(response => _get(response, "data.signIn", {}))
+      }).then(response => {
+          _get(response, "data.login", {})
+        })
         .then(response => {
           if (response.success) {
             const user = response.user;

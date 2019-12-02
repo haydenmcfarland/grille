@@ -24,8 +24,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen'
   gem 'graphiql-rails'
+  gem 'listen'
   gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen'
