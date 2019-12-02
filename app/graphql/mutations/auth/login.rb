@@ -8,9 +8,9 @@ module Mutations
       argument :email, String, required: true
       argument :password, String, required: true
 
-      type Types::Auth::UserType
+      field :user, Types::Auth::UserType, null: false
 
-      def resolve(email:, password:)
+      def grille_resolver(email:, password:)
         user = User.find_for_authentication(email: email)
         return nil unless user
 
