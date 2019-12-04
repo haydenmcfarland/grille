@@ -16,6 +16,17 @@ export default {
     username() {
       if (!this.signedIn) return "";
       return `${this.user.email}`;
+    },
+    setTheme() {
+      this.$vuetify.theme.dark = this.darkMode();
+    },
+  },
+  methods: {
+    toggleDarkMode(value) {
+      localStorage.darkMode = !!value
+    },
+    darkMode() {
+      return localStorage.darkMode == 'true'
     }
   }
 };

@@ -64,10 +64,15 @@ export default {
           let data = _get(response, "data.login", {})
           if (data.user) {
             const user = data.user;
+
+            // update vuex
+            this.signIn(user);
+
+            // set localStorage items
             localStorage.setItem(AUTH_TOKEN_KEY, user.token);
             localStorage.setItem(USERNAME_KEY, user.email);
 
-            Vue.prototype.$router.push("/");
+            this.$router.push("/");
           }
         })
         .catch(error => {

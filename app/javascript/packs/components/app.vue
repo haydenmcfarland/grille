@@ -56,19 +56,20 @@ export default {
   },
   data() {
     return {
-      goDark: false
+      goDark: this.darkMode()
     };
   },
-  computed: {
-    setTheme() {
-      if (this.goDark == true) {
-        return (this.$vuetify.theme.dark = true);
-      } else {
-        return (this.$vuetify.theme.dark = false);
-      }
+  watch: {
+    goDark: {
+      handler: function(newValue) {
+        // mark dark mode change persistent
+        this.toggleDarkMode(newValue);
+
+        // dynamically change theme
+        this.$vuetify.theme.dark = newValue;
+      },
+      deep: true
     }
-  },
-  methods: {
   }
 };
 </script>
