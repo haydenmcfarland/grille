@@ -10,6 +10,7 @@ module Tokenizable
       token, _payload = user_encoder.call(
         self, devise_scope, aud_headers
       )
+
       token
     end
 
