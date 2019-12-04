@@ -49,7 +49,11 @@ router.beforeEach((to, from, next) => {
   }
 
   Vue.prototype.$Progress.start();
-  if (localStorage.authToken) next();
+
+  let loggedIn = !!localStorage.authToken
+  let registrationPath = userPathNames.includes(to.name);
+  if (loggedIn && registrationPath) next('/home');
+  else if (loggedIn && !registrationPath) next();
   else if (!userPathNames.includes(to.name)) next("/signin");
   else next();
 });

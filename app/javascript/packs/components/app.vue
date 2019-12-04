@@ -13,7 +13,7 @@
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on">
-              {{ getUsername() }}
+              {{ username }}
             </v-btn>
           </template>
           <v-list>
@@ -69,9 +69,6 @@ export default {
     }
   },
   methods: {
-    getUsername() {
-      return localStorage.userName
-    }
   }
 };
 </script>

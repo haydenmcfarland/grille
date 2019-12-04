@@ -4,7 +4,6 @@ import { mapGetters } from "vuex";
 
 function authTokenExists() {
   const token = localStorage.getItem(AUTH_TOKEN_KEY);
-
   return token !== "" && token !== undefined && token !== null;
 }
 
@@ -14,9 +13,9 @@ export default {
     signedIn() {
       return !_isEmpty(this.user) && authTokenExists();
     },
-    userFullName() {
+    username() {
       if (!this.signedIn) return "";
-      return `${this.user.firstName} ${this.user.lastName}`;
+      return `${this.user.email}`;
     }
   }
 };
