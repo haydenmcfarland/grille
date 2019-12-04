@@ -8,7 +8,7 @@ module Mutations
       description 'Logout for users'
 
       field :result, GraphQL::Types::Boolean, null: false
-      #type GraphQL::Types::Boolean
+      # type GraphQL::Types::Boolean
 
       def grille_resolver
         if context[:current_user]
