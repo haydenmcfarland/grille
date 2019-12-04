@@ -9,11 +9,11 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div v-if="true">
+      <div v-if="signedIn">
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on">
-              User
+              {{ getUsername() }}
             </v-btn>
           </template>
           <v-list>
@@ -69,6 +69,9 @@ export default {
     }
   },
   methods: {
+    getUsername() {
+      return localStorage.userName
+    }
   }
 };
 </script>

@@ -17,10 +17,8 @@ const mutation = gql`
     ) {
       user {
         id
-        firstName
-        lastName
         email
-        authenticationToken
+        token
       }
       success
       errors

@@ -19,7 +19,9 @@ const router = new Router({
           return {
             path: "/" + path,
             query: to.query
-          };
+          }
+        } else {
+          return { path: "/home" }
         }
       }
     },
@@ -47,7 +49,7 @@ router.beforeEach((to, from, next) => {
   }
 
   Vue.prototype.$Progress.start();
-  if (localStorage.signedIn) next();
+  if (localStorage.authToken) next();
   else if (!userPathNames.includes(to.name)) next("/signin");
   else next();
 });

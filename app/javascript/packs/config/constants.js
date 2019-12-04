@@ -1,3 +1,3 @@
 const AUTH_TOKEN_KEY = "authToken";
-
-export { AUTH_TOKEN_KEY };
+const USERNAME_KEY = "userName"
+export { AUTH_TOKEN_KEY, USERNAME_KEY };
