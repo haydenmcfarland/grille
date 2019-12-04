@@ -9,6 +9,19 @@ module Types
       field :lastName, String, null: false
       field :email, String, null: true
       field :token, String, null: false
+
+      class << self
+        def empty
+          OpenStruct.new(
+            id: '',
+            name: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            token: ''
+          )
+        end
+      end
     end
   end
 end

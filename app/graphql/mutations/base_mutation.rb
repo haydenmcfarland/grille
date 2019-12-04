@@ -3,6 +3,9 @@
 class Mutations::BaseMutation < GraphQL::Schema::Mutation
   null false
 
+  field :success, GraphQL::Types::Boolean, null: false
+  field :errors, [GraphQL::Types::String], null: false
+
   def grille_resolver(*_args)
     raise "\'#{__method__}' must be declared in mutation"
   end
@@ -20,7 +23,13 @@ class Mutations::BaseMutation < GraphQL::Schema::Mutation
       Mutations::MutationResult.call(
         obj: { result: result },
         success: result,
-        errors: nil
+        errors: []
+      )
+    elsif result.nil?
+      Mutations::MutationResult.call(
+        obj: { user: Types::Auth::UserType.empty },
+        success: false,
+        errors: []
       )
     else
       raise "unsupported resolver type: '#{result.class}'"
