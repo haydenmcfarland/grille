@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 const mutation = gql`
   mutation signOut {
-    logout {
+    signOut {
       success
       errors
     }

@@ -2,7 +2,7 @@
 
 module Mutations
   module Auth
-    class Logout < Mutations::BaseMutation
+    class SignOut < Mutations::BaseMutation
       null true
 
       description 'Logout for users'

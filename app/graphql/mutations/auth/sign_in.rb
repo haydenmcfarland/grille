@@ -2,7 +2,7 @@
 
 module Mutations
   module Auth
-    class Login < Mutations::BaseMutation
+    class SignIn < Mutations::BaseMutation
       null true
 
       argument :email, String, required: true

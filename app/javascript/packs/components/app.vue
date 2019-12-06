@@ -86,7 +86,7 @@ export default {
         apollo: this.$apollo
       })
         .then(response => {
-          if (response.data.logout.success) {
+          if (response.data.signOut.success) {
             // update vuex
             this.clearUser();
 

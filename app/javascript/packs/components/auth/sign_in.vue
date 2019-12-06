@@ -62,7 +62,7 @@ export default {
         ...{ password: this.password, email: this.email }
       })
         .then(response => {
-          let data = _get(response, "data.login", {});
+          let data = _get(response, "data.signIn", {});
           if (data.user) {
             const user = data.user;
 
