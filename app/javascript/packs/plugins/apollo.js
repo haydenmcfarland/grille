@@ -15,13 +15,10 @@ const httpLink = createHttpLink({ uri: `${host}/graphql` });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   let graphQLErrorStr = null;
-  if (graphQLErrors)
+  if (graphQLErrors) {
     graphQLErrorStr = "bad request";
-    graphQLErrors.map(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-  );
+    console.log(graphQLErrors);
+  };
 
   if (networkError) console.log(`[Network error]: ${networkError}`);
 

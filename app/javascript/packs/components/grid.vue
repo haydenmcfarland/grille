@@ -2,8 +2,9 @@
   <v-layout column full-height>
     <v-flex row>
       <v-card>
+        <!-- FIXME: auto height -->
         <ag-grid-vue
-          style="height: 100vw; width: 100vw"
+          style="height: 450px; width: 100vw"
           class="ag-theme-balham"
           :columnDefs="columnDefs"
           :rowData="rowData"

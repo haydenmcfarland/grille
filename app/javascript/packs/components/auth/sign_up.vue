@@ -1,6 +1,18 @@
 <template>
   <v-container>
-    <v-form @submit.prevent="signup" v-model="valid">
+    <v-form @submit.prevent="handleSignUp" v-model="valid">
+      <v-text-field
+        name="firstMame"
+        label="First Name"
+        v-model="firstName"
+        required
+      />
+      <v-text-field
+        name="lastName"
+        label="Last Name"
+        v-model="lastName"
+        required
+      />
       <v-text-field
         name="email"
         label="E-mail"
@@ -34,6 +46,11 @@
 </template>
 
 <script>
+import signUp from "../../mutations/sign_up";
+import { AUTH_TOKEN_KEY, USERNAME_KEY } from "../../config/constants";
+import { mapMutations } from "vuex";
+import Vue from "vue";
+
 const passwordRules = [
   v => !!v || "Password is required",
   v => v.length > 10 || "Password must be greater than 10 characters"
@@ -57,44 +74,40 @@ export default {
       passwordConfirmationRules: [
         v =>
           this.password == this.password_confirmation || "Passwords must match"
-      ].concat(passwordRules)
+      ].concat(passwordRules),
+      firstName: "",
+      lastName: "",
     };
   },
-  created() {
-    this.checkedSignedIn();
-  },
-  updated() {
-    this.checkedSignedIn();
-  },
   methods: {
-    signup() {
-      this.$http.plain
-        .post("/signup", {
-          email: this.email,
+    ...mapMutations(["signIn"]),
+    handleSignUp() {
+      signUp({
+        apollo: this.$apollo,
+        ...{
           password: this.password,
-          password_confirmation: this.password_confirmation
-        })
-        .then(response => this.signupSuccessful(response))
-        .catch(error => this.signupFailed());
-    },
-    signupSuccessful(response) {
-      if (!response.data.csrf) {
-        this.signupFailed(response);
-        return;
-      }
+          email: this.email,
+          firstName: this.firstName,
+          lastName: this.lastName
+        }
+      })
+        .then(response => {
+          if (response.data.signUp) {
+            const user = response.data.signUp.user;
 
-      localStorage.csrf = response.data.csrf;
-      localStorage.signedIn = true;
-      this.$router.replace("/");
-    },
-    signupFailed() {
-      delete localStorage.csrf;
-      delete localStorage.signedIn;
-    },
-    checkedSignedIn() {
-      if (localStorage.signedIn) {
-        this.$router.replace("/");
-      }
+            // update vuex
+            this.signIn(user);
+
+            // set localStorage items
+            localStorage.setItem(AUTH_TOKEN_KEY, user.token);
+            localStorage.setItem(USERNAME_KEY, user.email);
+
+            this.$router.go("/");
+          }
+        })
+        .catch(error => {
+          this.errors = [error];
+        });
     }
   }
 };

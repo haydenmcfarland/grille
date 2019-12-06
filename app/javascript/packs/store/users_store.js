@@ -12,6 +12,9 @@ const mutations = {
   signIn(state, user) {
     state.user = user;
   },
+  signUp(state, user) {
+    state.user = user;
+  },
   clearUser(state) {
     state.user = {};
   }
@@ -22,6 +25,9 @@ const actions = {
     context.commit("clearUser");
   },
   signIn(context, user) {
+    context.commit("signIn", user);
+  },
+  signUp(context, user) {
     context.commit("signIn", user);
   }
 };

@@ -1,19 +1,17 @@
 import gql from "graphql-tag";
 
 const mutation = gql`
-  mutation registerUser(
+  mutation signUp(
     $firstName: String!
     $lastName: String!
     $email: String!
     $password: String!
   ) {
-    registerUser(
-      input: {
+    signUp(
         firstName: $firstName
         lastName: $lastName
         email: $email
         password: $password
-      }
     ) {
       user {
         id
@@ -26,7 +24,7 @@ const mutation = gql`
   }
 `;
 
-export default function({ apollo, firstName, lastName, email, password }) {
+export default function signUp({ apollo, firstName, lastName, email, password }) {
   return apollo.mutate({
     mutation,
     variables: {

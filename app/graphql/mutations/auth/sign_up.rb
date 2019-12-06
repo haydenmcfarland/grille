@@ -8,20 +8,21 @@ module Mutations
       description 'Sign up for users'
       argument :email, String, required: true
       argument :password, String, required: true
-      argument :passwordConfirmation, String, required: true
       argument :firstName, String, required: true
       argument :lastName, String, required: true
 
-      type Types::Auth::UserType
+      field :user, Types::Auth::UserType, null: false
 
-      def resolve(email:, password:, password_confirmation:, first_name:, last_name:)
-        User.create(
+      def grille_resolver(email:, password:, first_name:, last_name:)
+        user = User.create!(
           email: email,
           password: password,
-          password_confirmation: password_confirmation,
           first_name: first_name,
           last_name: last_name
         )
+
+        context[:current_user] = user
+        user
       end
     end
   end
