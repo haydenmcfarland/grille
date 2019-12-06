@@ -7,6 +7,9 @@ ruby '2.6.5'
 
 gem 'bcrypt'
 gem 'bootsnap'
+gem 'devise'
+gem 'devise-jwt'
+gem 'graphql'
 gem 'jbuilder'
 gem 'jwt_sessions'
 gem 'pg'
@@ -14,7 +17,6 @@ gem 'puma'
 gem 'rack-cors'
 gem 'rails'
 gem 'redis'
-gem 'serviceworker-rails', github: 'rossta/serviceworker-rails'
 gem 'webpacker'
 
 group :development, :test do
@@ -22,6 +24,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'graphiql-rails'
   gem 'listen'
   gem 'rubocop'
   gem 'spring'
@@ -34,7 +37,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-
-gem "graphql", "~> 1.9"
-
-gem 'graphiql-rails', group: :development
