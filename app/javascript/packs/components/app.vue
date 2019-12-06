@@ -10,22 +10,25 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="signedIn">
-        <v-menu offset-y>
+        <v-menu offset-y auto>
           <template v-slot:activator="{ on }">
             <v-btn v-on="on">
-              {{ username }}
+              <v-icon>mdi-menu</v-icon>
             </v-btn>
           </template>
           <v-list>
-            <v-list-item>
-              <v-switch v-model="goDark"></v-switch>
-            </v-list-item>
             <v-list-item>
               <a href="#" @click.prevent="handleSignOut">
                 <v-btn icon>
                   <v-icon>mdi-account-off</v-icon>
                 </v-btn>
               </a>
+              <v-label>
+                {{ username }}
+              </v-label>
+            </v-list-item>
+            <v-list-item>
+              <v-switch v-model="goDark" label="DARK MODE"> </v-switch>
             </v-list-item>
           </v-list>
         </v-menu>

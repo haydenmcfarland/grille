@@ -15,7 +15,7 @@ export default {
     },
     username() {
       if (!this.signedIn) return "";
-      return `${this.user.email}`;
+      return `${this.user.email}`.toUpperCase();
     },
     setTheme() {
       this.$vuetify.theme.dark = this.darkMode();

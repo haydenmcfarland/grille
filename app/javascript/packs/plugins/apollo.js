@@ -14,16 +14,18 @@ const host = window.location.origin;
 const httpLink = createHttpLink({ uri: `${host}/graphql` });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
+  let graphQLErrorStr = null;
   if (graphQLErrors)
+    graphQLErrorStr = "bad request";
     graphQLErrors.map(({ message, locations, path }) =>
       console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      ),
-    );
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+  );
 
   if (networkError) console.log(`[Network error]: ${networkError}`);
 
-  Vue.prototype.$toast.error(graphQLErrors || networkError)
+  Vue.prototype.$toast.error(graphQLErrorStr || networkError);
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -43,11 +45,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const link = ApolloLink.from([
-  authLink,
-  errorLink,
-  httpLink
-])
+const link = ApolloLink.from([authLink, errorLink, httpLink]);
 
 const client = new ApolloClient({
   link: link,
@@ -55,7 +53,7 @@ const client = new ApolloClient({
 });
 
 const apolloProvider = new VueApollo({
-  defaultClient: client,
+  defaultClient: client
 });
 
 export default apolloProvider;
