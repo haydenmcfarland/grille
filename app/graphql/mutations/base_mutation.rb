@@ -21,7 +21,7 @@ module Mutations
       end
 
       if [true, false].include?(result)
-        return { obj: { result: result }, success: result, errors: [] }
+        return { obj: { result: result }, success: true, errors: [] }
       end
 
       if result.nil?

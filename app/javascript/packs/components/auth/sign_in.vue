@@ -28,9 +28,9 @@
 <script>
 import _get from "lodash/get";
 import signIn from "../../mutations/sign_in";
-import { AUTH_TOKEN_KEY, USERNAME_KEY} from "../../config/constants";
+import { AUTH_TOKEN_KEY, USERNAME_KEY } from "../../config/constants";
 import { mapMutations } from "vuex";
-import Vue from 'vue'
+import Vue from "vue";
 
 export default {
   name: "SignIn",
@@ -60,8 +60,9 @@ export default {
       signIn({
         apollo: this.$apollo,
         ...{ password: this.password, email: this.email }
-      }).then(response => {
-          let data = _get(response, "data.login", {})
+      })
+        .then(response => {
+          let data = _get(response, "data.login", {});
           if (data.user) {
             const user = data.user;
 

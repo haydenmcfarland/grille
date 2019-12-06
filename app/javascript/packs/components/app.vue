@@ -19,7 +19,9 @@
           <v-list>
             <v-list-item>
               <v-switch v-model="goDark"></v-switch>
-              <a href="#" @click.prevent="signOut">
+            </v-list-item>
+            <v-list-item>
+              <a href="#" @click.prevent="handleSignOut">
                 <v-btn icon>
                   <v-icon>mdi-account-off</v-icon>
                 </v-btn>
@@ -50,6 +52,9 @@ Vue.use(Vuetify);
 
 import "images/logo.svg";
 
+import signOut from "../mutations/sign_out";
+import { mapMutations } from "vuex";
+
 export default {
   created() {
     this.$vuetify.theme.dark = false;
@@ -69,6 +74,27 @@ export default {
         this.$vuetify.theme.dark = newValue;
       },
       deep: true
+    }
+  },
+  methods: {
+    ...mapMutations(["clearUser"]),
+    handleSignOut() {
+      signOut({
+        apollo: this.$apollo
+      })
+        .then(response => {
+          if (response.data.logout.success) {
+            // update vuex
+            this.clearUser();
+
+            // clear localStorage items
+            localStorage.clear();
+            this.$router.go("/redirect?=signin");
+          }
+        })
+        .catch(error => {
+          this.errors = [error];
+        });
     }
   }
 };

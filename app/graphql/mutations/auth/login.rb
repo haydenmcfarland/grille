@@ -18,7 +18,10 @@ module Mutations
           user.valid_password?(password)
         end
 
-        is_valid_for_auth ? user : nil
+        return unless is_valid_for_auth
+
+        context[:current_user] = user
+        user
       end
     end
   end
