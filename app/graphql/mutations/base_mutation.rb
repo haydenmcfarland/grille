@@ -16,7 +16,7 @@ module Mutations
         return {
           obj: { result.class.name.demodulize.downcase => result },
           success: result.persisted?,
-          errors: result.error
+          errors: result.errors
         }
       end
 
