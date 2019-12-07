@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import signUp from "../../mutations/sign_up";
-import { AUTH_TOKEN_KEY, USERNAME_KEY } from "../../config/constants";
+import signUp from "../../../mutations/sign_up";
+import { AUTH_TOKEN_KEY, USERNAME_KEY } from "../../../config/constants";
 import { mapMutations } from "vuex";
 import Vue from "vue";
 
@@ -76,7 +76,7 @@ export default {
           this.password == this.password_confirmation || "Passwords must match"
       ].concat(passwordRules),
       firstName: "",
-      lastName: "",
+      lastName: ""
     };
   },
   methods: {
