@@ -19,8 +19,8 @@ import Vuetify from "vuetify";
 Vue.use(Vuetify);
 
 import "images/logo.svg";
-import Navbar from "./navbar.vue";
-import Footer from "./footer.vue";
+import Navbar from "./Navbar.vue";
+import Footer from "./Footer.vue";
 
 export default {
   components: {

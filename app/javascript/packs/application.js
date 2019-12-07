@@ -43,7 +43,7 @@ Vue.use(VueAxios, {
 import router from "./plugins/router";
 
 // main application component
-import App from "./components/app.vue";
+import App from "./components/App.vue";
 
 // application mixins
 import SettingsMixin from './mixins/settings';
