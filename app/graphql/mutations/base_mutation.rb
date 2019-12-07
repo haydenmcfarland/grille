@@ -8,7 +8,7 @@ module Mutations
     field :errors, [GraphQL::Types::String], null: false
 
     def grille_resolver(*_args)
-      raise "\'#{__method__}' must be declared in mutation"
+      raise "'#{__method__}' must be declared in mutation"
     end
 
     def wrap_result(result)
