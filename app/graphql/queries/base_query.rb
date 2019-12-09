@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
+# FIXME: Dry Queries and Mutations
 module Queries
   class BaseQuery < GraphQL::Schema::Resolver
-    #null false
-
-    #field :success, GraphQL::Types::Boolean, null: false
-    #field :errors, [GraphQL::Types::String], null: false
-
     def grille_resolver(*_args)
       raise "'#{__method__}' must be declared in mutation"
     end
