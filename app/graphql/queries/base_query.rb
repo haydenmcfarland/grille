@@ -8,7 +8,7 @@ module Queries
     end
 
     def resolve(*args)
-      return grille_resolver(*args)
+      grille_resolver(*args)
     end
   end
 end
