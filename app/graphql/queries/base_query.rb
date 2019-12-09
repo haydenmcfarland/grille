@@ -12,6 +12,10 @@ module Queries
     end
 
     def wrap_result(result)
+      if result.is_a?(ActiveRecord::Relation)
+        return result
+      end
+
       if result.is_a?(ActiveRecord::Base)
         return {
           result.class.name.demodulize.downcase => result,
