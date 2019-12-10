@@ -18,16 +18,18 @@
         <v-list>
           <v-list-item>
             <a href="#" @click.prevent="handleSignOut">
-              <v-btn icon>
-                <v-icon>mdi-account-off</v-icon>
+              <v-btn left text>
+                <v-icon>mdi-account-off</v-icon> {{ username }}
               </v-btn>
             </a>
-            <v-label>
-              {{ username }}
-            </v-label>
           </v-list-item>
           <v-list-item>
-            <v-switch v-model="goDark" label="DARK MODE"> </v-switch>
+            <router-link to="/users">
+              <v-btn left text> <v-icon>mdi-account</v-icon> Users </v-btn>
+            </router-link>
+          </v-list-item>
+          <v-list-item>
+            <v-switch left v-model="goDark" label="DARK MODE"> </v-switch>
           </v-list-item>
         </v-list>
       </v-menu>
