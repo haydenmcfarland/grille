@@ -23,6 +23,8 @@ import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
 import { AgGridVue } from "@ag-grid-community/vue";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
 
+import users from "../../queries/users";
+
 export default {
   data() {
     return {
@@ -35,59 +37,24 @@ export default {
     AgGridVue
   },
   beforeMount() {
-    this.columnDefs = [
-      {
-        headerName: "Security Instrument",
-        field: "security_instrument"
-      },
-      {
-        headerName: "Settlement Date",
-        field: "settlement_date"
-      },
-      {
-        headerName: "Price",
-        field: "price",
-        sortable: true
-      }
-    ];
+    users({
+      apollo: this.$apollo
+    })
+      .then(response => {
+        return response.data.users;
+      })
+      .then(result => {
+        this.rowData = result;
+        let modelKeys = Object.keys(result[0]);
 
-    this.rowData = [
-      {
-        security_instrument: "FN Fix-30 MBS",
-        settlement_date: "11/12/2019",
-        price: 105.32
-      },
-      {
-        security_instrument: "FN Fix-30 MBS",
-        settlement_date: "11/12/2019",
-        price: 105.32
-      },
-      {
-        security_instrument: "FN Fix-30 MBS",
-        settlement_date: "11/12/2019",
-        price: 105.32
-      },
-      {
-        security_instrument: "FN Fix-30 MBS",
-        settlement_date: "11/12/2019",
-        price: 105.32
-      },
-      {
-        security_instrument: "FN Fix-30 MBS",
-        settlement_date: "11/12/2019",
-        price: 105.32
-      },
-      {
-        security_instrument: "FN Fix-30 MBS",
-        settlement_date: "11/12/2019",
-        price: 105.32
-      },
-      {
-        security_instrument: "FN Fix-30 MBS",
-        settlement_date: "11/12/2019",
-        price: 105.32
-      }
-    ];
+        this.columnDefs = modelKeys.map(k => {
+          if (k.includes("__")) return null;
+          return {
+            headerName: k.toUpperCase(),
+            field: k
+          };
+        }).filter(x => !!x);
+      });
   }
 };
 </script>
