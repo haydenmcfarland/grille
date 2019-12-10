@@ -24,6 +24,12 @@
             <v-btn text @click="getSelectedRows()">
               <v-icon left>mdi-pencil</v-icon> Edit
             </v-btn>
+
+            <v-divider inset vertical></v-divider>
+
+            <v-btn text @click="getSelectedRows()">
+              <v-icon left>mdi-table</v-icon> Export
+            </v-btn>
           </v-toolbar-items>
         </v-toolbar>
       </v-card>
