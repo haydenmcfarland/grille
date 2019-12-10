@@ -23,8 +23,6 @@ import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
 import { AgGridVue } from "@ag-grid-community/vue";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
 
-import users from "../../queries/users";
-
 export default {
   data() {
     return {
@@ -36,24 +34,33 @@ export default {
   components: {
     AgGridVue
   },
+  props: {
+    model: {
+      type: String,
+      default: "users"
+    }
+  },
   beforeMount() {
-    users({
-      apollo: this.$apollo
-    })
+    import(`../../queries/${this.model}`)
+      .then(m => {
+        return m.default({ apollo: this.$apollo });
+      })
       .then(response => {
-        return response.data.users;
+        return response.data[this.model];
       })
       .then(result => {
         this.rowData = result;
         let modelKeys = Object.keys(result[0]);
 
-        this.columnDefs = modelKeys.map(k => {
-          if (k.includes("__")) return null;
-          return {
-            headerName: k.toUpperCase(),
-            field: k
-          };
-        }).filter(x => !!x);
+        this.columnDefs = modelKeys
+          .map(k => {
+            if (k.includes("__")) return null;
+            return {
+              headerName: k.toUpperCase(),
+              field: k
+            };
+          })
+          .filter(x => !!x);
       });
   }
 };
