@@ -14,11 +14,13 @@ module Mutations
         # add default protection to base mutation
         user = context[:current_user]
 
-        # this shouldn't be here (specific id check)
-        return false if user.nil? || ids.include?(user.id.to_s)
+        # FIXME: check permissions here
+        return false if user.nil?
 
+        klass = model.singularize.capitalize.constantize
         # FIXME: add some checks here and tighten permissions
-        model.singularize.capitalize.constantize.where(id: ids).delete_all
+
+        klass.delete(context: context, params: { id: ids })
         true
       end
     end

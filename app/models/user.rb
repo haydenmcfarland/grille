@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   include Tokenizable
+  extend CRUDContext
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -32,5 +33,16 @@ class User < ApplicationRecord
   # return first and lastname
   def name
     [first_name, last_name].join(' ').strip
+  end
+
+  # override to define specifc context actions
+  class << self
+    def delete(context:, params:)
+      if params[:id].any? { |id| context[:current_user]&.id == id.to_i }
+        raise 'cannot delete self'
+      end
+
+      super
+    end
   end
 end
