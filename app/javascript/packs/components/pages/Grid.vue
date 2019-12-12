@@ -92,28 +92,30 @@ export default {
       const selectedDataStringPresentation = JSON.stringify(selectedData);
       alert(`Selected nodes: ${selectedDataStringPresentation}`);
     },
-    getSelectedRowIDs() {
-      const selectedNodes = this.gridApi.getSelectedNodes();
-      const selectedData = selectedNodes.map(node => node.data.id);
-      return selectedData;
-    },
     addNewRow(params) {
       this.gridApi.updateRowData({ add: [{}] });
     },
     handleModelDelete() {
+      let selectedNodes = this.gridApi.getSelectedNodes();
+      let ids = selectedNodes.map(node => node.data.id);
+
       this.$refs.confirm
-        .open("Delete", "Are you sure?", {color: 'red'})
+        .open("Delete", "Are you sure?", { color: "red" })
         .then(confirm => {
-          if(!confirm) return;
+          if (!confirm) return;
           modelDelete({
             apollo: this.$apollo,
-            ...{ model: this.model, ids: this.getSelectedRowIDs() }
+            ...{ model: this.model, ids: ids }
           }).then(response => {
-            if (response.data.delete.result === true) this.loadData();
+            if (response.data.delete.result === true) {
+              this.loadData(() => {
+                this.gridApi.removeItems(selectedNodes);
+              });
+            }
           });
         });
     },
-    loadData() {
+    loadData(callback = null) {
       const defaultColumnConfig = {
         sortable: true,
         filter: true,
@@ -149,6 +151,8 @@ export default {
             })
             .filter(x => !!x);
         });
+
+      if (callback) callback();
     }
   },
   beforeMount() {
