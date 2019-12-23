@@ -38,6 +38,7 @@ class User < ApplicationRecord
   # override to define specifc context actions
   class << self
     def delete(context:, params:)
+      # should permissions be checked here on the model level?
       if params[:id].any? { |id| context[:current_user]&.id == id.to_i }
         raise 'cannot delete self'
       end

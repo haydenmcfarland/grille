@@ -5,6 +5,8 @@ const query = gql`
     users {
       id
       email
+      firstName
+      lastName
     }
   }
 `;

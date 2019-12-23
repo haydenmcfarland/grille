@@ -11,6 +11,7 @@
           :modules="modules"
           rowSelection="multiple"
           @grid-ready="onGridReady"
+          @cell-value-changed="onCellEdit"
         >
         </ag-grid-vue>
         <Confirm ref="confirm"></Confirm>
@@ -30,7 +31,7 @@
               <v-icon left>mdi-pencil</v-icon> Edit
             </v-btn>
 
-            <v-btn text @click="addNewRow()">
+            <v-btn text @click="applyChanges()">
               <v-icon left>mdi-check</v-icon> Apply
             </v-btn>
 
@@ -58,6 +59,7 @@ import Confirm from "../Confirm";
 
 // grid mutations
 import modelDelete from "../../mutations/model_delete";
+import modelUpdate from "../../mutations/model_update";
 
 // state management
 import { mapMutations } from "vuex";
@@ -86,6 +88,10 @@ export default {
       this.gridApi = params.api;
       this.columnApi = params.columnApi;
     },
+    onCellEdit(item) {
+      console.log(item);
+      item.node.newOrModified = true;
+    },
     getSelectedRows() {
       const selectedNodes = this.gridApi.getSelectedNodes();
       const selectedData = selectedNodes.map(node => node.data);
@@ -93,7 +99,32 @@ export default {
       alert(`Selected nodes: ${selectedDataStringPresentation}`);
     },
     addNewRow(params) {
-      this.gridApi.updateRowData({ add: [{}] });
+      this.gridApi.updateRowData({ add: [{ newOrModified: true }] });
+    },
+    applyChanges(params) {
+      let rowData = [];
+      this.gridApi.forEachNode(node => {
+        if (node.newOrModified) rowData.push(JSON.stringify(node.data));
+      });
+
+      // FIXME: generalize for CRUD
+      this.$refs.confirm
+        .open("Update", "Are you sure?", { color: "green" })
+        .then(confirm => {
+          if (!confirm) return;
+          modelUpdate({
+            apollo: this.$apollo,
+            ...{ model: this.model, jsonArray: rowData}
+          }).then(response => {
+            if (response.data.delete.result === true) {
+              this.loadData(rowData => {
+                //this.gridApi.removeItems(selectedNodes);
+                //this.gridApi.refreshCells();
+                this.gridApi.setRowData(rowData);
+              });
+            }
+          });
+        });
     },
     handleModelDelete() {
       let selectedNodes = this.gridApi.getSelectedNodes();
@@ -108,8 +139,10 @@ export default {
             ...{ model: this.model, ids: ids }
           }).then(response => {
             if (response.data.delete.result === true) {
-              this.loadData(() => {
-                this.gridApi.removeItems(selectedNodes);
+              this.loadData(rowData => {
+                //this.gridApi.removeItems(selectedNodes);
+                //this.gridApi.refreshCells();
+                this.gridApi.setRowData(rowData);
               });
             }
           });
@@ -152,7 +185,7 @@ export default {
             .filter(x => !!x);
         });
 
-      if (callback) callback();
+      if (callback) callback(this.rowData);
     }
   },
   beforeMount() {
