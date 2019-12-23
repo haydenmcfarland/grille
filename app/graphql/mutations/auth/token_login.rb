@@ -5,7 +5,7 @@ module Mutations
     class TokenLogin < Mutations::BaseMutation
       null true
 
-      description 'JWT token lgin'
+      description 'JWT token login'
 
       type Types::Auth::UserType
 

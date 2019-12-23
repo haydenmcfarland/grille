@@ -27,10 +27,6 @@
               <v-icon left>mdi-plus</v-icon> Add
             </v-btn>
 
-            <v-btn text @click="getSelectedRows()">
-              <v-icon left>mdi-pencil</v-icon> Edit
-            </v-btn>
-
             <v-btn text @click="applyChanges()">
               <v-icon left>mdi-check</v-icon> Apply
             </v-btn>
@@ -89,7 +85,7 @@ export default {
       this.columnApi = params.columnApi;
     },
     onCellEdit(item) {
-      console.log(item);
+      // FIXME: this is a very basic implementation
       item.node.newOrModified = true;
     },
     getSelectedRows() {
@@ -114,7 +110,7 @@ export default {
           if (!confirm) return;
           modelUpdate({
             apollo: this.$apollo,
-            ...{ model: this.model, jsonArray: rowData}
+            ...{ model: this.model, jsonArray: rowData }
           }).then(response => {
             if (response.data.delete.result === true) {
               this.loadData(rowData => {
