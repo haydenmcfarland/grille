@@ -5,10 +5,14 @@ module Queries
     class Tests < Queries::BaseQuery
       null true
 
+      argument :page_size, Integer, required: true
+      argument :page_number, Integer, required: true
+
       type [Types::Test::TestType], null: false
 
-      def grille_resolver
-        Test.all
+      def grille_resolver(page_size:, page_number:)
+        offset = page_number * page_size
+        Test.order(created_at: :desc).limit(page_size).offset(offset)
       end
     end
   end

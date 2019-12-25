@@ -54,8 +54,10 @@ import { AllCommunityModules } from "@ag-grid-community/all-modules";
 import Confirm from "../Confirm";
 
 // grid mutations
+// FIXME: use camel for file names
 import modelDelete from "../../mutations/model_delete";
 import modelUpdate from "../../mutations/model_update";
+import modelRecords from "../../queries/modelRecords";
 
 // state management
 import { mapMutations } from "vuex";
@@ -65,7 +67,8 @@ export default {
     return {
       columnDefs: null,
       rowData: null,
-      modules: AllCommunityModules
+      modules: AllCommunityModules,
+      pageNumber: 0
     };
   },
   components: {
@@ -76,6 +79,10 @@ export default {
     model: {
       type: String,
       default: "users"
+    },
+    pageSize: {
+      type: Number,
+      default: 10
     }
   },
   methods: {
@@ -151,10 +158,13 @@ export default {
         editable: true
       };
 
-      import(`../../queries/${this.model}`)
-        .then(m => {
-          return m.default({ apollo: this.$apollo });
-        })
+      modelRecords({
+        apollo: this.$apollo,
+        model: this.model,
+        attributes: ["id", "name", "age", "details"],
+        pageSize: this.pageSize,
+        pageNumber: this.pageNumber
+      })
         .then(response => {
           // FIXME: pluralize model instead of declaring model
           // pluralized
