@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Queries
-  module Auth
-    class Users < Queries::BaseQuery
+  module Test
+    class Tests < Queries::BaseQuery
     end
   end
 end
