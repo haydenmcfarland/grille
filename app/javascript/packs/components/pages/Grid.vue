@@ -83,6 +83,10 @@ export default {
     pageSize: {
       type: Number,
       default: 10
+    },
+    columns: {
+      type: Array,
+      default: () => ['id']
     }
   },
   methods: {
@@ -161,7 +165,7 @@ export default {
       modelRecords({
         apollo: this.$apollo,
         model: this.model,
-        attributes: ["id", "name", "age", "details"],
+        attributes: this.columns,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber
       })
@@ -175,9 +179,8 @@ export default {
 
           // FIXME: better introspection
           // protect via roles and add column configs
-          let modelKeys = Object.keys(result[0]);
-
-          this.columnDefs = modelKeys
+          //let modelKeys = Object.keys(result[0]);
+          this.columnDefs = this.columns
             .map(k => {
               if (k.includes("__")) return null;
               return {

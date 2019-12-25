@@ -1,5 +1,5 @@
 <template>
-  <Grid model="tests"/>
+  <Grid model="tests" v-bind:columns="columns" />
 </template>
 
 <script>
@@ -11,7 +11,9 @@ export default {
     Grid
   },
   data() {
-    return {};
+    return {
+      columns: ["id", "name", "age", "details"]
+    };
   }
 };
 </script>
