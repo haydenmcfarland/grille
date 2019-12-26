@@ -6,37 +6,30 @@ module Types
 
     class << self
       def inherited(klass)
-        type_name = 'Dynamic' + klass.name.demodulize
-        binding.pry
-        z = <<~MODULE
-        module Types
-          module Test
-            class #{type_name} < BaseObject
-              field :id, ID, null: false
-              field :name, String, null: false
-              field :details, String, null: true
-              field :age, Integer, null: true
-            end
-          end
-        end
-      MODULE
-      binding.pry
-        eval <<~MODULE
-          module Types
-            module Test
-              class #{type_name} < BaseObject
-                field :id, ID, null: false
-                field :name, String, null: false
-                field :details, String, null: true
-                field :age, Integer, null: true
+        TracePoint.trace(:end) do |t|
+          modules = klass.name.split('::')
+          type_name = 'Dynamic' + modules.pop
+          hack = modules.map { |m| "module #{m}" }.join('; ')
+          binding.pry
+          hackery = <<~MODULE
+            #{hack}; class #{type_name} < BaseObject
+                    field :id, ID, null: false
+                    field :name, String, null: false
+                    field :details, String, null: true
+                    field :age, Integer, null: true
+                end
               end
             end
-          end
-        MODULE
+          MODULE
 
-        klass.class_eval do
-          field :total_pages, Integer, null: false
-          field :rows, [type_name.constantize], null: false
+          eval hackery
+
+          resolved_type = (modules + [type_name]).join('::')
+
+          klass.class_eval <<-HACK
+              field :total_pages, Integer, null: false
+              field :rows, [#{resolved_type}], null: false
+          HACK
         end
       end
     end

@@ -37,7 +37,6 @@ module Queries
     end
 
     def resolve(*args)
-      binding.pry
       grille_resolver(*args)
     end
   end
