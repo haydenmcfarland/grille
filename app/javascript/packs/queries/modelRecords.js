@@ -4,7 +4,10 @@ const modelQuery = (model, attributes, pageSize, pageNumber) => {
   const query = gql`
     {
       ${model}(pageSize: ${pageSize}, pageNumber: ${pageNumber}) {
-        ${attributes.join("\r\n")}
+        totalPages,
+        rows {
+          ${attributes.join("\r\n")}
+        }
       }
     }
   `;

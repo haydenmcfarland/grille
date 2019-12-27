@@ -17,6 +17,16 @@
         <Confirm ref="confirm"></Confirm>
         <v-toolbar>
           <v-toolbar-items>
+            <v-pagination
+              v-model="pageNumber"
+              class="my-4"
+              :length="totalPages"
+              :total-visible="5"
+              @input="loadData"
+            ></v-pagination>
+
+            <v-divider inset vertical></v-divider>
+
             <v-btn text @click="handleModelDelete()">
               <v-icon left>mdi-delete</v-icon> Delete
             </v-btn>
@@ -68,7 +78,8 @@ export default {
       columnDefs: null,
       rowData: null,
       modules: AllCommunityModules,
-      pageNumber: 0
+      pageNumber: 0,
+      totalPages: 1
     };
   },
   components: {
@@ -86,7 +97,7 @@ export default {
     },
     columns: {
       type: Array,
-      default: () => ['id']
+      default: () => ["id"]
     }
   },
   methods: {
@@ -175,7 +186,8 @@ export default {
           return response.data[this.model];
         })
         .then(result => {
-          this.rowData = result;
+          this.rowData = result.rows;
+          this.totalPages = result.totalPages - 1;
 
           // FIXME: better introspection
           // protect via roles and add column configs
@@ -194,7 +206,7 @@ export default {
             .filter(x => !!x);
         });
 
-      if (callback) callback(this.rowData);
+      if (callback === 'function') callback(this.rowData);
     }
   },
   beforeMount() {

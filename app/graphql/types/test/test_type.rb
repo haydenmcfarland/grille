@@ -2,10 +2,10 @@
 
 module Types
   module Test
-    class TestType < BaseType
+    class TestType < ActiveRecordType
       class << self
-        def columns
-          Test.columns
+        def model
+          'Test'
         end
       end
     end
