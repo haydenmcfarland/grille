@@ -26,7 +26,8 @@ module Queries
     end
 
     def grille_resolver(page_size:, page_number:)
-      offset = page_number * page_size
+      # FIXME: we should have a specific limit
+      offset = (page_number - 1) * page_size
       rows = self.class.model.order(created_at: :desc)
                  .limit(page_size).offset(offset)
 

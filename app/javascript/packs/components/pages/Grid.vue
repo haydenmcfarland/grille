@@ -78,7 +78,7 @@ export default {
       columnDefs: null,
       rowData: null,
       modules: AllCommunityModules,
-      pageNumber: 0,
+      pageNumber: 1,
       totalPages: 1
     };
   },
@@ -135,7 +135,7 @@ export default {
             ...{ model: this.model, jsonArray: rowData }
           }).then(response => {
             if (response.data.delete.result === true) {
-              this.loadData(rowData => {
+              this.loadData(this.pageNumber, owData => {
                 //this.gridApi.removeItems(selectedNodes);
                 //this.gridApi.refreshCells();
                 this.gridApi.setRowData(rowData);
@@ -166,7 +166,7 @@ export default {
           });
         });
     },
-    loadData(callback = null) {
+    loadData(page, callback = null) {
       const defaultColumnConfig = {
         sortable: true,
         filter: true,
@@ -189,6 +189,7 @@ export default {
           this.rowData = result.rows;
           this.totalPages = result.totalPages - 1;
 
+          console.log(this.totalPages);
           // FIXME: better introspection
           // protect via roles and add column configs
           //let modelKeys = Object.keys(result[0]);
@@ -206,7 +207,7 @@ export default {
             .filter(x => !!x);
         });
 
-      if (callback === 'function') callback(this.rowData);
+      if (callback === "function") callback(this.rowData);
     }
   },
   beforeMount() {
