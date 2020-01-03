@@ -1,5 +1,5 @@
 <template>
-  <Grid model="tests" v-bind:columns="columns" />
+  <Grid model="tests" v-bind:columns="columns" v-bind:pageSize="pageSize" />
 </template>
 
 <script>
@@ -12,7 +12,8 @@ export default {
   },
   data() {
     return {
-      columns: ["id", "name", "age", "details"]
+      columns: ["id", "name", "age", "details"],
+      pageSize: 3
     };
   }
 };

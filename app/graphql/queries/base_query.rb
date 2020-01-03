@@ -20,14 +20,21 @@ module Queries
           argument :page_size, Integer, required: true
           argument :page_number, Integer, required: true
 
-          type [model_type], null: false
+          type model_type, null: false
         end
       end
     end
 
     def grille_resolver(page_size:, page_number:)
-      offset = page_number * page_size
-      self.class.model.order(created_at: :desc).limit(page_size).offset(offset)
+      # FIXME: we should have a specific limit
+      offset = (page_number - 1) * page_size
+      rows = self.class.model.order(created_at: :desc)
+                 .limit(page_size).offset(offset)
+
+      {
+        rows: rows,
+        total_pages: self.class.model.count / page_size + 1
+      }
     end
 
     def resolve(*args)

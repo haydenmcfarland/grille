@@ -18,7 +18,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrorStr = "bad request";
     console.log(graphQLErrors);
-  };
+  }
 
   if (networkError) console.log(`[Network error]: ${networkError}`);
 
@@ -44,9 +44,21 @@ const authLink = setContext((_, { headers }) => {
 
 const link = ApolloLink.from([authLink, errorLink, httpLink]);
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "ignore"
+  },
+  query: {
+    fetchPolicy: "no-cache",
+    errorPolicy: "all"
+  }
+};
+
 const client = new ApolloClient({
   link: link,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  defaultOptions: defaultOptions
 });
 
 const apolloProvider = new VueApollo({

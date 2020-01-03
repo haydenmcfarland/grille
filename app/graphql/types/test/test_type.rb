@@ -2,11 +2,12 @@
 
 module Types
   module Test
-    class TestType < BaseObject
-      field :id, ID, null: false
-      field :name, String, null: false
-      field :details, String, null: true
-      field :age, Integer, null: true
+    class TestType < ActiveRecordType
+      class << self
+        def model
+          'Test'
+        end
+      end
     end
   end
 end
