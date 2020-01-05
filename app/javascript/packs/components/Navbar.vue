@@ -42,7 +42,7 @@ import Vue from "vue";
 import Vuetify from "vuetify";
 Vue.use(Vuetify);
 
-import signOut from "../mutations/sign_out";
+import signOut from "../mutations/signOut";
 import { mapMutations } from "vuex";
 
 export default {

@@ -27,7 +27,7 @@
 
 <script>
 import _get from "lodash/get";
-import signIn from "../../../mutations/sign_in";
+import signIn from "../../../mutations/signIn";
 import { AUTH_TOKEN_KEY, USERNAME_KEY } from "../../../config/constants";
 import { mapMutations } from "vuex";
 import Vue from "vue";

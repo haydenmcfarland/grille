@@ -65,13 +65,14 @@ import Confirm from "../Confirm";
 
 // grid mutations
 // FIXME: use camel for file names
-import modelDelete from "../../mutations/model_delete";
-import modelUpdate from "../../mutations/model_update";
+import modelDelete from "../../mutations/modelDelete";
+import modelUpdate from "../../mutations/modelUpdate";
 import modelRecords from "../../queries/modelRecords";
 
 // state management
 import { mapMutations } from "vuex";
 
+// FIXME: handle grid refresh & DRY
 export default {
   data() {
     return {
@@ -135,7 +136,7 @@ export default {
             ...{ model: this.model, jsonArray: rowData }
           }).then(response => {
             if (response.data.delete.result === true) {
-              this.loadData(this.pageNumber, owData => {
+              this.loadData(this.pageNumber, rowData => {
                 //this.gridApi.removeItems(selectedNodes);
                 //this.gridApi.refreshCells();
                 this.gridApi.setRowData(rowData);
@@ -158,8 +159,6 @@ export default {
           }).then(response => {
             if (response.data.delete.result === true) {
               this.loadData(rowData => {
-                //this.gridApi.removeItems(selectedNodes);
-                //this.gridApi.refreshCells();
                 this.gridApi.setRowData(rowData);
               });
             }
@@ -167,6 +166,7 @@ export default {
         });
     },
     loadData(page, callback = null) {
+      // FIXME: allow config passthrough
       const defaultColumnConfig = {
         sortable: true,
         filter: true,
@@ -181,18 +181,12 @@ export default {
         pageNumber: this.pageNumber
       })
         .then(response => {
-          // FIXME: pluralize model instead of declaring model
-          // pluralized
+          // FIXME: pluralize model instead of declaring model pluralized
           return response.data[this.model];
         })
         .then(result => {
           this.rowData = result.rows;
           this.totalPages = result.totalPages - 1;
-
-          console.log(this.totalPages);
-          // FIXME: better introspection
-          // protect via roles and add column configs
-          //let modelKeys = Object.keys(result[0]);
           this.columnDefs = this.columns
             .map(k => {
               if (k.includes("__")) return null;
