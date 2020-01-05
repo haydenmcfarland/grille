@@ -2,7 +2,7 @@
   <v-container>
     <v-form @submit.prevent="handleSignUp" v-model="valid">
       <v-text-field
-        name="firstMame"
+        name="firstName"
         label="First Name"
         v-model="firstName"
         required
@@ -105,6 +105,7 @@ export default {
           }
         })
         .catch(error => {
+          console.log(error)
           this.errors = [error];
         });
     }
