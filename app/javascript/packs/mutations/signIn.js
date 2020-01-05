@@ -3,11 +3,9 @@ import gql from "graphql-tag";
 const mutation = gql`
   mutation signIn($email: String!, $password: String!) {
     signIn(email: $email, password: $password) {
-      user {
-        id
-        email
-        token
-      }
+      result
+      success
+      errors
     }
   }
 `;

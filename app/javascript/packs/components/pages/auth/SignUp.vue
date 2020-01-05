@@ -93,8 +93,7 @@ export default {
       })
         .then(response => {
           if (response.data.signUp) {
-            const user = response.data.signUp.user;
-
+            const user = JSON.parse(response.data.signUp.result);
             // update vuex
             this.signIn(user);
 

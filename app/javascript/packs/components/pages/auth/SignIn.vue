@@ -63,8 +63,8 @@ export default {
       })
         .then(response => {
           let data = _get(response, "data.signIn", {});
-          if (data.user) {
-            const user = data.user;
+          if (data.result) {
+            const user = JSON.parse(data.result);
 
             // update vuex
             this.signIn(user);

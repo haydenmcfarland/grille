@@ -20,6 +20,14 @@ module Mutations
         }
       end
 
+      if result.is_a?(Hash)
+        return {
+          result: result.except('error', 'errors').to_json,
+          success: true,
+          errors: ([result['error']] + (result['errors'] || [])).compact
+        }
+      end
+
       if [true, false].include?(result)
         return { result: result, success: true, errors: [] }
       end

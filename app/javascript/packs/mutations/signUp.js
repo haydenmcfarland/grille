@@ -13,11 +13,7 @@ const mutation = gql`
         email: $email
         password: $password
     ) {
-      user {
-        id
-        email
-        token
-      }
+      result
       success
       errors
     }
