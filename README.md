@@ -1,9 +1,9 @@
 # grille
-Vue Rails Template with JS Grids (heavy WIP)
+VueJS, Rails, GraphQl Generalized Grid Component/Interface
 
 ## Goal
 
-Create a generalized grid component and interface for a model adapter.
+- Create a generalized grid component and interface for a model adapter
 
 ![](https://i.imgur.com/SdR4jbz.png)
 
