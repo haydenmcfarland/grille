@@ -1,11 +1,10 @@
 <template>
-  <v-layout column full-height>
-    <v-flex row style="margin: 50px">
+  <v-layout>
+    <v-flex>
       <v-card>
-        <!-- FIXME: auto height -->
         <ag-grid-vue
-          style="height: 200px; width: 75vw"
-          class="ag-theme-balham"
+          style="width: 100%;"
+          class="ag-theme-balham grille-grid"
           :columnDefs="columnDefs"
           :rowData="rowData"
           :modules="modules"
@@ -17,6 +16,10 @@
         <Confirm ref="confirm"></Confirm>
         <v-toolbar>
           <v-toolbar-items>
+            <v-btn text @click="refreshPage()">
+              <v-icon>mdi-refresh</v-icon>
+            </v-btn>
+
             <v-pagination
               v-model="pageNumber"
               class="my-4"
@@ -27,6 +30,7 @@
 
             <v-divider inset vertical></v-divider>
 
+            <!-- FIXME: generalize these into 'actions' -->
             <v-btn text @click="handleModelDelete()">
               <v-icon left>mdi-delete</v-icon> Delete
             </v-btn>
@@ -71,6 +75,12 @@ import modelRecords from "../../queries/modelRecords";
 
 // state management
 import { mapMutations } from "vuex";
+
+// color mapping
+const actionColorMap = {
+  delete: "red",
+  apply: "green"
+};
 
 // FIXME: handle grid refresh & DRY
 export default {
@@ -120,6 +130,21 @@ export default {
     addNewRow(params) {
       this.gridApi.updateRowData({ add: [{ newOrModified: true }] });
     },
+    refreshPage() {
+      this.loadData(this.pageNumber, rowData => {
+        this.gridApi.setRowData(rowData);
+      });
+    },
+    confirmAction(action, callback) {
+      this.$refs.confirm
+        .open(action, "Are you sure?", {
+          color: actionColorMap[action] || "green"
+        })
+        .then(confirm => {
+          if (!confirm) return;
+          callback();
+        });
+    },
     applyChanges(params) {
       let rowData = [];
       this.gridApi.forEachNode(node => {
@@ -127,43 +152,27 @@ export default {
       });
 
       // FIXME: generalize for CRUD
-      this.$refs.confirm
-        .open("Update", "Are you sure?", { color: "green" })
-        .then(confirm => {
-          if (!confirm) return;
-          modelUpdate({
-            apollo: this.$apollo,
-            ...{ model: this.model, jsonArray: rowData }
-          }).then(response => {
-            if (response.data.delete.result === true) {
-              this.loadData(this.pageNumber, rowData => {
-                //this.gridApi.removeItems(selectedNodes);
-                //this.gridApi.refreshCells();
-                this.gridApi.setRowData(rowData);
-              });
-            }
-          });
+      this.confirmAction("apply", () => {
+        modelUpdate({
+          apollo: this.$apollo,
+          ...{ model: this.model, jsonArray: rowData }
+        }).then(response => {
+          if (response.data.update.result === true) this.refreshPage();
         });
+      });
     },
     handleModelDelete() {
       let selectedNodes = this.gridApi.getSelectedNodes();
       let ids = selectedNodes.map(node => node.data.id);
 
-      this.$refs.confirm
-        .open("Delete", "Are you sure?", { color: "red" })
-        .then(confirm => {
-          if (!confirm) return;
-          modelDelete({
-            apollo: this.$apollo,
-            ...{ model: this.model, ids: ids }
-          }).then(response => {
-            if (response.data.delete.result === true) {
-              this.loadData(rowData => {
-                this.gridApi.setRowData(rowData);
-              });
-            }
-          });
+      this.confirmAction("delete", () => {
+        modelDelete({
+          apollo: this.$apollo,
+          ...{ model: this.model, ids: ids }
+        }).then(response => {
+          if (response.data.delete.result === true) this.refreshPage();
         });
+      });
     },
     loadData(page, callback = null) {
       // FIXME: allow config passthrough
@@ -209,3 +218,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* FIXME: use more reliable method for full height ag-grid */
+.grille-grid {
+  height: calc(100vh - 220px);
+  overflow-y: auto;
+}
+</style>

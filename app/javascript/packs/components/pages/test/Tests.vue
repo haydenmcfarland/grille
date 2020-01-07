@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       columns: ["id", "name", "age", "details"],
-      pageSize: 3
+      pageSize: 5
     };
   }
 };

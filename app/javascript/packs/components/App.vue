@@ -1,15 +1,15 @@
 <template>
   <v-app id="app" :dark="setTheme">
-    <Navbar/>
+    <Navbar />
     <v-content>
-      <v-container fluid>
-        <v-row justify="center">
+      <v-container fluid class="full-height">
+        <v-row justify="center" class="fill-height">
           <vue-progress-bar></vue-progress-bar>
-          <router-view />
+          <router-view/>
         </v-row>
       </v-container>
     </v-content>
-    <Footer/>
+    <Footer />
   </v-app>
 </template>
 
@@ -29,3 +29,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.grille {
+  height: calc(100vh - 270px); /* Adjust 270px to suits your needs */
+  overflow-y: auto;
+}
+</style>
