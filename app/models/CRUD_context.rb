@@ -6,17 +6,17 @@ module CRUDContext
   end
 
   def create(context:, params:)
-    permission(context)
+    permission(cntext: context)
     create(params)
   end
 
   def read(context:, params:)
-    permission(context)
+    permission(context: context)
     where(params)
   end
 
   def update(context:, params:, update_params:)
-    permission(context)
+    permission(context: context)
     where(params).update_all(update_params)
   end
 

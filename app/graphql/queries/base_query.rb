@@ -28,7 +28,11 @@ module Queries
     def grille_resolver(page_size:, page_number:)
       # FIXME: we should have a specific limit
       offset = (page_number - 1) * page_size
-      rows = self.class.model.order(created_at: :desc)
+
+      # FIXME: CRUDContext needs to be updated as params isn't used
+      # for where clause
+      rows = self.class.model.read(context: context, params: {})
+                 .order(created_at: :desc)
                  .limit(page_size).offset(offset)
 
       {
