@@ -63,6 +63,10 @@ export default {
       })
         .then(response => {
           let data = _get(response, "data.signIn", {});
+          if (!data.success) {
+            return Vue.prototype.$toast.error('Invalid email/password');
+          }
+
           if (data.result) {
             const user = JSON.parse(data.result);
 
