@@ -9,6 +9,8 @@
           :rowData="rowData"
           :modules="modules"
           rowSelection="multiple"
+          @filter-changed="onFilterChanged"
+          @sort-changed="onSortChanged"
           @grid-ready="onGridReady"
           @cell-value-changed="onCellEdit"
         >
@@ -117,6 +119,12 @@ export default {
       this.gridApi = params.api;
       this.columnApi = params.columnApi;
     },
+    onFilterChanged(_event) {
+      this.refreshPage();
+    },
+    onSortChanged(_event) {
+      this.refreshPage()
+    },
     onCellEdit(item) {
       // FIXME: this is a very basic implementation
       item.node.newOrModified = true;
@@ -182,12 +190,22 @@ export default {
         editable: true
       };
 
+      let sortModel = {};
+      let filterModel = {};
+
+      if (this.gridApi) {
+        sortModel = this.gridApi.getSortModel();
+        filterModel = this.gridApi.getFilterModel();
+      }
+
       modelRecords({
         apollo: this.$apollo,
         model: this.model,
         attributes: this.columns,
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber
+        pageNumber: this.pageNumber,
+        sortModel: sortModel,
+        filterModel: filterModel
       })
         .then(response => {
           // FIXME: pluralize model instead of declaring model pluralized
