@@ -3,10 +3,8 @@
 module Types
   module Test
     class TestType < ActiveRecordType
-      class << self
-        def model
-          'Test'
-        end
+      configure do |c|
+        c.model = 'Test'
       end
     end
   end

@@ -3,10 +3,8 @@
 module Types
   module Auth
     class UserType < ActiveRecordType
-      class << self
-        def model
-          'User'
-        end
+      configure do |c|
+        c.model = 'User'
       end
     end
   end
