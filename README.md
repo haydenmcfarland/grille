@@ -6,7 +6,7 @@ VueJS, Rails, GraphQl Generalized Grid Component/Interface
 - Create a generalized grid component and interface for a model adapter
 - protect model operations with user level permissions
 
-![](https://i.imgur.com/SdR4jbz.png)
+![](https://i.imgur.com/pI3dW9C.png)
 
 ## WIP
 
