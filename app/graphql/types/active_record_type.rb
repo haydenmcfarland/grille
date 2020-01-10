@@ -9,6 +9,8 @@ module Types
       'Integer' => 'Int'
     }.freeze
 
+    TYPE_TAG = 'Pagination'
+
     class << self
       def inherited(klass)
         TracePoint.trace(:end) do |t|
@@ -17,7 +19,7 @@ module Types
           next unless t.self == klass
 
           modules = klass.name.split('::')
-          type_name = modules.pop + 'ActiveRecordPagination'
+          type_name = modules.pop + TYPE_TAG
 
           pagination_klass = Class.new BaseObject do
             GraphQL::Schema::Object.field :id, GraphQL::Types::ID, null: false
