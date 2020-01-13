@@ -6,9 +6,9 @@
           style="width: 100%;"
           class="ag-theme-balham grille-grid"
           :columnDefs="columnDefs"
-          :rowData="rowData"
           :modules="modules"
           rowSelection="multiple"
+          :gridOptions="gridOptions"
           @filter-changed="onFilterChanged"
           @sort-changed="onSortChanged"
           @grid-ready="onGridReady"
@@ -27,7 +27,7 @@
               class="my-4"
               :length="totalPages"
               :total-visible="5"
-              @input="loadData"
+              @input="refreshPage"
             ></v-pagination>
 
             <v-divider inset vertical></v-divider>
@@ -118,16 +118,46 @@ export default {
     onGridReady(params) {
       this.gridApi = params.api;
       this.columnApi = params.columnApi;
+      this.refreshPage();
     },
     onFilterChanged(_event) {
+      const agModified = this.gridApi.getFilterModel();
+      if (this.filterModel && Object.keys(agModified).length === 0) {
+        this.gridApi.setFilterModel(this.filterModel);
+        return;
+      } else {
+        if (this.gridApi) {
+          this.filterModel = this.gridApi.getFilterModel();
+        }
+      }
+
       this.refreshPage();
     },
     onSortChanged(_event) {
-      this.refreshPage()
+      console.log(_event);
+      const agModified = this.gridApi.getSortModel();
+
+      console.log(agModified);
+      console.log(this.sortModel);
+      if (this.sortModel && Object.keys(agModified).length === 0) {
+        this.gridApi.setSortModel(this.sortModel);
+        return;
+      } else {
+        if (this.gridApi) {
+          this.sortModel = this.gridApi.getSortModel();
+        }
+      }
+
+      this.refreshPage();
     },
     onCellEdit(item) {
       // FIXME: this is a very basic implementation
       item.node.newOrModified = true;
+    },
+    getAllRows() {
+      let rowData = [];
+      this.gridApi.forEachNode(node => rowData.push(node.data));
+      return rowData;
     },
     getSelectedRows() {
       const selectedNodes = this.gridApi.getSelectedNodes();
@@ -140,7 +170,8 @@ export default {
     },
     refreshPage() {
       this.loadData(this.pageNumber, rowData => {
-        this.gridApi.setRowData(rowData);
+        this.gridApi.updateRowData({ remove: this.getAllRows() });
+        this.gridApi.updateRowData({ add: rowData });
       });
     },
     confirmAction(action, callback) {
@@ -187,16 +218,12 @@ export default {
       const defaultColumnConfig = {
         sortable: true,
         filter: true,
-        editable: true
+        editable: true,
+        filterParams: {
+          applyButton: true,
+          newRowsAction: "keep"
+        }
       };
-
-      let sortModel = {};
-      let filterModel = {};
-
-      if (this.gridApi) {
-        sortModel = this.gridApi.getSortModel();
-        filterModel = this.gridApi.getFilterModel();
-      }
 
       modelRecords({
         apollo: this.$apollo,
@@ -204,15 +231,14 @@ export default {
         attributes: this.columns,
         pageSize: this.pageSize,
         pageNumber: this.pageNumber,
-        sortModel: sortModel,
-        filterModel: filterModel
+        sortModel: this.sortModel || {},
+        filterModel: this.filterModel || {}
       })
         .then(response => {
           // FIXME: pluralize model instead of declaring model pluralized
           return response.data[this.model];
         })
         .then(result => {
-          this.rowData = result.rows;
           this.totalPages = result.totalPages - 1;
           this.columnDefs = this.columns
             .map(k => {
@@ -226,13 +252,10 @@ export default {
               };
             })
             .filter(x => !!x);
-        });
 
-      if (callback === "function") callback(this.rowData);
+          if (callback) callback(result.rows);
+        });
     }
-  },
-  beforeMount() {
-    this.loadData();
   }
 };
 </script>

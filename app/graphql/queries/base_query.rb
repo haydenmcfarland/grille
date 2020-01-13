@@ -29,7 +29,7 @@ module Queries
 
     def text_filter(column, text)
       quoted = ActiveRecord::Base.connection.quote("%#{text}%")
-      "#{column} LIKE #{quoted}"
+      "#{column}::text LIKE #{quoted}"
     end
 
     def grille_resolver(page_size:, page_number:, sort_model:, filter_model:)
@@ -66,15 +66,18 @@ module Queries
         end
       end.join(' AND ')
 
-      rows = self.class.model.read(context: context, params: {})
+      binding.pry
+      query = self.class.model.read(context: context, params: {})
                  .order(created_at: :desc)
-                 .order(sorters)
+                 .order(sorters.empty? ? :desc : sorters)
                  .where(sql_filter)
-                 .limit(page_size).offset(offset)
+
+      rows = query.limit(page_size).offset(offset)
+      total_pages = query.count / page_size + 1
 
       {
         rows: rows,
-        total_pages: self.class.model.count / page_size + 1
+        total_pages: total_pages
       }
     end
 
