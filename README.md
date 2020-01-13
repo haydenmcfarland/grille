@@ -14,5 +14,4 @@ VueJS, Rails, GraphQl Generalized Grid Component/Interface
 - has basic CRUD context interface
 - uses convention to derive model queries
 - needs better permission handling
-- update/delete work, but grid refresh is not implemented
-- hacky active record integration (make idiomatic)
+- need to resolve issues with ag-grid sorting/filtering
