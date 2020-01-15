@@ -6,9 +6,11 @@
           style="width: 100%;"
           class="ag-theme-balham grille-grid"
           :columnDefs="columnDefs"
-          :rowData="rowData"
           :modules="modules"
           rowSelection="multiple"
+          @filter-changed="onFilterChanged"
+          @sort-changed="onSortChanged"
+          :gridOptions="gridOptions"
           @grid-ready="onGridReady"
           @cell-value-changed="onCellEdit"
         >
@@ -25,7 +27,7 @@
               class="my-4"
               :length="totalPages"
               :total-visible="5"
-              @input="loadData"
+              @input="refreshPage"
             ></v-pagination>
 
             <v-divider inset vertical></v-divider>
@@ -111,15 +113,37 @@ export default {
       default: () => ["id"]
     }
   },
+  beforeMount() {
+    this.gridOptions = {
+      deltaRowDataMode: true,
+      getRowNodeId(row) {
+        return row.id;
+      }
+    };
+  },
   methods: {
     ...mapMutations(["modelDelete"]),
     onGridReady(params) {
       this.gridApi = params.api;
       this.columnApi = params.columnApi;
+      this.refreshPage();
+    },
+    onFilterChanged(_event) {
+      this.filterModel = this.gridApi.getFilterModel();
+      this.refreshPage();
+    },
+    onSortChanged(_event) {
+      this.sortModel = this.gridApi.getSortModel();
+      this.refreshPage();
     },
     onCellEdit(item) {
       // FIXME: this is a very basic implementation
       item.node.newOrModified = true;
+    },
+    getAllRows() {
+      let rowData = [];
+      this.gridApi.forEachNode(node => rowData.push(node.data));
+      return rowData;
     },
     getSelectedRows() {
       const selectedNodes = this.gridApi.getSelectedNodes();
@@ -179,7 +203,11 @@ export default {
       const defaultColumnConfig = {
         sortable: true,
         filter: true,
-        editable: true
+        editable: true,
+        filterParams: {
+          applyButton: true,
+          newRowsAction: "keep"
+        }
       };
 
       modelRecords({
@@ -187,34 +215,36 @@ export default {
         model: this.model,
         attributes: this.columns,
         pageSize: this.pageSize,
-        pageNumber: this.pageNumber
+        pageNumber: this.pageNumber,
+        sortModel: this.sortModel || {},
+        filterModel: this.filterModel || {}
       })
         .then(response => {
           // FIXME: pluralize model instead of declaring model pluralized
           return response.data[this.model];
         })
         .then(result => {
-          this.rowData = result.rows;
           this.totalPages = result.totalPages - 1;
-          this.columnDefs = this.columns
-            .map(k => {
-              if (k.includes("__")) return null;
-              return {
-                ...defaultColumnConfig,
-                ...{
-                  headerName: k.toUpperCase(),
-                  field: k
-                }
-              };
-            })
-            .filter(x => !!x);
-        });
 
-      if (callback === "function") callback(this.rowData);
+          // FIXME: this doesn't seem that great here
+          if (!this.columnDefs) {
+            this.columnDefs = this.columns
+              .map(k => {
+                if (k.includes("__")) return null;
+                return {
+                  ...defaultColumnConfig,
+                  ...{
+                    headerName: k.toUpperCase(),
+                    field: k
+                  }
+                };
+              })
+              .filter(x => !!x);
+          }
+
+          if (callback) callback(result.rows);
+        });
     }
-  },
-  beforeMount() {
-    this.loadData();
   }
 };
 </script>

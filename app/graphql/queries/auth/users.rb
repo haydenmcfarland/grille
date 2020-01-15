@@ -2,7 +2,6 @@
 
 module Queries
   module Auth
-    class Users < Queries::BaseQuery
-    end
+    class Users < Queries::PaginatedQuery; end
   end
 end
