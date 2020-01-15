@@ -8,9 +8,9 @@
           :columnDefs="columnDefs"
           :modules="modules"
           rowSelection="multiple"
-          :gridOptions="gridOptions"
           @filter-changed="onFilterChanged"
           @sort-changed="onSortChanged"
+          :gridOptions="gridOptions"
           @grid-ready="onGridReady"
           @cell-value-changed="onCellEdit"
         >
@@ -113,6 +113,14 @@ export default {
       default: () => ["id"]
     }
   },
+  beforeMount() {
+    this.gridOptions = {
+      deltaRowDataMode: true,
+      getRowNodeId(row) {
+        return row.id;
+      }
+    };
+  },
   methods: {
     ...mapMutations(["modelDelete"]),
     onGridReady(params) {
@@ -121,33 +129,11 @@ export default {
       this.refreshPage();
     },
     onFilterChanged(_event) {
-      const agModified = this.gridApi.getFilterModel();
-      if (this.filterModel && Object.keys(agModified).length === 0) {
-        this.gridApi.setFilterModel(this.filterModel);
-        return;
-      } else {
-        if (this.gridApi) {
-          this.filterModel = this.gridApi.getFilterModel();
-        }
-      }
-
+      this.filterModel = this.gridApi.getFilterModel();
       this.refreshPage();
     },
     onSortChanged(_event) {
-      console.log(_event);
-      const agModified = this.gridApi.getSortModel();
-
-      console.log(agModified);
-      console.log(this.sortModel);
-      if (this.sortModel && Object.keys(agModified).length === 0) {
-        this.gridApi.setSortModel(this.sortModel);
-        return;
-      } else {
-        if (this.gridApi) {
-          this.sortModel = this.gridApi.getSortModel();
-        }
-      }
-
+      this.sortModel = this.gridApi.getSortModel();
       this.refreshPage();
     },
     onCellEdit(item) {
@@ -170,8 +156,7 @@ export default {
     },
     refreshPage() {
       this.loadData(this.pageNumber, rowData => {
-        this.gridApi.updateRowData({ remove: this.getAllRows() });
-        this.gridApi.updateRowData({ add: rowData });
+        this.gridApi.setRowData(rowData);
       });
     },
     confirmAction(action, callback) {
@@ -240,18 +225,22 @@ export default {
         })
         .then(result => {
           this.totalPages = result.totalPages - 1;
-          this.columnDefs = this.columns
-            .map(k => {
-              if (k.includes("__")) return null;
-              return {
-                ...defaultColumnConfig,
-                ...{
-                  headerName: k.toUpperCase(),
-                  field: k
-                }
-              };
-            })
-            .filter(x => !!x);
+
+          // FIXME: this doesn't seem that great here
+          if (!this.columnDefs) {
+            this.columnDefs = this.columns
+              .map(k => {
+                if (k.includes("__")) return null;
+                return {
+                  ...defaultColumnConfig,
+                  ...{
+                    headerName: k.toUpperCase(),
+                    field: k
+                  }
+                };
+              })
+              .filter(x => !!x);
+          }
 
           if (callback) callback(result.rows);
         });

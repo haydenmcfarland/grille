@@ -2,7 +2,7 @@
 
 module Queries
   module Test
-    class Tests < Queries::BaseQuery
+    class Tests < Queries::PaginatedQuery
     end
   end
 end

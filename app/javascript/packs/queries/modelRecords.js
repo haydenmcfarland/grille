@@ -23,7 +23,6 @@ const modelQuery = (
     }
   `;
 
-  console.log(query);
   return query;
 };
 
