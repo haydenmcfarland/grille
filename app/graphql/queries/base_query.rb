@@ -66,10 +66,9 @@ module Queries
         end
       end.join(' AND ')
 
-      binding.pry
       query = self.class.model.read(context: context, params: {})
                  .order(created_at: :desc)
-                 .order(sorters.empty? ? :desc : sorters)
+                 .order(sorters)
                  .where(sql_filter)
 
       rows = query.limit(page_size).offset(offset)
