@@ -38,11 +38,11 @@ module Queries
 
     def parse_sorters(sort_model)
       JSON.parse(sort_model).map do |sorter|
-        { sorter['colId'].split('_').first => sorter['sort'] }
+        { sorter['colId'].split('_').first.underscore => sorter['sort'] }
       end
     end
 
-    def parse_multi_filter(filter)
+    def parse_multi_filter(column, filter)
       x, y = [1, 2].map { |i| filter.dig("condition#{i}", 'filter') }
       if x == y
         text_filter(column, x)
@@ -56,12 +56,12 @@ module Queries
     # FIXME: assumes text filter; does not support all ag-Grid filter options
     def parse_filter(filter_model)
       JSON.parse(filter_model).map do |column, filter|
-        column = column.split('_').first
+        column = column.split('_').first.underscore
 
         raise 'not a column in model' unless model.column_names.include?(column)
 
         if filter.key?('condition1')
-          parse_multi_filter(filter)
+          parse_multi_filter(column, filter)
         elsif filter.key?('filter')
           text_filter(column, filter['filter'])
         end
