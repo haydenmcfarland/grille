@@ -2,7 +2,6 @@
 
 module Queries
   module Test
-    class Tests < Queries::PaginatedQuery
-    end
+    class Tests < Queries::PaginatedQuery; end
   end
 end
