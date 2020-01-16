@@ -95,6 +95,6 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
 
   config.before(:each, type: :system, js: true) do
-    driven_by :selenium
+    driven_by :selenium_chrome_headless
   end
 end
