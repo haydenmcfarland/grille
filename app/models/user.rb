@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class User < ApplicationRecord
+class User < Grille::GraphQL::Base
   include Devise::JWT::RevocationStrategies::JTIMatcher
   include Tokenizable
-  extend CRUDContext
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

@@ -76,9 +76,8 @@ module Queries
       query.limit(page_size).offset((page_number - 1) * page_size)
     end
 
-    # FIXME: CRUDContext needs to be updated as params isn't used
     def grille_resolver(page_size:, page_number:, sort_model:, filter_model:)
-      query = self.class.model.read(context: context, params: {})
+      query = self.class.model.read(context: context)
                   .order(parse_sorters(sort_model))
                   .where(parse_filter(filter_model))
 
