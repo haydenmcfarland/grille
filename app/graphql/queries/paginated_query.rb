@@ -78,6 +78,7 @@ module Queries
 
     def grille_resolver(page_size:, page_number:, sort_model:, filter_model:)
       query = self.class.model.read(context: context)
+                  .order(self.class.model.primary_key)
                   .order(parse_sorters(sort_model))
                   .where(parse_filter(filter_model))
 
