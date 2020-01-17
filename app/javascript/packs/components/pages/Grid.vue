@@ -92,7 +92,8 @@ export default {
       rowData: null,
       modules: AllCommunityModules,
       pageNumber: 1,
-      totalPages: 1
+      totalPages: 1,
+      modifiedCellMap: {}
     };
   },
   components: {
@@ -156,6 +157,8 @@ export default {
     },
     refreshPage() {
       this.loadData(this.pageNumber, rowData => {
+        // clear modifiedCellMap on load data
+        this.modifiedCellMap = {};
         this.gridApi.setRowData(rowData);
       });
     },
@@ -207,6 +210,22 @@ export default {
         filterParams: {
           applyButton: true,
           newRowsAction: "keep"
+        },
+        onCellValueChanged: params => {
+          if (params.newValue == (params.oldValue || '')) return;
+          const column = params.colDef.field;
+          let cellSet = this.modifiedCellMap[column] || new Set();
+          cellSet.add(params.node.__objectId);
+          this.modifiedCellMap[column] = cellSet;
+          this.gridApi.refreshCells();
+        },
+        cellClassRules: {
+          "grille-edited": params => {
+            const column = params.colDef.field;
+            let cellSet = this.modifiedCellMap[column];
+            const node_id = params.node.__objectId;
+            return !!cellSet && cellSet.has(node_id);
+          }
         }
       };
 
@@ -249,10 +268,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /* FIXME: use more reliable method for full height ag-grid */
 .grille-grid {
   height: calc(100vh - 220px);
   overflow-y: auto;
+}
+
+.grille-edited {
+  background-color: rgba(0,0,0,0.1);
 }
 </style>
