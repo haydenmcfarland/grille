@@ -5,7 +5,6 @@ require 'rails_helper'
 # FIXME: very basic registration test for now
 RSpec.describe 'User Registration', type: :system, js: true do
   it 'allows user to sign up using form' do
-
     visit '/signup'
 
     # FIXME: add password entropy checking
