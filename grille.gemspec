@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$:.push File.expand_path('../lib', __FILE__)
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
 require 'grille/version'
@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
       'public gem pushes.'
   end
 
-  spec.files = `git ls-files`.split($\)
+  spec.files = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
 
   puts spec.files
   add_dependencies(
