@@ -10,8 +10,9 @@ VueJS, Rails, GraphQl Generalized Grid Component/Interface
 
 ## WIP
 
-- has basic pagination
-- has basic CRUD context interface
+- has pagination
+- has CRUD context interface
 - uses convention to derive model queries
-- needs better permission handling
-- need to resolve issues with ag-grid sorting/filtering
+- needs permission handling
+- utilizes ag-grid sorting/filtering (needs to support other types and create better interface)
+- needs Gemification
