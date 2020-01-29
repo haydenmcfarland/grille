@@ -28,9 +28,13 @@ module Grille
       )
     end
 
-    config.app_middleware.use(
-      Rack::Static,
-      urls: ['/grille-packs'], root: 'grille/public'
-    )
+    # Serves the engine's webpack when requested
+    initializer 'webpacker.static' do |app|
+      app.config.middleware.use(
+        Rack::Static,
+        urls: ['/grille-packs'],
+        root: File.expand_path(File.join(__dir__, '..', '..', 'public'))
+      )
+    end
   end
 end
