@@ -2,10 +2,8 @@
 
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 
-# Maintain your gem's version:
 require 'grille/version'
 
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   def add_dependencies(spec, dependencies)
     dependencies.each do |d|
