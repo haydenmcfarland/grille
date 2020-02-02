@@ -5,7 +5,7 @@ module Grille
     module Test
       class TestType < Grille::Types::ActiveRecordType
         configure do |c|
-          c.model = 'Test'
+          c.model = 'Grille::Test'
         end
       end
     end

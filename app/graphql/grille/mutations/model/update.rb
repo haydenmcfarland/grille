@@ -17,7 +17,10 @@ module Grille
           user = context[:current_user]
           return false if user.nil?
 
-          klass = model.singularize.capitalize.constantize
+          # FIXME: make this more configurable
+          klass = Grille::Mutations::Model.model_map[model]
+          raise 'unable to resolve model' unless klass
+
           # FIXME: add some cheks here and tighten permissions and newOrModified
           data = json_array.map { |j| JSON.parse(j).except('newOrModified') }
 

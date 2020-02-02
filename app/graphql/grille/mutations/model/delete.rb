@@ -18,7 +18,10 @@ module Grille
           # FIXME: check permissions here
           return false if user.nil?
 
-          klass = model.singularize.capitalize.constantize
+          # FIXME: make this more configurable and DRY as we are repeating
+          klass = Grille::Mutations::Model.model_map[model]
+          raise 'unable to resolve model' unless klass
+
           # FIXME: add some checks here and tighten permissions
 
           klass.delete(context: context, params: { id: ids })

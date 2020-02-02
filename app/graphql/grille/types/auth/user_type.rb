@@ -5,7 +5,7 @@ module Grille
     module Auth
       class UserType < Grille::Types::ActiveRecordType
         configure do |c|
-          c.model = 'User'
+          c.model = 'Grille::User'
         end
       end
     end

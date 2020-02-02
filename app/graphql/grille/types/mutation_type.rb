@@ -3,7 +3,7 @@
 module Grille
   module Types
     class MutationType < Types::BaseObject
-      mutations_path = Rails.root.join('app', 'graphql', 'grille', 'mutations')
+      mutations_path = File.expand_path('../mutations', __dir__)
       mutations_paths = Pathname.new(mutations_path).children
                                 .select(&:directory?)
 

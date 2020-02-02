@@ -5,8 +5,12 @@ require 'spec_helper'
 require 'support/chromedriver'
 
 ENV['RAILS_ENV'] ||= 'test'
+DUMMY_APP_ROOT_FOLDER = File.join(Dir.pwd, 'spec', 'dummy')
+require File.join(DUMMY_APP_ROOT_FOLDER, 'config', 'environment.rb')
 
-require File.expand_path('../config/environment', __dir__)
+ActiveRecord::Migrator.migrations_paths = [
+  File.join(DUMMY_APP_ROOT_FOLDER, 'db', 'migrate')
+]
 
 # Prevent database truncation if the environment is production
 if Rails.env.production?

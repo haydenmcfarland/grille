@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
+Grille::Engine.routes.draw do
   if Rails.env.development?
+    require 'graphiql/rails'
     mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql'
   end
+
   post '/graphql', to: 'graphql#execute'
 
   root 'landing#index'
@@ -12,5 +14,5 @@ Rails.application.routes.draw do
   # utilized to use vue-router history mode
   match '*path', to: redirect('/?redirect=%{path}'), via: :all
 
-  devise_for :users
+  devise_for :users, class_name: 'Grille::User', module: :devise
 end

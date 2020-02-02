@@ -9,28 +9,41 @@ module Grille
       class_attribute :model_type
 
       class << self
-        def resolve_model(klass)
-          klass.name.demodulize.singularize.constantize
+        def default_config
+          OpenStruct.new({})
         end
 
-        # FIXME: this should be rethought
-        def resolve_query_type(klass)
-          modules = klass.name.split('::')[2..]
-          "Grille::Types::#{(modules << modules.pop.singularize + 'Type')
-            .join('::')}"
+        # FIXME: DRY
+        def configure
+          # FIXME: expand on configuration
+          config = default_config
+          yield(config) || {}
+
+          # allow the passing of model_type as constant or string
+          model_type = config.model_type.to_s
+
+          raise 'no model type defined' unless model_type
+          raise "model type does not exist: #{model_type}" unless
+            const_defined?(model_type)
+
+          create_paginated_query(config)
         end
 
-        def inherited(klass)
-          klass.model = resolve_model(klass)
-          klass.model_type = resolve_query_type(klass)
-          klass.class_eval do
+        def create_paginated_query(config)
+          self.model_type = config.model_type.constantize
+          self.model = model_type.model
+
+          class_eval do
             argument :page_size, Integer, required: true
             argument :page_number, Integer, required: true
             argument :sort_model, String, required: true
             argument :filter_model, String, required: true
 
-            type model_type, null: false
+            type config.model_type, null: false
           end
+
+          key = model.name.demodulize.downcase.pluralize
+          Grille::Mutations::Model.model_map[key] = model
         end
       end
 
