@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'devise'
+
 module Grille
   class Engine < ::Rails::Engine
     # Configures Webpacker within the host app
@@ -35,6 +37,17 @@ module Grille
         urls: ['/grille-packs'],
         root: File.expand_path(File.join(__dir__, '..', '..', 'public'))
       )
+    end
+
+    Devise.setup do |config|
+      config.router_name = :grille
+      config.parent_controller = 'Grille::ApplicationController'
+    end
+
+    require 'warden/jwt_auth'
+    ::Warden::JWTAuth.configure do |config|
+      config.mappings = { user: "User" }
+      config.revocation_strategies = { user: "User"}
     end
   end
 end

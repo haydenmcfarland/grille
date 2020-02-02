@@ -13,7 +13,7 @@ namespace :grille do
     desc 'Install deps with yarn'
     task :yarn_install do
       Dir.chdir(File.join(__dir__, '/../..')) do
-        system 'yarn install'# --no-progress --production'
+        system 'yarn install'
       end
     end
 

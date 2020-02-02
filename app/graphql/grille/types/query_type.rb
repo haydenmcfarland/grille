@@ -4,7 +4,7 @@ module Grille
   module Types
     class QueryType < Types::BaseObject
       # FIXME: dry mutations and query type
-      queries_path = Rails.root.join('app', 'graphql', 'grille', 'queries')
+      queries_path = File.expand_path('../queries', __dir__)
       queries_paths = Pathname.new(queries_path).children.select(&:directory?)
 
       queries = queries_paths.map do |path|

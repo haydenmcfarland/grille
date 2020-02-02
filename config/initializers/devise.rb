@@ -3,30 +3,16 @@
 require 'devise'
 require 'devise/jwt'
 
-# Use this hook to configure devise mailer, warden hooks and so forth.
-# Many of these configuration options can be set straight in your model.
+SECRET_KEY = Rails.application.secrets.secret_key_base.to_s
+
 Devise.setup do |config|
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials[:devise_jwt_secret_key]
+    jwt.secret = SECRET_KEY
     jwt.expiration_time = 30.days.to_i
   end
-  config.secret_key = '9a8be58c72b930ace64ad4c062a2ab590c2bb3529759085e86104b77097b9921b9a5cab4b75d5b4a4208f78ffec79cd23e1a3dbf766cc63b38cb4ba48c13f042'
-  # The secret key used by Devise. Devise uses this key to generate
-  # random tokens. Changing this key will render invalid all existing
-  # confirmation, reset password and unlock tokens in the database.
-  # Devise will use the `secret_key_base` as its `secret_key`
-  # by default. You can change it below and use your own secret key.
-  # config.secret_key = '7909691d240ca70853244e0ec5970621ee2cd7c611503f203d0ecd2a2036d5fcddc47aedf4f283d63088c3a4f1bea1512d89df24cf488ada24986ec949842ca9'
+  config.secret_key = SECRET_KEY
 
-  # ==> Controller configuration
-  # Configure the parent class to the devise controllers.
-  # config.parent_controller = 'DeviseController'
-
-  # ==> Mailer Configuration
-  # Configure the e-mail address which will be shown in Devise::Mailer,
-  # note that it will be overwritten if you use your own mailer class
-  # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  # config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'

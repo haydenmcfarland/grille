@@ -4,8 +4,6 @@ class User < Grille::Base
   include Devise::JWT::RevocationStrategies::JTIMatcher
   include Grille::Concerns::Tokenizable
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :registerable,
          :recoverable,
@@ -15,7 +13,6 @@ class User < Grille::Base
          :jwt_authenticatable,
          jwt_revocation_strategy: self
 
-  # - VALIDATIONS
   validates :email, presence: true, uniqueness: true
   validates :email, length: { maximum: 255 }
   validates :email, format: { with: Devise.email_regexp }

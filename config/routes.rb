@@ -12,7 +12,7 @@ Grille::Engine.routes.draw do
 
   # utilized to use vue-router history mode
 
-  #match '*path', to: redirect('/?redirect=%{path}'), via: :all
+  match '*path', to: redirect('/?redirect=%{path}'), via: :all
 
-  devise_for :users
+  devise_for :users, class_name: "User", module: :devise
 end
