@@ -1,28 +1,18 @@
-# Grille
-Short description and motivation.
+# grille
+VueJS, Rails, GraphQl Generalized Grid Component/Interface
 
-## Usage
-How to use my plugin.
+## Goal
 
-## Installation
-Add this line to your application's Gemfile:
+- Create a generalized grid component and interface for a model adapter
+- protect model operations with user level permissions
 
-```ruby
-gem 'grille'
-```
+![](https://i.imgur.com/pI3dW9C.png)
 
-And then execute:
-```bash
-$ bundle
-```
+## WIP
 
-Or install it yourself as:
-```bash
-$ gem install grille
-```
-
-## Contributing
-Contribution directions go here.
-
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+- has pagination
+- has CRUD context interface
+- uses convention to derive model queries
+- needs permission handling
+- utilizes ag-grid sorting/filtering (needs to support other types and create better interface)
+- needs Gemification
