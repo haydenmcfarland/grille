@@ -31,6 +31,8 @@ vendor/
 
 # ignore gem related files
 pkg/
-test/dummy/log/*.log
-test/dummy/storage/
-test/dummy/tmp/
+
+# ignore spec dummy dirs
+spec/dummy/db/migrate/
+spec/dummy/log/
+spec/dummy/tmp/
