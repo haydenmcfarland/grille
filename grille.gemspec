@@ -57,6 +57,7 @@ Gem::Specification.new do |spec|
       spring
       spring-watcher-listen
       web-console
+      pry
     ]
   )
 end
