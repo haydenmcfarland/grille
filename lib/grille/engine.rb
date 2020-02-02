@@ -46,8 +46,8 @@ module Grille
 
     require 'warden/jwt_auth'
     ::Warden::JWTAuth.configure do |config|
-      config.mappings = { user: "User" }
-      config.revocation_strategies = { user: "User"}
+      config.mappings = { user: 'User' }
+      config.revocation_strategies = { user: 'User' }
     end
   end
 end

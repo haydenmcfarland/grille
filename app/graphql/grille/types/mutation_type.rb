@@ -3,7 +3,7 @@
 module Grille
   module Types
     class MutationType < Types::BaseObject
-      mutations_path = File.expand_path('../../mutations', __FILE__)
+      mutations_path = File.expand_path('../mutations', __dir__)
       mutations_paths = Pathname.new(mutations_path).children
                                 .select(&:directory?)
 

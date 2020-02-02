@@ -1,4 +1,6 @@
-require "webpacker/helper"
+# frozen_string_literal: true
+
+require 'webpacker/helper'
 
 module Grille
   module ApplicationHelper

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Grille::Engine.routes.draw do
-  if false #Grille.env.development?
+  if false # Grille.env.development?
     # require 'graphi_ql'
     # mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql'
   end
@@ -14,5 +14,5 @@ Grille::Engine.routes.draw do
 
   match '*path', to: redirect('/?redirect=%{path}'), via: :all
 
-  devise_for :users, class_name: "User", module: :devise
+  devise_for :users, class_name: 'User', module: :devise
 end
