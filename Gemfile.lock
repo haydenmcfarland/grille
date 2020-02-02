@@ -97,6 +97,7 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
+    coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crass (1.0.6)
     devise (4.7.1)
@@ -159,6 +160,9 @@ GEM
     parser (2.7.0.2)
       ast (~> 2.4.0)
     pg (1.2.2)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     public_suffix (4.0.3)
     puma (4.3.1)
       nio4r (~> 2.0)
@@ -287,6 +291,7 @@ PLATFORMS
 DEPENDENCIES
   capybara
   grille!
+  pry
   rspec
   rspec-rails
   selenium-webdriver

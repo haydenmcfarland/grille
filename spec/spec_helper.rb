@@ -95,8 +95,8 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
 
   config.before(:each, type: :system, js: true) do
-    allow_any_instance_of(ActionController::Base).
-      to receive(:protect_against_forgery?).and_return(true)
+    allow_any_instance_of(ActionController::Base)
+      .to receive(:protect_against_forgery?).and_return(true)
     driven_by :selenium_chrome_headless
   end
 end
