@@ -1,17 +1,23 @@
-# grille (gem)
-VueJS, Rails, GraphQl Generalized Grid Component/Interface
+# grille (gem / heavy WIP)
+Rails engine that utilizes VueJS and GraphQl to create a generalized grid component/interface
 
 ## Goal
 
-- Create a generalized grid component and interface for a model adapter
-- protect model operations with user level permissions
+- create gem that provides user authentication and grid ui for viewing model data
+- provide permission system to protect model CRUD operations
+- have a simple interface for extending the base application and grid features
+
+## Info
+
+- uses `devise` and `devise-jwt` for JWT token based authentication with user model
+- leverages `graphql` for model CRUD operation interface
+- components made using `VueJS`, `Vuetify`, and `agGrid`
 
 ![](https://i.imgur.com/pI3dW9C.png)
 
-## WIP
+## TODO
 
-- needs lots of DRYing
-- TESTS
-- needs permission handling (add to jwt?)
-- utilizes ag-grid sorting/filtering (needs to support other types and create better interface)
-- separate vuejs Grid component into npm package
+- DRY
+- begin adding specs for regression testing and future features
+- add permission system (add to jwt payload?)
+- create npm package for Grid component
