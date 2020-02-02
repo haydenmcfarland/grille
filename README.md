@@ -10,9 +10,7 @@ VueJS, Rails, GraphQl Generalized Grid Component/Interface
 
 ## WIP
 
-- has pagination
-- has CRUD context interface
-- uses convention to derive model queries
-- needs permission handling
+- needs lots of DRYing
+- needs permission handling (add to jwt?)
 - utilizes ag-grid sorting/filtering (needs to support other types and create better interface)
-- needs Gemification
+- separate vuejs Grid component into npm package
