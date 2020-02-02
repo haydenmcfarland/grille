@@ -1,4 +1,4 @@
-# grille
+# grille (gem)
 VueJS, Rails, GraphQl Generalized Grid Component/Interface
 
 ## Goal
