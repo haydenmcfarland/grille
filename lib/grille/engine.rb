@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'devise'
+require 'warden/jwt_auth'
 
 module Grille
   class Engine < ::Rails::Engine
@@ -44,10 +45,9 @@ module Grille
       config.parent_controller = 'Grille::ApplicationController'
     end
 
-    require 'warden/jwt_auth'
     ::Warden::JWTAuth.configure do |config|
-      config.mappings = { user: 'User' }
-      config.revocation_strategies = { user: 'User' }
+      config.mappings = { user: 'Grille::User' }
+      config.revocation_strategies = { user: 'Grille::User' }
     end
   end
 end

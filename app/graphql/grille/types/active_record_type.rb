@@ -3,6 +3,8 @@
 module Grille
   module Types
     class ActiveRecordType < GraphQL::Schema::Object
+      class_attribute :model
+
       field_class Types::BaseField
 
       TYPES = %i[boolean integer float string].to_set
@@ -33,6 +35,8 @@ module Grille
 
         def create_pagination_type(model)
           klass = self
+          klass.model = model.constantize
+
           modules = klass.name.split('::')
           type_name = modules.pop + TYPE_TAG
 
