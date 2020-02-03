@@ -11,8 +11,8 @@ module Grille
         type Types::Auth::UserType
 
         def resolve
-          context[:current_user]
-          user.as_json.slice('email', 'id').merge('token' => user.token)
+          user = context[:current_user]
+          ::Grille::Mutations::Auth.user_to_hash(user)
         end
       end
     end
