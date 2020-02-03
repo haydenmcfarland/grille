@@ -8,7 +8,7 @@ RSpec.describe 'User Login', type: :system, js: true do
     # FIXME: add password entropy checking
     password = 'a' * 14
 
-    user = User.create!(
+    user = ::Grille::User.create!(
       first_name: 'test',
       last_name: 'test',
       email: 'test@gmail.com',

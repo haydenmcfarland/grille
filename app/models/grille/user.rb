@@ -6,7 +6,6 @@ module Grille
     include Grille::Concerns::Tokenizable
 
     devise :database_authenticatable,
-           :registerable,
            :recoverable,
            :devise,
            :validatable,

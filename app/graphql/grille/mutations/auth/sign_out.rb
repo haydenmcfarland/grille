@@ -11,13 +11,10 @@ module Grille
         field :result, GraphQL::Types::Boolean, null: false
 
         def grille_resolver
-          if context[:current_user]
-            context[:current_user].update(jti: SecureRandom.uuid)
-            return true
-          end
-          false
+          user = context[:current_user]
+          user&.update!(jti: SecureRandom.uuid)
         end
       end
     end
-end
+  end
 end

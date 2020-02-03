@@ -11,7 +11,8 @@ module Grille
         type Types::Auth::UserType
 
         def resolve
-          context[:current_user]
+          user = context[:current_user]
+          ::Grille::Mutations::Auth.user_to_hash(user)
         end
       end
     end
