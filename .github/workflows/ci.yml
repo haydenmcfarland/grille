@@ -44,7 +44,9 @@ jobs:
 
       - name: Run RSpec
         run: |
-          bundle exec rake grille:webpacker:yarn_install 
+          cd spec/dummy
+          bundle exec rake grille:webpacker:yarn_install
+          cd ../..
           HEADLESS=true bundle exec rspec
         env:
           RAILS_ENV: test
