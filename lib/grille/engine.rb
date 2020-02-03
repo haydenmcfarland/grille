@@ -45,6 +45,7 @@ module Grille
       config.parent_controller = 'Grille::ApplicationController'
     end
 
+    # FIXME: shouldn't have to do this explicitly (devise-jwt)
     ::Warden::JWTAuth.configure do |config|
       config.mappings = { user: 'Grille::User' }
       config.revocation_strategies = { user: 'Grille::User' }
