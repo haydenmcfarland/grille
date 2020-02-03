@@ -12,7 +12,7 @@ module Grille
         field :result, String, null: false
 
         def grille_resolver(email:, password:)
-          user = User.find_for_authentication(email: email)
+          user = ::Grille::User.find_for_authentication(email: email)
           return nil unless user
 
           is_valid_for_auth = user.valid_for_authentication? do

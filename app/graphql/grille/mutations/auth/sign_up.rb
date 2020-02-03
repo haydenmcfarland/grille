@@ -15,7 +15,7 @@ module Grille
         field :result, String, null: false
 
         def grille_resolver(email:, password:, first_name:, last_name:)
-          user = User.create!(
+          user = ::Grille::User.create!(
             email: email,
             password: password,
             first_name: first_name,
