@@ -43,7 +43,9 @@ jobs:
           POSTGRES_PASSWORD: postgres
 
       - name: Run RSpec
-        run: HEADLESS=true bundle exec rspec
+        run: |
+          bundle exec rake grille:webpacker:yarn_install 
+          HEADLESS=true bundle exec rspec
         env:
           RAILS_ENV: test
           POSTGRES_USER: postgres
