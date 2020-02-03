@@ -32,9 +32,11 @@ jobs:
       - name: Setup Database
         run: |
           cd spec/dummy
-          bundle exec rake db:create 
+          cp -Rf ../../config/database.yml.github-actions config/database.yml
+          bundle exec rake db:create
           bundle exec rake db:schema:load
-  
+          cd ../..
+
         env:
           RAILS_ENV: test
           POSTGRES_USER: postgres
