@@ -12,6 +12,7 @@ module Grille
 
         def resolve
           context[:current_user]
+          user.as_json.slice('email', 'id').merge('token' => user.token)
         end
       end
     end

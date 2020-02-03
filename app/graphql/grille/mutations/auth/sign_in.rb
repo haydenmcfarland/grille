@@ -22,7 +22,7 @@ module Grille
           return unless is_valid_for_auth
 
           context[:current_user] = user
-          user.as_json.slice('email', 'id').merge('token' => user.token)
+          ::Grille::Mutations::Auth.user_to_hash(user)
         end
       end
     end
