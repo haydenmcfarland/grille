@@ -31,7 +31,7 @@ jobs:
 
       - name: Setup Database
         run: |
-          bundle exec rake db:create db:schema:load
+          bin/rails db:create db:schema:load
   
         env:
           RAILS_ENV: test
