@@ -2,8 +2,8 @@
 require("@rails/ujs").start();
 require("@rails/activestorage").start();
 
-import "initializers/polyfills";
-import "initializers/turbolinks";
+import "../initializers/polyfills";
+import "../initializers/turbolinks";
 
 import Vue from "vue";
 
