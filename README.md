@@ -1,6 +1,6 @@
 # grille ![Grille](app/assets/images/logo.svg?sanitize=true "Grille")
 
-Rails engine that utilizes Vue and GraphQl to create a generalized grid component/interface
+Rails engine that utilizes Vue and GraphQL to create a generalized grid component/interface
 
 ## GOAL
 
