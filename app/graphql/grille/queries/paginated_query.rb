@@ -86,7 +86,7 @@ module Grille
       end
 
       def query_page_count(query, page_size)
-        query.count / page_size + 1
+        (query.count.to_f / page_size).ceil.to_i
       end
 
       def query_page_rows(query, page_number, page_size)
