@@ -243,7 +243,7 @@ export default {
           return response.data[this.model];
         })
         .then(result => {
-          this.totalPages = result.totalPages - 1;
+          this.totalPages = result.totalPages;
 
           // FIXME: this doesn't seem that great here
           if (!this.columnDefs) {
