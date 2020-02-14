@@ -17,10 +17,9 @@ Rails engine that utilizes VueJS and GraphQl to create a generalized grid compon
 
 ## TODO
 
-- DRY
+- DRY + reorganization
 - begin adding specs for regression testing and future features
 - add permission system (add to jwt payload?)
-- create npm package for Grid component
 - remove unused files (files from generators)
 
 ## HOW TO USE
