@@ -16,7 +16,7 @@ Rails engine that utilizes Vue and GraphQl to create a generalized grid componen
 - leverages `graphql` for model CRUD operation interface
 - components made using `Vue`, `Vuetify`, and `agGrid`
 
-![](https://i.imgur.com/pI3dW9C.png)
+![](https://i.imgur.com/uVlb1gB.gif)
 
 ## TODO
 
