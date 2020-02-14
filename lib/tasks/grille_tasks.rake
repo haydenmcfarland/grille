@@ -30,6 +30,12 @@ namespace :grille do
         end
       end
     end
+
+    desc 'Integrate erb, vue and install yarn'
+    task :grille_prepare do
+      system 'bundle exec rails webpacker:install:vue webpacker:install:erb'
+      Rake::Task['grille:webpacker:yarn_install'].invoke
+    end
   end
 end
 
