@@ -99,5 +99,23 @@ Create a `grille.js.erb` file in `app/javascript/packs/` and utilize
 `Grille.javascript` helper to import desired components.
 
 ```javascript
-import "<%= Grille.javascript('application.js') %>";
+import {
+  Vue,
+  vuetify,
+  router,
+  App,
+  apolloProvider,
+  createStore
+} from "<%= Grille.javascript('packs/grille.js') %>";
+
+document.addEventListener("turbolinks:load", () => {
+  const app = new Vue({
+    vuetify,
+    router,
+    apolloProvider,
+    store: createStore(),
+    render: h => h(App)
+  }).$mount();
+  document.body.appendChild(app.$el);
+});
 ```
