@@ -21,16 +21,6 @@ module Grille
     validates :last_name, presence: true
     validates :last_name, length: { maximum: 255 }
 
-    # Send mail through activejob
-    def send_devise_notification(notification, *args)
-      devise_mailer.send(notification, self, *args).deliver_later
-    end
-
-    # return first and lastname
-    def name
-      [first_name, last_name].join(' ').strip
-    end
-
     # override to define specifc context actions
     class << self
       def delete(context:, params:)
