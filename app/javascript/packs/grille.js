@@ -52,13 +52,11 @@ Vue.mixin(SettingsMixin)
 // vuex store
 import createStore from './store/base_store';
 
-document.addEventListener("turbolinks:load", () => {
-  const app = new Vue({
-    vuetify,
-    router,
-	apolloProvider,
-	store: createStore(),
-	render: h => h(App)
-  }).$mount();
-  document.body.appendChild(app.$el);
-});
+export {
+  Vue,
+  vuetify,
+  router,
+  App,
+  apolloProvider,
+  createStore,
+}
