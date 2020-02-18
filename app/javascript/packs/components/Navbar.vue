@@ -55,7 +55,7 @@ export default {
       actions: [
         {
           id: "logout",
-          props: { href: "#", "v-on:click": "handleSignOut()" },
+          props: { href: "#" },
           icon: "mdi-account-off",
           label: () => this.username,
           component: "a",
