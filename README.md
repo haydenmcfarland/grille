@@ -9,6 +9,7 @@ Rails engine that utilizes Vue and GraphQL to create a generalized grid componen
 - have a simple interface for extending the base application and grid features
 - provide pagination and infinite scroll grid interfaces
 - make components reusable and extendable via webpacker
+- determine if reliable replacement for Netzke/ExtJS framework
 
 ## INFO
 
