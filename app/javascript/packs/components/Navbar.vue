@@ -16,17 +16,18 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item>
-            <a href="#" @click.prevent="handleSignOut">
+          <!-- FIXME: this should be its own component & generalize more -->
+          <v-list-item v-for="action in actions" :key="action.id">
+            <component
+              :is="action.component"
+              v-bind="action.props"
+              @click.prevent="action.handler"
+            >
               <v-btn left text>
-                <v-icon>mdi-account-off</v-icon> {{ username }}
+                <v-icon>{{ action.icon }}</v-icon>
+                {{ action.label && action.label() }}
               </v-btn>
-            </a>
-          </v-list-item>
-          <v-list-item>
-            <router-link to="/users">
-              <v-btn left text> <v-icon>mdi-account</v-icon> Users </v-btn>
-            </router-link>
+            </component>
           </v-list-item>
           <v-list-item>
             <v-switch left v-model="goDark" label="DARK MODE"> </v-switch>
@@ -51,6 +52,30 @@ export default {
   },
   data() {
     return {
+      actions: [
+        {
+          id: "logout",
+          props: { href: "#", "v-on:click": "handleSignOut()" },
+          icon: "mdi-account-off",
+          label: () => this.username,
+          component: "a",
+          handler: this.handleSignOut
+        },
+        {
+          id: "users",
+          props: { to: "/users" },
+          icon: "mdi-account",
+          label: () => "Users",
+          component: "router-link"
+        },
+        {
+          id: "tests",
+          props: { to: "/tests" },
+          icon: "mdi-account",
+          label: () => "Tests",
+          component: "router-link"
+        },
+      ],
       goDark: this.darkMode()
     };
   },
@@ -85,7 +110,7 @@ export default {
         .catch(error => {
           this.errors = [error];
         });
-    }
+    },
   }
 };
 </script>
