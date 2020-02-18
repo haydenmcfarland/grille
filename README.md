@@ -1,4 +1,4 @@
-# grille ![Grille](app/assets/images/logo.svg?sanitize=true "Grille")
+# grille ![Grille](app/assets/images/logo.svg?sanitize=true "Grille") (alpha)
 
 Rails engine that utilizes Vue and GraphQL to create a generalized grid component/interface
 
