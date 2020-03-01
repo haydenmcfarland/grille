@@ -13,7 +13,7 @@ module Grille
 
         def grille_resolver(email:, password:)
           user = ::Grille::User.find_for_authentication(email: email)
-          return nil unless user
+          return unless user
 
           is_valid_for_auth = user.valid_for_authentication? do
             user.valid_password?(password)
