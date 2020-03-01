@@ -45,8 +45,6 @@ webpacker and install yarn packages:
 ```
 rake grille:webpacker:grille_prepare
 ```
-
-Currently there are issues with the sassLoader.
 Add the following to your `webpack/environment.js`:
 
 ```javascript
