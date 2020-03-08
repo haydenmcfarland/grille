@@ -16,7 +16,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.datetime :reset_password_sent_at
 
       ## Rememberable
-      #   t.datetime :remember_created_at
+      # t.datetime :remember_created_at
 
       ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
@@ -29,11 +29,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string   :confirmation_token
       t.datetime :confirmed_at
       t.datetime :confirmation_sent_at
-      t.string   :unconfirmed_email # Only if using reconfirmable
+      t.string   :unconfirmed_email
 
       # Lockable
-      t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
-      t.string   :unlock_token # Only if unlock strategy is :email or :both
+      t.integer  :failed_attempts, default: 0, null: false
+      t.string   :unlock_token
       t.datetime :locked_at
 
       ## JTI for JWT auth
@@ -46,6 +46,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
     add_index :grille_users, :reset_password_token, unique: true
     add_index :grille_users, :confirmation_token,   unique: true
     add_index :grille_users, :unlock_token,         unique: true
-    add_index 'grille_users', ['jti'], name: 'index_users_on_jti', unique: true, using: :btree
+    add_index 'grille_users', ['jti'], name: 'index_users_on_jti', unique: true,
+                                       using: :btree
   end
 end
