@@ -4,7 +4,9 @@ $LOAD_PATH.push File.expand_path('lib', __dir__)
 
 require 'grille/version'
 
-Gem::Specification.new do |spec|
+module GemSpecHelper
+  module_function
+
   def add_dependencies(spec, dependencies)
     dependencies.each do |d|
       spec.add_dependency(*(d.is_a?(String) ? [d] : d))
@@ -16,7 +18,9 @@ Gem::Specification.new do |spec|
       spec.add_development_dependency(*(d.is_a?(String) ? [d] : d))
     end
   end
+end
 
+Gem::Specification.new do |spec|
   spec.name        = 'grille'
   spec.version     = Grille::VERSION
   spec.authors     = ['Hayden McFarland']
@@ -35,7 +39,7 @@ Gem::Specification.new do |spec|
 
   spec.files = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
 
-  add_dependencies(
+  GemSpecHelper.add_dependencies(
     spec,
     [
       'bcrypt',
@@ -54,7 +58,7 @@ Gem::Specification.new do |spec|
     ]
   )
 
-  add_development_dependencies(
+  GemSpecHelper.add_development_dependencies(
     spec,
     %w[
       graphiql-rails
