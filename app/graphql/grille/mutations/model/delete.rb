@@ -12,10 +12,7 @@ module Grille
         field :result, GraphQL::Types::Boolean, null: false
 
         def grille_resolver(model:, ids:)
-          # add default protection to base mutation
           user = context[:current_user]
-
-          # FIXME: check permissions here
           return false if user.nil?
 
           klass = ::Grille::Mutations::Model.get_model_klass(model)

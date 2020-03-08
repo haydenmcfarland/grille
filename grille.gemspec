@@ -11,6 +11,12 @@ Gem::Specification.new do |spec|
     end
   end
 
+  def add_development_dependencies(spec, dependencies)
+    dependencies.each do |d|
+      spec.add_development_dependency(*(d.is_a?(String) ? [d] : d))
+    end
+  end
+
   spec.name        = 'grille'
   spec.version     = Grille::VERSION
   spec.authors     = ['Hayden McFarland']
@@ -48,7 +54,7 @@ Gem::Specification.new do |spec|
     ]
   )
 
-  add_dependencies(
+  add_development_dependencies(
     spec,
     %w[
       graphiql-rails

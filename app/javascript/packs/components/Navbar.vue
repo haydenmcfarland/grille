@@ -68,13 +68,6 @@ export default {
           label: () => "Users",
           component: "router-link"
         },
-        {
-          id: "tests",
-          props: { to: "/tests" },
-          icon: "mdi-account",
-          label: () => "Tests",
-          component: "router-link"
-        },
       ],
       goDark: this.darkMode()
     };

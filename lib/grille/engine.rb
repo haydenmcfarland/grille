@@ -24,8 +24,9 @@ module Grille
                         end
       next unless insert_middleware
 
+      # "Webpacker::DevServerProxy" if Rails version < 5
       app.middleware.insert_before(
-        0, Webpacker::DevServerProxy, # "Webpacker::DevServerProxy" if Rails version < 5
+        0, Webpacker::DevServerProxy,
         ssl_verify_none: true,
         webpacker: Grille.webpacker
       )
@@ -45,7 +46,6 @@ module Grille
       config.parent_controller = 'Grille::ApplicationController'
     end
 
-    # FIXME: shouldn't have to do this explicitly (devise-jwt)
     ::Warden::JWTAuth.configure do |config|
       config.mappings = { user: 'Grille::User' }
       config.revocation_strategies = { user: 'Grille::User' }
