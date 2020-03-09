@@ -5,7 +5,7 @@
   config.revocation_strategies = { user: Grille::User }
   config.secret = ENV['GRILLE_JWT_SECRET_KEY'] ||
                   Rails.application.secrets.secret_key_base ||
-                  (Rails.env == 'development' ? 'development' : nil)
+                  (Rails.env != 'production' ? 'test' : nil)
 
   exp = ENV['GRILLE_JWT_EXPIRATION_TIME'].to_i
   config.expiration_time = exp.positive? ? expiration.days.to_i : 30.days.to_i

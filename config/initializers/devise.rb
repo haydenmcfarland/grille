@@ -8,7 +8,7 @@ Devise.setup do |config|
   config.parent_controller = 'Grille::ApplicationController'
   config.secret_key = ENV['DEVISE_SECRET_KEY'] ||
                       Rails.application.secrets.secret_key_base ||
-                      (Rails.env == 'development' ? 'development' : nil)
+                      (Rails.env != 'production' ? 'test' : nil)
 
   # config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 
