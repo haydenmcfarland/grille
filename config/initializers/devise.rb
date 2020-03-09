@@ -3,14 +3,11 @@
 require 'devise'
 require 'devise/jwt'
 
-SECRET_KEY = Rails.application.secrets.secret_key_base.to_s
-
 Devise.setup do |config|
-  config.jwt do |jwt|
-    jwt.secret = SECRET_KEY
-    jwt.expiration_time = 30.days.to_i
-  end
-  config.secret_key = SECRET_KEY
+  config.router_name = :grille
+  config.parent_controller = 'Grille::ApplicationController'
+  config.secret_key = ENV['GRILLE_DEVISE_SECRET_KEY'] ||
+                      Rails.application.secrets.secret_key_base
 
   # config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
 

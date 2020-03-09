@@ -52,3 +52,6 @@ jobs:
           RAILS_ENV: test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          GRILLE_DEVISE_SECRET_KEY: test
+          GRILLE_JWT_SECRET_KEY: test
+
