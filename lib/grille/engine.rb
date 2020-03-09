@@ -40,15 +40,5 @@ module Grille
         root: File.expand_path(File.join(__dir__, '..', '..', 'public'))
       )
     end
-
-    Devise.setup do |config|
-      config.router_name = :grille
-      config.parent_controller = 'Grille::ApplicationController'
-    end
-
-    ::Warden::JWTAuth.configure do |config|
-      config.mappings = { user: 'Grille::User' }
-      config.revocation_strategies = { user: 'Grille::User' }
-    end
   end
 end
