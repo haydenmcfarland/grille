@@ -4,8 +4,7 @@
   config.mappings = { user: Grille::User }
   config.revocation_strategies = { user: Grille::User }
   config.secret = ENV['GRILLE_JWT_SECRET_KEY'] ||
-                  Rails.application.secrets.secret_key_base ||
-                  (Rails.env != 'production' ? 'test' : nil)
+                  Rails.application.secrets.secret_key_base
 
   exp = ENV['GRILLE_JWT_EXPIRATION_TIME'].to_i
   config.expiration_time = exp.positive? ? expiration.days.to_i : 30.days.to_i
