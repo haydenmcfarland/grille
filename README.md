@@ -23,8 +23,7 @@ Rails engine that utilizes Vue and GraphQL to create a generalized grid componen
 
 - DRY + reorganization
 - begin adding specs for regression testing and future features
-- add permission system (add to jwt payload?)
-- remove unused files (files from generators)
+- make permission system more configurable
 - generalize vue components and configuration to make it easier to configure
 
 ## HOW TO USE
