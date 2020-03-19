@@ -7,12 +7,12 @@ module Grille
       queries_path = File.expand_path('../queries', __dir__)
       queries_paths = Pathname.new(queries_path).children.select(&:directory?)
 
-      queries = queries_paths.map do |path|
+      queries = queries_paths.flat_map do |path|
         Dir[path.join('**', '*.rb')].map do |file|
           mod, klass = file.split(queries_path.to_s + '/').last.split('/')
           [mod, klass.chomp('.rb')]
         end
-      end.flatten(1)
+      end
 
       queries.map do |mod, klass|
         field klass.to_sym, resolver:

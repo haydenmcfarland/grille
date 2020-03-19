@@ -7,12 +7,12 @@ module Grille
       mutations_paths = Pathname.new(mutations_path).children
                                 .select(&:directory?)
 
-      mutations = mutations_paths.map do |path|
+      mutations = mutations_paths.flat_map do |path|
         Dir[path.join('**', '*.rb')].map do |file|
           mod, klass = file.split(mutations_path.to_s + '/').last.split('/')
           [mod, klass.chomp('.rb')]
         end
-      end.flatten(1)
+      end
 
       mutations.each do |mod, klass|
         field klass.to_sym, mutation:

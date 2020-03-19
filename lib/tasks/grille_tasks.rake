@@ -11,7 +11,7 @@ end
 namespace :grille do
   namespace :webpacker do
     desc 'Install deps with yarn'
-    task :yarn_install do
+    task yarn_install: :environment do
       Dir.chdir(File.join(__dir__, '/../..')) do
         system 'yarn install'
       end
@@ -32,7 +32,7 @@ namespace :grille do
     end
 
     desc 'Integrate erb, vue and install yarn'
-    task :grille_prepare do
+    task prepare: :environment do
       Rake::Task['webpacker:install:vue'].invoke
       Rake::Task['webpacker:install:erb'].invoke
       Rake::Task['grille:webpacker:yarn_install'].invoke
@@ -56,7 +56,8 @@ def enhance_assets_precompile
 end
 
 # Compile packs after we've compiled all other assets during precompilation
-skip_webpacker_precompile = %w[no false n f].include?(ENV['WEBPACKER_PRECOMPILE'])
+skip_webpacker_precompile = %w[no false n f]
+                            .include?(ENV['WEBPACKER_PRECOMPILE'])
 
 unless skip_webpacker_precompile
   if Rake::Task.task_defined?('assets:precompile')

@@ -1,0 +1,19 @@
+inherit_from:
+  - .rubocop/rubocop_defaults.yml
+  - .rubocop/rubocop_rspec.yml
+  - .rubocop/rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.7.0
+  Exclude:
+    - 'db/**/*'
+    - 'spec/dummy/**/*'
+    - 'bin/{rails,rake}'
+    - 'bin/bundle'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
