@@ -39,12 +39,16 @@ Gem::Specification.new do |spec|
 
   spec.files = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
 
+  # FIXME: dry-configurable is pinned to 0.11.3 as it breaks
+  # devise-jwt; we should just remove devise-jwt as it is just a wrapper
+  # for warden/jwt
   GemSpecHelper.add_dependencies(
     spec,
     [
       'bcrypt',
       'bootsnap',
       'devise',
+      ['dry-configurable', '0.11.3'],
       'devise-jwt',
       'graphql',
       'jbuilder',
