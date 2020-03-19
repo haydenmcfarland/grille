@@ -1,5 +1,6 @@
-inherit_from: .rubocop_todo.yml
-inherit_from: .rubocop_rspec.yml
+inherit_from:
+  - .rubocop_rspec.yml
+  - .rubocop_todo.yml
 
 require:
   - rubocop-performance
@@ -12,6 +13,7 @@ AllCops:
     - 'db/**/*'
     - 'spec/dummy/**/*'
     - 'bin/{rails,rake}'
+    - 'bin/bundle'
     - 'vendor/**/*'
     - 'node_modules/**/*'
 
@@ -35,3 +37,7 @@ Metrics/AbcSize:
 
 Naming/MethodParameterName:
   MinNameLength: 1
+
+Style/FormatStringToken:
+  Exclude:
+    - config/routes.rb

@@ -24,7 +24,7 @@ module Grille
 
         def update(context:, params:, update_params:)
           permission(context: context)
-          where(params).update_all(update_params)
+          where(params).update(update_params)
         end
 
         def delete(context:, params: {})
