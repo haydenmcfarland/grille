@@ -37,6 +37,7 @@ spec/dummy/db/migrate/
 spec/dummy/log/
 spec/dummy/tmp/
 spec/dummy/public/packs/
+spec/dummy/public/packs-test/
 
 # lock down in gemspec
 Gemfile.lock
