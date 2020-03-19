@@ -1,7 +1,7 @@
 inherit_from:
-  - .rubocop_defaults.yml
-  - .rubocop_rspec.yml
-  - .rubocop_todo.yml
+  - .rubocop/rubocop_defaults.yml
+  - .rubocop/rubocop_rspec.yml
+  - .rubocop/rubocop_todo.yml
 
 require:
   - rubocop-performance
