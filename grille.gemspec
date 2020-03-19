@@ -48,7 +48,6 @@ Gem::Specification.new do |spec|
       'bcrypt',
       'bootsnap',
       'devise',
-      ['dry-configurable', '0.11.3'],
       'devise-jwt',
       'graphql',
       'jbuilder',
