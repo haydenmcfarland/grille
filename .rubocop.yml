@@ -2,7 +2,7 @@ inherit_from: .rubocop_todo.yml
 require:
   - rubocop-performance
   - rubocop-rails
-  - rubocop-rails-rspec
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 2.7.0

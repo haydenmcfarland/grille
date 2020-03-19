@@ -9,7 +9,7 @@ module Grille
 
       class_methods do
         def permission(context:)
-          raise 'not a valid session' unless context[:current_user].present?
+          raise 'not a valid session' if context[:current_user].blank?
         end
 
         def create(context:, params: {})
