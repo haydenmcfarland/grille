@@ -67,6 +67,9 @@ Gem::Specification.new do |spec|
       graphiql-rails
       listen
       rubocop
+      rubocop-performance
+      rubocop-rails
+      rubocop-rspec
       spring
       spring-watcher-listen
       web-console
