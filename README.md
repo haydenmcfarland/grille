@@ -42,7 +42,7 @@ Run the following rake prep task to install `erb`/`vue` integrations for
 webpacker and install yarn packages:
 
 ```
-rake grille:webpacker:grille_prepare
+rake grille:webpacker:prepare
 ```
 Add the following to your `webpack/environment.js`:
 
