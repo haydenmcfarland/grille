@@ -29,6 +29,8 @@ Rails engine that utilizes Vue and GraphQL to create a generalized grid componen
 - generalize vue components and configuration to make it easier to configure
 - allow errors to propagate through UI when logged in
 - fix js warnings/issues with borrowed components
+- update 'getting started' documentation
+- column options / label formatting
 
 ## HOW TO USE (wip - need to update documentation to add erb loader to webpacker.yml)
 
@@ -120,4 +122,56 @@ document.addEventListener("turbolinks:load", () => {
   }).$mount();
   document.body.appendChild(app.$el);
 });
+```
+
+# Example Component Extension
+---
+
+( change actions defined in grille Navbar)
+```js
+import Navbar from "<%= Grille.javascript('packs/components/Navbar.vue') %>";
+
+export default {
+  name: 'Navbar',
+  extends: Navbar,
+  data() {
+    return {
+      actions: [
+        {
+          id: "logout",
+          props: { href: "#" },
+          icon: "mdi-account-off",
+          label: () => 'Logout',
+          component: "a",
+          handler: this.handleSignOut
+        },
+        {
+          id: "users",
+          props: { to: "/users" },
+          icon: "mdi-account",
+          label: () => "Users",
+          component: "router-link"
+        },
+        {
+          id: "projects",
+          props: { to: "/projects" },
+          icon: "mdi-pencil",
+          label: () => "Projects",
+          component: "router-link"
+        },
+      ],
+    }
+  }
+}
+```
+
+```js
+import Navbar from "./mixins/grille/navbar.js.erb"
+const MyApp = {
+  name: 'App',
+  extends: App,
+    components: {
+    Navbar
+  }
+}
 ```
