@@ -125,9 +125,8 @@ document.addEventListener("turbolinks:load", () => {
 ```
 
 # Example Component Extension
----
 
-( change actions defined in grille Navbar)
+Change action defined in grille's Navbar component (a better interface will replace this):
 ```js
 import Navbar from "<%= Grille.javascript('packs/components/Navbar.vue') %>";
 
