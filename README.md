@@ -18,6 +18,8 @@ Rails engine that utilizes Vue and GraphQL to create a generalized grid componen
 - components made using `Vue`, `Vuetify`, and `agGrid`
 
 ![example](https://github.com/haydenmcfarland/assets/blob/master/images/grille.gif?raw=true)
+![example](https://github.com/haydenmcfarland/assets/blob/master/images/grille_simple_auth.gif?raw=true)
+
 
 ## TODO
 
@@ -28,7 +30,7 @@ Rails engine that utilizes Vue and GraphQL to create a generalized grid componen
 - allow errors to propagate through UI when logged in
 - fix js warnings/issues with borrowed components
 
-## HOW TO USE
+## HOW TO USE (wip - need to update documentation to add erb loader to webpacker.yml)
 
 Add the following to your `Gemfile`:
 
