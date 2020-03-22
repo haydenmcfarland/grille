@@ -1,4 +1,4 @@
-# grille (alpha)
+# grille (WIP)
 
 Rails engine that utilizes Vue and GraphQL to create a generalized grid component/interface
 
