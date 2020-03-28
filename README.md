@@ -32,7 +32,7 @@ Rails engine that utilizes Vue and GraphQL to create a generalized grid componen
 - update 'getting started' documentation
 - column options / label formatting
 
-## HOW TO USE (wip - need to update documentation to add erb loader to webpacker.yml)
+## HOW TO USE
 
 Add the following to your `Gemfile`:
 
@@ -62,7 +62,7 @@ const options = sassLoaderConfig.options
 options.implementation = require('sass')
 ```
 
-Modify `config/webpacker/loaders/vue.js` to the include the following rules:
+Add/Modify `config/webpacker/loaders/vue.js` to the include the following rules:
 
 ```javascript
 module.exports = {
@@ -96,6 +96,21 @@ module.exports = {
       ],
     },
   ],
+}
+```
+Add/modfiy `config/webpacker/loaders/erb.js` to include the following:
+
+```
+module.exports = {
+  test: /\.erb$/,
+  enforce: 'pre',
+  exclude: /node_modules/,
+  use: [{
+    loader: 'rails-erb-loader',
+    options: {
+      runner: (/^win/.test(process.platform) ? 'ruby ' : '') + 'bin/rails runner'
+    }
+  }]
 }
 ```
 
