@@ -11,7 +11,7 @@ Grille::Engine.routes.draw do
     path: /((?!graphiql).)*/
   }
 
-  if Rails.env.development?
+  if ENV['GRILLE_GRAPHI_QL'] == 'true' && Rails.env.development?
     require 'graphiql/rails'
     mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/graphql'
   end
