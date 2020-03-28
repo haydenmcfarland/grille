@@ -98,7 +98,7 @@ module.exports = {
   ],
 }
 ```
-Add/modfiy `config/webpacker/loaders/erb.js` to include the following:
+Add/modify `config/webpacker/loaders/erb.js` to include the following:
 
 ```
 module.exports = {
