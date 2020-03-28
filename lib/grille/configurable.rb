@@ -2,9 +2,8 @@
 
 module Grille
   module Configurable
-    def default_config
-      OpenStruct.new
-    end
+    # should return a hash or an object that supports to_h
+    def default_config; end
 
     def configure
       config = default_config
