@@ -50,7 +50,7 @@ webpacker and install yarn packages:
 ```
 rake grille:webpacker:prepare
 ```
-Add the following to your `webpack/environment.js`:
+Add the following to your `config/webpack/environment.js`:
 
 ```javascript
 const sassLoader = environment.loaders.get('sass')
