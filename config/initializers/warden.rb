@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-::Warden::JWTAuth.configure do |config|
+Warden::JWTAuth.configure do |config|
   config.mappings = { user: Grille::User }
   config.revocation_strategies = { user: Grille::User }
   config.secret = ENV['GRILLE_JWT_SECRET_KEY'] ||
