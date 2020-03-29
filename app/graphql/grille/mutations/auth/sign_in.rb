@@ -4,8 +4,6 @@ module Grille
   module Mutations
     module Auth
       class SignIn < Grille::Mutations::Base
-        null true
-
         argument :email, String, required: true
         argument :password, String, required: true
 

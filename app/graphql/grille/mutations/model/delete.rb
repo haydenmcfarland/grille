@@ -4,8 +4,6 @@ module Grille
   module Mutations
     module Model
       class Delete < Grille::Mutations::Base
-        null true
-
         argument :model, String, required: true
         argument :ids, [ID], required: true
 

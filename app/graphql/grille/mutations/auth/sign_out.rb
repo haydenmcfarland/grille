@@ -4,8 +4,6 @@ module Grille
   module Mutations
     module Auth
       class SignOut < Grille::Mutations::Base
-        null true
-
         description 'Logout for users'
 
         field :result, GraphQL::Types::Boolean, null: false

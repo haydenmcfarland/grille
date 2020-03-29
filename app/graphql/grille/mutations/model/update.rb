@@ -4,8 +4,6 @@ module Grille
   module Mutations
     module Model
       class Update < Grille::Mutations::Base
-        null true
-
         argument :model, String, required: true
         argument :json_array, [String], required: true
 
