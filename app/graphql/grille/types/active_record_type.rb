@@ -23,10 +23,11 @@ module Grille
           modules = name.split('::')
           type_name = modules.pop + TYPE_TAG
 
+          klass = self
           pagination_klass = Class.new BaseObject do
             GraphQL::Schema::Object.field :id, GraphQL::Types::ID, null: false
 
-            model.constantize.columns.each do |c|
+            klass.model.columns.each do |c|
               next if c.name == 'id'
 
               # default to String for types not in TYPES
