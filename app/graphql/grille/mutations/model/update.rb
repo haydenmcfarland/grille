@@ -11,6 +11,10 @@ module Grille
 
         field :result, GraphQL::Types::Boolean, null: false
 
+        def massage_params(params)
+          params.transform_keys(&:underscore).except('__typename')
+        end
+
         def grille_resolver(model:, json_array:)
           user = context[:current_user]
           return false if user.nil?
@@ -26,14 +30,9 @@ module Grille
           ActiveRecord::Base.transaction do
             row_updates.each do |r|
               obj = klass.find(r['id'])
-
-              # FIXME: massage params from js
-              params = r.transform_keys(&:underscore).except('__typename')
-              obj.update!(params)
+              obj.update!(massage_params(r))
             end
-            new_rows.each do |r|
-              klass.create!(r).save!
-            end
+            new_rows.each { |r| klass.create!(massage_params(r)).save! }
           end
           true
         end
