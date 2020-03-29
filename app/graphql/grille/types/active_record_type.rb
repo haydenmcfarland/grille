@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../../../../lib/grille/configurable'
+
 module Grille
   module Types
     class ActiveRecordType < GraphQL::Schema::Object
+      extend Grille::Configurable
+
       class_attribute :model
 
       field_class Types::BaseField
@@ -15,29 +19,8 @@ module Grille
       TYPE_TAG = 'Pagination'
 
       class << self
-        def default_config
-          OpenStruct.new({})
-        end
-
-        def configure
-          # FIXME: expand on configuration
-          config = default_config
-          yield(config) || {}
-
-          # allow the passing of model as constant or string
-          model = config.model.to_s
-
-          raise 'no model defined' unless model
-          raise "model does not exist: #{model}" unless const_defined?(model)
-
-          create_pagination_type(model)
-        end
-
-        def create_pagination_type(model)
-          klass = self
-          klass.model = model.constantize
-
-          modules = klass.name.split('::')
+        def build
+          modules = name.split('::')
           type_name = modules.pop + TYPE_TAG
 
           pagination_klass = Class.new BaseObject do
@@ -57,10 +40,10 @@ module Grille
             end
           end
 
-          namespace = klass.name.split('::')[0...-1].join('::').constantize
+          namespace = name.split('::')[0...-1].join('::').constantize
           klass_type = namespace.const_set(type_name, pagination_klass)
 
-          klass.class_eval do
+          class_eval do
             GraphQL::Schema::Object.field :total_pages, Integer, null: false
             GraphQL::Schema::Object.field :rows, [klass_type], null: false
           end
