@@ -5,15 +5,13 @@ module Grille
     # overwrite to call component initialization
     def build; end
 
+    def default_config; end
+
     def configure
-      config = default_config
+      config = OpenStruct.new(default_config)
       yield(config)
       config.to_h.each { |k, v| send("#{k}=", v) }
       build
-    end
-
-    def default_config
-      OpenStruct.new
     end
   end
 end
