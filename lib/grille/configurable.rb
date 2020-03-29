@@ -6,7 +6,7 @@ module Grille
     def build; end
 
     def configure
-      config = default_config
+      config = default_config || {}
       yield(config)
       config.to_h.each { |k, v| send("#{k}=", v) }
       build
