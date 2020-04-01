@@ -19,7 +19,7 @@
 /config/credentials/development.key
 
 # ignore js related files
-/public/packs
+/public/grille-packs
 /public/packs-test
 /node_modules
 /yarn-error.log
