@@ -36,8 +36,6 @@
   "dependencies": {
     "@ag-grid-community/all-modules": "^22.1.0",
     "@ag-grid-community/vue": "^22.1.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "^4.2.0",
     "@vue/test-utils": "^1.0.0-beta.30",
     "apollo-boost": "^0.4.4",
@@ -56,7 +54,6 @@
     "sass": "^1.25.0",
     "sass-loader": "^8.0.0",
     "serialize-javascript": "^2.1.2",
-    "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
     "vue-apollo": "^3.0.2",
     "vue-axios": "^2.1.5",
