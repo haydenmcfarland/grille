@@ -120,7 +120,7 @@ import {
   createStore
 } from "<%= Grille.javascript('packs/grille.js') %>";
 
-document.addEventListener("turbolinks:load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({
     vuetify,
     router,

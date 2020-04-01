@@ -1,14 +1,4 @@
-// rails
-require("@rails/ujs").start();
-require("@rails/activestorage").start();
-
-import "../initializers/polyfills";
-import "../initializers/turbolinks";
-
 import Vue from "vue";
-
-import TurbolinksAdapter from "vue-turbolinks";
-Vue.use(TurbolinksAdapter);
 
 // vuex
 import Vuex from 'vuex';
