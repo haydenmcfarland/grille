@@ -1,3 +1,5 @@
+<% actions ||= [] %>
+
 <template>
   <v-app-bar app>
     <v-toolbar-title>
@@ -39,11 +41,7 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Vuetify from "vuetify";
-Vue.use(Vuetify);
-
-import signOut from "../mutations/signOut";
+import signOut from "<%= Grille.javascript('packs/mutations/signOut.js') %>";
 import { mapMutations } from "vuex";
 
 export default {
@@ -52,7 +50,7 @@ export default {
   },
   data() {
     return {
-      actions: <%= (actions || default_actions).to_json %>,
+      actions: <%= (actions || default_actions) %>,
       goDark: this.darkMode()
     };
   },
