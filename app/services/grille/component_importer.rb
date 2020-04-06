@@ -39,14 +39,13 @@ module Grille
           #{result[:imports]}
           Vue.component('#{component_name}', {
             #{result[:definition]},
-            template: '#{result[:template].gsub("\n", '')}'
+            template: '#{result[:template].delete("\n")}'
           });
           JS
         rescue StandardError => e
           # pass
         end
       end.compact
-      binding.pry
       result.join("\n")
     end
   end

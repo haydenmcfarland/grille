@@ -1,5 +1,3 @@
-<% actions ||= [] %>
-
 <template>
   <v-app-bar app>
     <v-toolbar-title>
@@ -50,7 +48,7 @@ export default {
   },
   data() {
     return {
-      actions: <%= (actions || default_actions) %>,
+      actions: <%= actions %>,
       goDark: this.darkMode()
     };
   },
