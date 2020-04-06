@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Grid from "../Grid.vue";
+import Grid from "../Grid.vue.erb";
 
 export default {
   name: "Users",

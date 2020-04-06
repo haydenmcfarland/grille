@@ -19,7 +19,7 @@ import Vuetify from "vuetify";
 Vue.use(Vuetify);
 
 import "images/logo.svg";
-import Navbar from "./Navbar.vue";
+import Navbar from "./Navbar.vue.erb";
 import Footer from "./Footer.vue";
 
 export default {
