@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Grille
+  # FIXME: need to support styles as well in single file components
   module ComponentImporter
     COMPONENTS_PATH = Pathname.new(
       File.join(__dir__, '../../components/grille/components')
@@ -38,7 +39,9 @@ module Grille
           mixin = component_name + 'Mixin'
           component = klass.new
           result = parse_vue_single_file_component(component.render)
-          component_imports = result[:imports].split("\n").select { |s| s.include?('import') }
+          component_imports = result[:imports].split("\n").select do |s|
+            s.include?('import')
+          end
           new_imports = (component_imports - imports.to_a).join("\n")
           imports += component_imports
 
