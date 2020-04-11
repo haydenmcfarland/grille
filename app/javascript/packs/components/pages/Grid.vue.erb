@@ -67,13 +67,13 @@ import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
 import { AgGridVue } from "@ag-grid-community/vue";
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
 
-import Confirm from "../Confirm";
+import Confirm from "<%= Grille.javascript('packs/components/Confirm.vue') %>";
 
 // grid mutations
 // FIXME: use camel for file names
-import modelDelete from "../../mutations/modelDelete";
-import modelUpdate from "../../mutations/modelUpdate";
-import modelRecords from "../../queries/modelRecords";
+import modelDelete from "<%= Grille.javascript('packs/mutations/modelDelete.js') %>";
+import modelUpdate from "<%= Grille.javascript('packs/mutations/modelUpdate.js') %>";
+import modelRecords from "<%= Grille.javascript('packs/queries/modelRecords.js') %>";
 
 // state management
 import { mapMutations } from "vuex";

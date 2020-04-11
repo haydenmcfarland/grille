@@ -31,15 +31,38 @@ module Grille
     end
 
     def call
+      imports = Set.new
       result = Grille::Components::Base.descendants.map do |klass|
         component_name = klass.name.gsub('::', '').camelize
         begin
-          result = parse_vue_single_file_component(klass.new.render)
+          mixin = component_name + 'Mixin'
+          component = klass.new
+          result = parse_vue_single_file_component(component.render)
+          component_imports = result[:imports].split("\n").select { |s| s.include?('import') }
+          new_imports = (component_imports - imports.to_a).join("\n")
+          imports += component_imports
+
+          if component.mixins
+            import_mixins_js = <<-JS
+            import #{mixin} from '#{component.mixins_path}';
+            JS
+
+            mixins_js = <<-JS
+            mixins: [#{mixin}]
+            JS
+          end
+
           <<-JS
-          #{result[:imports]}
+          #{import_mixins_js}
+          #{new_imports}
           Vue.component('#{component_name}', {
-            #{result[:definition]},
-            template: '#{result[:template].delete("\n")}'
+            #{
+              [
+                result[:definitions],
+                "template: #{result[:template].delete("\n").to_json}",
+                mixins_js
+              ].compact.join(",\n")
+            }
           });
           JS
         rescue StandardError => e
