@@ -3,6 +3,9 @@
 module Grille
   # FIXME: need to support styles as well in single file components
   module ComponentImporter
+
+    # need to also grab engine components;
+    # this should be configurable form the rails
     COMPONENTS_PATH = Pathname.new(
       File.join(__dir__, '../../components/grille/components')
     )
@@ -45,6 +48,7 @@ module Grille
           new_imports = (component_imports - imports.to_a).join("\n")
           imports += component_imports
 
+          # need to support inherited component's mixins as well
           if component.mixins
             import_mixins_js = <<-JS
             import #{mixin} from '#{component.mixins_path}';

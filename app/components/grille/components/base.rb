@@ -5,7 +5,15 @@ require 'erb'
 module Grille
   module Components
     class Base < OpenStruct
+      attr_accessor :called_from
+
+      JS_PATH = Pathname.new(File.join(__dir__, '../../../javascript/packs'))
+
       class << self
+        def grille_ancestors
+          self == Base ? [] : superclass.grille_ancestors + [self]
+        end
+
         def inherited(klass)
           component_dir = begin
             cllr = if Kernel.respond_to?(:caller_locations)
@@ -28,8 +36,6 @@ module Grille
           end
         end
       end
-
-      JS_PATH = Pathname.new(File.join(__dir__, '../../../javascript/packs'))
 
       def render(template)
         ERB.new(template).result(binding)
