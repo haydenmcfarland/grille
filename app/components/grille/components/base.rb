@@ -26,11 +26,11 @@ module Grille
             cllr[0..-4]
           end
 
-          klass.define_method(:mixins_path) do
+          klass.define_singleton_method(:mixins_path) do
             "#{component_dir}/mixins.js"
           end
 
-          klass.define_method(:mixins) do
+          klass.define_singleton_method(:mixins) do
             path = mixins_path
             File.read(path) if File.exist?(path)
           end
