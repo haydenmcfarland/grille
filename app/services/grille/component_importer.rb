@@ -43,6 +43,7 @@ module Grille
       @@mixin_names[klass] ||= component_name(klass) + 'Mixin' if klass.mixins
     end
 
+    # FIXME: time to DRY and refactorino
     def call
       imports = Set.new
       result = Grille::Components::Base.descendants.map do |klass|
@@ -55,7 +56,6 @@ module Grille
         imports += component_imports
 
         mixins = klass.grille_ancestors.map { |a| mixin_name(a) }.compact
-        # need to support inherited component's mixins as well
         if mixins.present?
           mixin_imports = klass.grille_ancestors.map do |k|
             <<-JS
