@@ -16,7 +16,6 @@ module Grille
       )
     end
 
-    # FIXME: is this the best way to expose gem js?
     def javascript(path)
       File.join(ROOT_PATH, 'app/javascript/', path)
     end
