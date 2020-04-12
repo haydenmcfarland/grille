@@ -66,7 +66,7 @@ module Grille
           new_mixin_imports = (mixin_imports - imports.to_a).join("\n")
 
           mixins_js = <<-JS
-            mixins: [#{mixins.join(", ")}]
+            mixins: [#{mixins.join(', ')}]
           JS
         end
 
