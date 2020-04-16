@@ -3,8 +3,6 @@
 module Grille
   # FIXME: need to support styles as well in single file components
   module ComponentImporter
-    # need to also grab engine components;
-    # this should be configurable form the rails
     COMPONENTS_PATH = Pathname.new(
       File.join(__dir__, '../../components/grille/components')
     )
