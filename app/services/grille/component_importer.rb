@@ -9,7 +9,10 @@ module Grille
       File.join(__dir__, '../../components/grille/components')
     )
 
+    RAILS_APP_COMPONENTS_PATH = Rails.root.join('app/components')
+
     Dir[COMPONENTS_PATH + '**/*.rb'].sort.each { |f| require f }
+    Dir[RAILS_APP_COMPONENTS_PATH + '**/*.rb'].sort.each { |f| require f}
 
     REG_EXP_SCRIPT_IMPORTS = Regexp.new(
       '<script>(.*)export default.*</script>',
@@ -64,6 +67,7 @@ module Grille
           end
 
           new_mixin_imports = (mixin_imports - imports.to_a).join("\n")
+          imports += mixin_imports
 
           mixins_js = <<-JS
             mixins: [#{mixins.join(', ')}]

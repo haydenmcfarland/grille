@@ -16,7 +16,14 @@ export default {
           icon: "mdi-account",
           label: () => "Users",
           component: "router-link",
-        }
+        },
+        {
+          id: "projects",
+          props: { to: "/projects" },
+          icon: "mdi-pencil",
+          label: () => "Projects",
+          component: "router-link",
+        },
       ],
     };
   },

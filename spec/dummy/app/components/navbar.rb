@@ -1,0 +1,1 @@
+class Navbar < Grille::Components::Navbar; end

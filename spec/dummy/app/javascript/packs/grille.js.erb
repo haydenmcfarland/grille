@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     router,
     apolloProvider,
     store: createStore(),
-    render: h => h(GrilleComponentsApp)
+    render: h => h(App)
   }).$mount();
   document.body.appendChild(app.$el);
 });
