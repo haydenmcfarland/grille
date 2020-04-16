@@ -9,16 +9,16 @@ module Grille
         end
       end
 
-      def configuration
-        { navbar_element: navbar_element }
-      end
-
       def navbar_klass
         Navbar
       end
 
       def navbar_element
         Grille::ComponentImporter.component_name(navbar_klass)
+      end
+
+      def navbar_element_tag
+        "<#{navbar_element} />"
       end
     end
   end

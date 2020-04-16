@@ -45,14 +45,6 @@ module Grille
           end
         end
       end
-
-      def initialize
-        super(configuration)
-      end
-
-      def configuration
-        {}
-      end
     end
   end
 end
