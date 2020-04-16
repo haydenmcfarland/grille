@@ -77,7 +77,7 @@ module Grille
         <<-JS
           #{new_mixin_imports}
           #{new_imports}
-          Vue.component('#{component_name(klass)}', {
+          const #{component_name(klass)} = Vue.component('#{component_name(klass)}', {
             #{
               [
                 result[:definitions],

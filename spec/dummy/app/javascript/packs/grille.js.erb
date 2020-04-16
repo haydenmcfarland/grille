@@ -2,7 +2,6 @@ import {
   Vue,
   vuetify,
   router,
-  App,
   apolloProvider,
   createStore
 } from "<%= Grille.javascript('packs/grille.js') %>";
@@ -15,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     router,
     apolloProvider,
     store: createStore(),
-    render: h => h(App)
+    render: h => h(GrilleComponentsApp)
   }).$mount();
   document.body.appendChild(app.$el);
 });
