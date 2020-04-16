@@ -1,6 +1,6 @@
 <template>
   <v-app id="app" :dark="setTheme">
-    <grille-components-navbar />
+    <<%= navbar_element %> />
     <v-content>
       <v-container fluid class="full-height">
         <v-row justify="center" class="fill-height">
@@ -14,12 +14,8 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Vuetify from "vuetify";
-Vue.use(Vuetify);
-
 import "images/logo.svg";
-import Footer from "./Footer.vue";
+import Footer from "<%= Grille.javascript('packs/components/Footer.vue') %>";
 
 export default {
   components: {

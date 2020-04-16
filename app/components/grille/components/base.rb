@@ -10,6 +10,10 @@ module Grille
       JS_PATH = Pathname.new(File.join(__dir__, '../../../javascript/packs'))
 
       class << self
+        def js_path
+          JS_PATH
+        end
+
         def grille_ancestors
           self == Base ? [] : superclass.grille_ancestors + [self]
         end
@@ -34,15 +38,20 @@ module Grille
             path = mixins_path
             File.read(path) if File.exist?(path)
           end
+
+          klass.define_method(:render) do
+            |template = File.read(klass.js_path)|
+            ERB.new(template).result(binding)
+          end
         end
       end
 
-      def render(template)
-        ERB.new(template).result(binding)
+      def initialize
+        super(configuration)
       end
 
-      def actions
-        []
+      def configuration
+        {}
       end
     end
   end

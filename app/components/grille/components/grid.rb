@@ -3,10 +3,10 @@
 module Grille
   module Components
     class Grid < Base
-      COMPONENT_PATH = JS_PATH.join('components/pages/Grid.vue.erb')
-
-      def render(template = File.read(COMPONENT_PATH))
-        super(template)
+      class << self
+        def js_path
+          super.join('components/pages/Grid.vue.erb')
+        end
       end
 
       def actions
