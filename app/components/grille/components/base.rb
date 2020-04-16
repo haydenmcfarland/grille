@@ -39,8 +39,7 @@ module Grille
             File.read(path) if File.exist?(path)
           end
 
-          klass.define_method(:render) do
-            |template = File.read(klass.js_path)|
+          klass.define_method(:render) do |template = File.read(klass.js_path)|
             ERB.new(template).result(binding)
           end
         end
