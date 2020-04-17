@@ -7,7 +7,7 @@ module Grille
   module ComponentImporter
     mattr_accessor :component_names, default: {}
     mattr_accessor :mixin_names, default: {}
-    mattr_accessor :imports, default: Set.new
+    mattr_accessor :component_imports, default: Set.new
 
     COMPONENTS_PATH = Pathname.new(
       File.join(__dir__, '../../components/grille/components')
@@ -31,10 +31,10 @@ module Grille
     def call
       Grille::Components::Base.descendants.map do |klass|
         grille_component = klass.new
-        vue_component = ::Vue::SingleFileComponent.new(grille_component.render)
+        sfc = ::Vue::SingleFileComponent.new(grille_component.render)
 
-        new_imports = imports.difference(vue_component.imports).to_a.join("\n")
-        imports.add(vue_component.imports)
+        new_imports = (sfc.imports - component_imports.to_a).join("\n")
+        self.component_imports += sfc.imports
 
         mixins = klass.grille_ancestors.map { |a| mixin_name(a) }.compact
         if mixins.present?
@@ -42,18 +42,21 @@ module Grille
             "import #{mixin_name(k)} from '#{k.mixins_path}';"
           end
 
-          new_mixin_imports = imports.difference(mixin_imports).to_a.join("\n")
-          imports.add(mixin_imports)
+          new_mixin_imports = (
+            mixin_imports - component_imports.to_a
+          ).join("\n")
+          self.component_imports += mixin_imports
         end
 
+        # FIXME: need to support styles as well in single file components
         inline_component = ::Vue::InlineTemplateComponent.new(
           name: component_name(klass),
-          definition: vue_component.definition,
-          template: vue_component.template,
+          definition: sfc.definition,
+          template: sfc.template,
           mixins: mixins
         ).render
 
-        [new_mixin_imports, new_imports, inline_component].join("\n")
+        [new_mixin_imports, new_imports, inline_component].compact.join("\n")
       end.compact.join("\n")
     end
   end
