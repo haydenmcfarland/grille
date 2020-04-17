@@ -46,7 +46,6 @@ module Grille
           imports.add(mixin_imports)
         end
 
-        # FIXME: need to support styles as well in single file components
         inline_component = ::Vue::InlineTemplateComponent.new(
           name: component_name(klass),
           definition: vue_component.definition,

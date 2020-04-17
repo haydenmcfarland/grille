@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Vue
+  # FIXME: need to support styles as well in single file components
   class InlineTemplateComponent
     attr_accessor :name, :definition, :template, :style, :mixins
 
