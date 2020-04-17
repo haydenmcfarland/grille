@@ -48,7 +48,6 @@ module Grille
           self.component_imports += mixin_imports
         end
 
-        # FIXME: need to support styles as well in single file components
         inline_component = ::Vue::InlineTemplateComponent.new(
           name: component_name(klass),
           definition: sfc.definition,
