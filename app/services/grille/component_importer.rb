@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../../lib/vue/single_file_component'
+
 module Grille
   # FIXME: need to support styles as well in single file components
   module ComponentImporter
@@ -12,27 +14,7 @@ module Grille
     Dir[COMPONENTS_PATH + '**/*.rb'].sort.each { |f| require f }
     Dir[RAILS_APP_COMPONENTS_PATH + '**/*.rb'].sort.each { |f| require f }
 
-    REG_EXP_SCRIPT_IMPORTS = Regexp.new(
-      '<script>(.*)export default.*</script>',
-      Regexp::MULTILINE
-    )
-    REG_EXP_SCRIPT_DEFINITION = Regexp.new(
-      '<script>.*export default {(.*)}.*</script>',
-      Regexp::MULTILINE
-    )
-    REG_EXP_STYLE = Regexp.new('<style>(.*)</style>', Regexp::MULTILINE)
-    REG_EXP_TEMPLATE = Regexp.new('<template>(.*)</template>', Regexp::MULTILINE)
-
     module_function
-
-    def parse_vue_single_file_component(file)
-      {
-        definition: file.match(REG_EXP_SCRIPT_DEFINITION)&.[](1),
-        imports: file.match(REG_EXP_SCRIPT_IMPORTS)&.[](1),
-        style: file.match(REG_EXP_STYLE)&.[](1),
-        template: file.match(REG_EXP_TEMPLATE)&.[](1)
-      }
-    end
 
     def component_name(klass)
       @@component_names ||= {}
@@ -47,10 +29,10 @@ module Grille
     # FIXME: time to DRY and refactorino
     def call
       imports = Set.new
-      result = Grille::Components::Base.descendants.map do |klass|
+      Grille::Components::Base.descendants.map do |klass|
         component = klass.new
-        result = parse_vue_single_file_component(component.render)
-        component_imports = result[:imports].split("\n").select do |s|
+        vue_component = ::Vue::SingleFileComponent.new(component.render)
+        component_imports = vue_component.imports.split("\n").select do |s|
           s.include?('import')
         end
         new_imports = (component_imports - imports.to_a).join("\n")
@@ -73,7 +55,7 @@ module Grille
         end
 
         template_js = <<-JS
-            template: #{result[:template].delete("\n").to_json}
+            template: #{vue_component.template.delete("\n").to_json}
         JS
 
         <<-JS
@@ -82,15 +64,14 @@ module Grille
           const #{component_name(klass)} = Vue.component('#{component_name(klass)}', {
             #{
               [
-                result[:definitions],
+                vue_component.definition,
                 template_js,
                 mixins_js
               ].compact.join(",\n")
             }
           });
         JS
-      end.compact
-      result.join("\n")
+      end.compact.join("\n")
     end
   end
 end
