@@ -7,7 +7,6 @@ module Grille
   module ComponentImporter
     mattr_accessor :component_names, default: {}
     mattr_accessor :mixin_names, default: {}
-    mattr_accessor :component_imports, default: Set.new
 
     COMPONENTS_PATH = Pathname.new(
       File.join(__dir__, '../../components/grille/components')
@@ -38,32 +37,31 @@ module Grille
     def call
       components = Grille::Components::Base.descendants.map do |klass|
         grille_component = klass.new
-        sfc = ::Vue::SingleFileComponent.new(grille_component.render)
-
-        new_imports = (sfc.imports - component_imports.to_a).join("\n")
-        self.component_imports += sfc.imports
 
         mixins = klass.grille_ancestors.map { |a| mixin_name(a) }.compact
+
+        component_string = grille_component.render
         if mixins.present?
           mixin_imports = klass.grille_ancestors.map do |k|
             "import #{mixin_name(k)} from '#{k.mixins_path}';"
-          end
+          end.join("\n")
 
-          new_mixin_imports = (
-            mixin_imports - component_imports.to_a
-          ).join("\n")
-          self.component_imports += mixin_imports
+          # FIXME: add mixin logic
         end
 
-        inline_component = ::Vue::InlineTemplateComponent.new(
-          name: component_name(klass),
-          definition: sfc.definition,
-          template: sfc.template,
-          mixins: mixins
-        ).render
+        name = component_name(klass)
 
-        [new_mixin_imports, new_imports, inline_component].compact.join("\n")
-      end.compact.join("\n")
+        dir = Rails.root.join('tmp/grille')
+        Dir.mkdir(dir) unless File.directory?(dir)
+        file_path = dir.join("#{name}.vue")
+        File.open(file_path, 'w+') do |f|
+          f.write(component_string)
+        end
+        <<-JS
+        const #{name} = () => import("#{file_path}");
+        Vue.component('#{name}', #{name})
+        JS
+      end.join("\n")
 
       [vuetify, components].join("\n")
     end
