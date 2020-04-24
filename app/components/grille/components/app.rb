@@ -20,6 +20,8 @@ module Grille
       def navbar_element_tag
         "<#{navbar_element} />"
       end
+
+      def footer; end
     end
   end
 end

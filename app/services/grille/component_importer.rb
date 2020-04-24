@@ -28,8 +28,15 @@ module Grille
       mixin_names[klass] ||= component_name(klass) + 'Mixin' if klass.mixins
     end
 
+    def vuetify
+      <<-JS
+      import Vuetify from "vuetify";
+      Vue.use(Vuetify);
+      JS
+    end
+
     def call
-      Grille::Components::Base.descendants.map do |klass|
+      components = Grille::Components::Base.descendants.map do |klass|
         grille_component = klass.new
         sfc = ::Vue::SingleFileComponent.new(grille_component.render)
 
@@ -57,6 +64,8 @@ module Grille
 
         [new_mixin_imports, new_imports, inline_component].compact.join("\n")
       end.compact.join("\n")
+
+      [vuetify, components].join("\n")
     end
   end
 end

@@ -8,10 +8,6 @@ module Grille
           super.join('components/pages/Grid.vue.erb')
         end
       end
-
-      def actions
-        []
-      end
     end
   end
 end
