@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 Create a new class in the components directory derived from the base grille navbar class:
 
 ```ruby
-// app/components/navbar.rb
+# app/components/navbar.rb
 class Navbar < Grille::Components::Navbar; end
 ```
 
