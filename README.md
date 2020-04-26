@@ -121,7 +121,7 @@ import {
 Utilize the `Grille::ComponentImporter` service call to render all grille and extended components:
 ```javascript
 
-<%= Grille::ComponenterImporter.call %>
+<%= Grille::ComponentImporter.call %>
 
 // MySickApp derived from App is now available to reference
 document.addEventListener("DOMContentLoaded", () => {
