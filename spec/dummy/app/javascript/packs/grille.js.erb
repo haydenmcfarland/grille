@@ -2,11 +2,11 @@ import {
   Vue,
   vuetify,
   router,
-  App,
   apolloProvider,
   createStore
 } from "<%= Grille.javascript('packs/grille.js') %>";
 
+<%= Grille::ComponentImporter.call %>
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({

@@ -32,9 +32,6 @@ Vue.use(VueAxios, {
 // router
 import router from "./plugins/router";
 
-// main application component
-import App from "./components/App.vue";
-
 // application mixins
 import SettingsMixin from './mixins/settings';
 Vue.mixin(SettingsMixin)
@@ -46,7 +43,6 @@ export {
   Vue,
   vuetify,
   router,
-  App,
   apolloProvider,
   createStore,
 }

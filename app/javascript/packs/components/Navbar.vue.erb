@@ -39,11 +39,7 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Vuetify from "vuetify";
-Vue.use(Vuetify);
-
-import signOut from "../mutations/signOut";
+import signOut from "<%= Grille.javascript('packs/mutations/signOut.js') %>";
 import { mapMutations } from "vuex";
 
 export default {
@@ -52,23 +48,6 @@ export default {
   },
   data() {
     return {
-      actions: [
-        {
-          id: "logout",
-          props: { href: "#" },
-          icon: "mdi-account-off",
-          label: () => this.username,
-          component: "a",
-          handler: this.handleSignOut
-        },
-        {
-          id: "users",
-          props: { to: "/users" },
-          icon: "mdi-account",
-          label: () => "Users",
-          component: "router-link"
-        },
-      ],
       goDark: this.darkMode()
     };
   },
