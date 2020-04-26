@@ -1,6 +1,6 @@
-# grille (WIP)
+# grille (heavy WIP)
 
-Rails engine that utilizes Vue and GraphQL to create a generalized grid component/interface
+Rails engine that utilizes Vue and GraphQL to create a generalized grid component/interface and ruby vuejs dsl.
 
 ## GOAL
 
@@ -26,11 +26,8 @@ Rails engine that utilizes Vue and GraphQL to create a generalized grid componen
 - DRY + reorganization
 - begin adding specs for regression testing and future features
 - make permission system more configurable
-- generalize vue components and configuration to make it easier to configure
 - allow errors to propagate through UI when logged in
-- fix js warnings/issues with borrowed components
-- update 'getting started' documentation
-- column options / label formatting
+- provide support for predefined component mixins, etc.
 
 ## HOW TO USE
 
@@ -108,7 +105,7 @@ module.exports = {
 ```
 
 Create a `grille.js.erb` file in `app/javascript/packs/` and utilize
-`Grille.javascript` helper to import desired components.
+`Grille.javascript` and helper to import desired components.
 
 ```javascript
 import {
@@ -119,28 +116,40 @@ import {
   apolloProvider,
   createStore
 } from "<%= Grille.javascript('packs/grille.js') %>";
+```
 
+Utilize the `Grille::ComponentImporter` service call to render all grille and extended components:
+```javascript
+
+<%= Grille::ComponenterImporter.call %>
+
+// MySickApp derived from App is now available to reference
 document.addEventListener("DOMContentLoaded", () => {
   const app = new Vue({
     vuetify,
     router,
     apolloProvider,
     store: createStore(),
-    render: h => h(App)
+    render: h => h(MySickApp)
   }).$mount();
   document.body.appendChild(app.$el);
 });
 ```
-
 # Example Component Extension
 
-Change action defined in grille's Navbar component (a better interface will replace this):
-```js
-import Navbar from "<%= Grille.javascript('packs/components/Navbar.vue') %>";
+## Change actions defined in default Navbar:
 
+Create a new class in the components directory derived from the base grille navbar class:
+
+```ruby
+// app/components/navbar.rb
+class Navbar < Grille::Components::Navbar; end
+```
+
+Create a folder with the same name as the component rb file and define a mixins.js file with desired changes:
+```javascript
+// app/components/navbar/mixins.js
 export default {
-  name: 'Navbar',
-  extends: Navbar,
   data() {
     return {
       actions: [
@@ -148,37 +157,26 @@ export default {
           id: "logout",
           props: { href: "#" },
           icon: "mdi-account-off",
-          label: () => 'Logout',
+          label: () => "Logout",
           component: "a",
-          handler: this.handleSignOut
+          handler: this.handleSignOut,
         },
         {
           id: "users",
           props: { to: "/users" },
           icon: "mdi-account",
           label: () => "Users",
-          component: "router-link"
+          component: "router-link",
         },
         {
           id: "projects",
           props: { to: "/projects" },
           icon: "mdi-pencil",
           label: () => "Projects",
-          component: "router-link"
+          component: "router-link",
         },
       ],
-    }
-  }
-}
-```
-
-```js
-import Navbar from "./mixins/grille/navbar.js.erb"
-const MyApp = {
-  name: 'App',
-  extends: App,
-    components: {
-    Navbar
-  }
-}
+    };
+  },
+};
 ```
