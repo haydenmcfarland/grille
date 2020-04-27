@@ -32,6 +32,10 @@ module Grille
         { result: result, success: true, errors: [] }
       end
 
+      def string_result(result)
+        { result: result, success: true, errors: [] }
+      end
+
       def nil_result(_result)
         null_obj_keys = self.class.fields.keys - %w[success errors]
         null_obj = null_obj_keys.each_with_object({}) { |k, h| h[k] = {} }
@@ -48,6 +52,8 @@ module Grille
           boolean_result(result)
         when nil
           nil_result(result)
+        when String
+          string_result(result)
         else
           raise "unsupported resolver type: '#{result.class}'"
         end
