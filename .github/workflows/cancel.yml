@@ -1,0 +1,15 @@
+name: Cancel
+on:
+  push:
+    branches:
+      - master
+jobs:
+  cancel:
+    name: "Cancel Previous CI Runs"
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: styfle/cancel-workflow-action@0.3.1
+        with:
+          workflow_id: ${{ secrets.GH_WORKFLOW_ID }}
+          access_token: ${{ secrets.GH_ACCESS_TOKEN }}
